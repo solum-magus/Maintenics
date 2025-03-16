@@ -1,0 +1,70 @@
+@font-face {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.Container {
+    z-index: 1;
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 0.25fr 4.75fr;
+    grid-template-rows: 0.5fr 4.5fr;
+    grid-template-areas:
+        'nav nav'
+        'side main'
+}
+
+nav {
+    z-index: 1;
+    background-color: #4A628A;
+    grid-area: nav;
+    top: 0px;
+    position: sticky;
+    padding: 16px;
+    box-shadow: 0px 5px 4px 1.5px rgba(0, 0, 0, 0.5);
+}
+
+main {
+    background-color: white;
+    grid-area: main;
+}
+
+#side {
+    background-color: #4A628A;
+    position: sticky;
+    top: 0px;
+    grid-area: side;
+}
+
+#smart {
+    margin-left: 5px;
+    color: white;
+    font-size: 64px;
+}
+
+a {
+    text-decoration: none; /*this removes the underline under SMART beside the LOGO*/
+}
+
+#icons {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 30px;
+}
+
+#prof {
+    height: 50px;
+    width: 50px;
+    margin-bottom: 100px;
+    padding: 3px;
+}

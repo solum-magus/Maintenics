@@ -1,0 +1,20 @@
+main {
+    background-color: #d6e6ff;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px #00000040;
+    padding-bottom: 15px;
+    margin: 30px;
+    padding-inline: 10px;
+}
+
+th, td {
+    border: 1px solid black !important;
+}
+
+th {
+    background-color: #7ea1d7 !important;
+}
+
+h2 {
+    padding-top: 15px !important;
+}

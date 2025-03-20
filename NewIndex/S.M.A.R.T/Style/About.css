@@ -1,0 +1,25 @@
+#logo, #logo2 {
+    width: 150px;
+}
+
+.mainrow {
+    flex-shrink: 1;
+    background-color: #d6e6ff;
+    margin-inline: 30px;
+    margin-block: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px #00000040;
+    text-align: justify;
+    padding: 10px;
+}
+
+.toprow {
+    background: none !important;
+    text-align: center;
+    padding: 10px;
+    box-shadow: none !important;
+}
+
+#main1 span {
+    margin-inline: 10px;
+}

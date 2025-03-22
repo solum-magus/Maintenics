@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Get the Dots icon and sidebar
     const dotsIcon = document.getElementById("Dots");
     const sidebar = document.getElementById("sidebar");
-    const content = document.querySelector(".content");
 
     // Function to toggle sidebar visibility
     function toggleSidebar() {

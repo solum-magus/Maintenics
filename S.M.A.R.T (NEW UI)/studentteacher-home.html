@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="sticky-header">
+    <div class="header-container">
+        <div class="logos">
+    <a href="dot.html"><img src="dots.png" class="logo" alt="Dots" id="Dots"></a>
+    <a href="studentteacher-home.html"><img src="home.png" class="logo" alt="Home" id="Home"></a>
+    <a href="history.html"><img src="history.png" class="logo" alt="History" id="History"></a>
+    <a href="notif.html"><img src="notif.png" class="logo" alt="Notifications" id="Notifications"></a>
+    <a href="settings.html"><img src="settings.png" class="logo" alt="Settings" id="Settings"></a>
+</div>
+
+
+        <div class="user-info">
+            <div class="user-top">
+                <span class="username">Leiby Rose M.</span>
+				<span class="position">Student</span>
+                <select class="dropdown">
+                    <option value="">Profile</option>
+                    <option value="settings">Settings</option>
+                    <option value="logout">Logout</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="form-container">
+    <h2 class="form-title">Good day, Leiby! Reporting an issue? <br> Fill out the form below!</h2>
+    <form id="reportForm">
+        <select id="location" required>
+            <option value="" disabled selected>Location of Issue</option>
+            <option>Ampi</option>
+            <option>Room 101</option>
+            <option>Library</option>
+        </select>
+
+        <select id="problem" required>
+            <option value="" disabled selected>Problem Type</option>
+            <option>TV</option>
+            <option>Broken Chair</option>
+            <option>No Wi-Fi</option>
+        </select>
+
+        <textarea id="description" placeholder="Description (optional)"></textarea>
+
+        <button type="submit">Submit</button>
+        
+    </form>
+</div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <img src="modal.png" class="modal-image">
+        <h2>Report Submitted</h2>
+        <hr class="separator">
+        <p>Your report has been logged and will be addressed shortly.</p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

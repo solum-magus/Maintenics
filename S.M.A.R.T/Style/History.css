@@ -35,9 +35,9 @@
     background-color: #7ea1d7 !important;
 }
 
-table, th, td, tr {
+/*table, th, td, tr {
     border:1px solid black;
-}
+} why is this here*/
 
 .resolved h3 {
     color: #11c037;

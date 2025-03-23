@@ -16,13 +16,35 @@ $rid = $_SESSION["id"];
 $sql = "SELECT * FROM userinfo WHERE position = '$position'";
 $result = $Testsql->query($sql);
 
-$sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-        FROM reportdetails 
-        WHERE status = 'Resolved' AND rid = ? 
-        ORDER BY date_reported DESC";
+switch ($position) {
+    case "Admin":
+    case "Maintenance Staff":
+        // Admins & Maintenance Staff see all reports
+        $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback, rid 
+                FROM reportdetails 
+                WHERE status = 'Resolved' 
+                ORDER BY date_reported DESC";
 
-$stmt = $Testsql->prepare($sql);
-$stmt->bind_param("i", $rid);
+        $stmt = $Testsql->prepare($sql);
+        break;
+
+    case "Student":
+    case "Teacher":
+        // Students & Teachers see only their own reports
+        $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
+                FROM reportdetails 
+                WHERE status = 'Resolved' AND rid = ? 
+                ORDER BY date_reported DESC";
+
+        $stmt = $Testsql->prepare($sql);
+        $stmt->bind_param("i", $rid);
+        break;
+
+    default:
+        // Handle unexpected roles (optional)
+        die("Unauthorized access.");
+}
+
 $stmt->execute();
 $Report = $stmt->get_result();
 

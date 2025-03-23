@@ -57,7 +57,6 @@ body {
     filter: brightness(0.8);
     border-bottom: 2px solid #fff;
     background-color: rgba(0, 63, 125, 0.2);
-    filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
 
 .user-info {
@@ -93,6 +92,10 @@ body {
     background-color: #333;
 }
 
+#Home {
+    fill: gold; /* If inline SVG */
+    filter: sepia(1) saturate(5) hue-rotate(10deg); /* If external SVG file */
+}
 
 /* Sidebar styles */
 .sidebar {

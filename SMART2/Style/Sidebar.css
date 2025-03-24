@@ -1,0 +1,84 @@
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed; /* Fix the sidebar on the screen */
+    top: 0;
+    left: -300px; /* Sidebar hidden by default */
+    width: 300px; /* Adjust sidebar width to fit both logo and text */
+    height: 100%;
+    background-color:  #003f7d;
+    color: white;
+    padding: 20px;
+    padding-left: 10px; /* Reduce or remove */
+    transition: left 0.3s ease;
+    z-index: 9999; /* Ensure it appears above the navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align content to the left */
+}
+
+.sidebar .logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0;  /* Remove any unwanted padding */
+    margin: 0;   /* Remove any unwanted margin */
+}
+
+
+.sidebar .logo {
+    width: 50%; /* Adjust logo size */
+    height: auto;
+    margin: 0; /* Remove any unwanted margin */
+    padding: 0; /* Remove any unwanted padding */
+}
+
+
+/* Company name and product name */
+.sidebar .company-name h2,
+.sidebar .company-name h3 {
+    margin: 10%;
+    font-size: 25px; /* Adjust the text size if necessary */
+    color: white;
+}
+
+/* Separator to create space */
+.sidebar .separator {
+    height: 20px;
+    width: 100%;
+}
+
+/* Company Info Section (Vision, Mission, etc.) */
+.sidebar .company-info {
+    margin-top: 20px;
+    text-align: left; /* Align text to the left for better readability */
+    width: 100%;
+}
+
+.sidebar .company-info div {
+    margin-bottom: 20px;
+}
+
+.sidebar .company-info h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.sidebar .company-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Active state to show the sidebar */
+.sidebar.active {
+    left: 0;
+}
+
+/* Content adjustment when sidebar is visible */
+.content.active {
+    margin-left: 300px; /* Adjust content margin to accommodate sidebar width */
+}

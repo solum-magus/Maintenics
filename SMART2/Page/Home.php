@@ -108,7 +108,7 @@
     <form id="reportForm">
         <input type="hidden" id="rname" name="rname">
 
-        <select id="location" required>
+        <select id="plocation" required>
             <option value="" disabled selected>Location of Issue</option>
             <option>Ampi</option>
             <option>Room 101</option>
@@ -122,7 +122,7 @@
             <option>No Wi-Fi</option>
         </select>
 
-        <textarea id="description" placeholder="Description (optional)"></textarea>
+        <textarea id="pdescription" placeholder="Description (optional)"></textarea>
 
         <button type="submit">Submit</button>
     </form>
@@ -148,11 +148,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let formData = new FormData();
         formData.append("rname", document.getElementById("rname").value); // Use full_name as rname
-        formData.append("location", document.getElementById("location").value);
+        formData.append("plocation", document.getElementById("plocation").value);
         formData.append("problem", document.getElementById("problem").value);
-        formData.append("description", document.getElementById("description").value);
+        formData.append("pdescription", document.getElementById("pdescription").value);
 
-        fetch("submit_report.php", {
+        fetch("../Authentication/submit_report.php", {
             method: "POST",
             body: formData
         })
@@ -163,6 +163,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
 </script>
 
 

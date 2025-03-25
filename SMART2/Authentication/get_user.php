@@ -1,26 +1,37 @@
 <?php
+header("Content-Type: application/json"); // Set response to JSON format
+
+// Include database connection
+$mysqli = require __DIR__ . "/../database.php"; // Make sure this file exists
+
 session_start();
-$mysqli = require __DIR__ . "/../database.php";
 
 if (!isset($_SESSION["school_id"])) {
     echo json_encode(["error" => "User not logged in"]);
     exit;
 }
 
-$user_id = $_SESSION["school_id"]; // Assuming user_id is stored in session
+$school_id = $_SESSION["school_id"];
 
-// Fetch the user's full name from userinfo
-$stmt = $conn->prepare("SELECT full_name FROM userinfo WHERE id = ?");
-$stmt->bind_param("i", $user_id);
+// Use `$mysqli` (not `$conn`) for database queries
+$sql = "SELECT full_name FROM userinfo WHERE school_id = ?";
+$stmt = $mysqli->prepare($sql);
+
+if (!$stmt) {
+    echo json_encode(["error" => "Database query failed"]);
+    exit;
+}
+
+$stmt->bind_param("i", $school_id);
 $stmt->execute();
-$stmt->bind_result($full_name);
-$stmt->fetch();
-$stmt->close();
-$conn->close();
+$result = $stmt->get_result();
 
-if ($full_name) {
-    echo json_encode(["rname" => $full_name]); // Return full_name as rname
+if ($row = $result->fetch_assoc()) {
+    echo json_encode(["rname" => $row["full_name"]]); // Send full_name as rname
 } else {
     echo json_encode(["error" => "User not found"]);
 }
+
+$stmt->close();
+$mysqli->close();
 ?>

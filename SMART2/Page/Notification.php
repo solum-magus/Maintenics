@@ -22,8 +22,22 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-$sql = "SELECT * FROM reportdetails WHERE status IN ('Pending', 'Ongoing', 'Resolved')";
+$sql = "SELECT * FROM reportdetails WHERE status IN ('Pending', 'Ongoing', 'Resolved') ORDER BY date_reported DESC";
 $reports = $Testsql->query($sql);
+
+function timeAgo($timestamp) {
+    $timeDiff = time() - strtotime($timestamp); // Difference in seconds
+
+    if ($timeDiff < 60) {
+        return $timeDiff . " seconds ago";
+    } elseif ($timeDiff < 3600) {
+        return floor($timeDiff / 60) . " minutes ago";
+    } elseif ($timeDiff < 86400) {
+        return floor($timeDiff / 3600) . " hours ago";
+    } else {
+        return floor($timeDiff / 86400) . " days ago";
+    }
+}
 
 $pendingReports = [];
 $ongoingReports = [];
@@ -130,26 +144,35 @@ if ($reports->num_rows > 0) {
     </div>
 </div>
 
-<h1> Notifications </h1>
+
 
 	<div class="notifications">
-  <button id="mark-all-read" class="mark-all-btn">Mark All as Read</button>
+    <form method="POST" action="../Authentication/mark_all_read.php">
+        <button type="submit" id="mark-all-read" class="mark-all-btn">Mark All as Read</button>
+    </form>
 </div>
 
-	<div class="box">
-			<span class="overlayt" id="status-text">Report Submitted!</span>
-			<span class="timestamp">5 hours ago</span>
-	  </div>
+<div class="notification-container">
+<h1> Notifications </h1>
 
-	<div class="box1">
-			<span class="overlayt1" id="status-text">Report Submitted!</span>
-			<span class="timestamp">3 hours ago</span>
-	  </div>
+<?php foreach ($pendingReports as $report): ?>
+    <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>">
+        <span class="overlayt">Report Submitted!</span>
+        <span class="timestamp"><?= timeAgo($report['date_reported']) ?></span>
 
+        <?php if ($_SESSION['position'] === 'Maintenance Staff'): ?>
+            <form method="POST" action="../Authentication/update_report.php">
+                <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
+                <input type="hidden" name="status" value="Ongoing">
+                <button type="submit">Take Action</button>
+            </form>
+        <?php endif; ?>
+    </div>
+<?php endforeach; ?>
+
+</div>
 
   <script src="../JS/script2.js"></script>
   <script src="../JS/script4.js"></script>
-
-  
   </body>
 </html>

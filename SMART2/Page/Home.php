@@ -30,6 +30,10 @@
 
     }
 
+    if (isset($_SESSION["report_submitted"])) {
+        unset($_SESSION["report_submitted"]); // Remove session first
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -158,11 +162,11 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.text())
         .then(data => {
-            alert(data); // Show success message
             document.getElementById("reportForm").reset(); // Reset form
         });
     });
 });
+
 
 </script>
 
@@ -170,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="successModal" class="modal">
     <div class="modal-content">
         <span id="closeModal" class="close">&times;</span>
-        <img src="modal.png" class="modal-image">
+        <img src="../Assets/modal.svg" class="modal-image">
         <h2>Report Submitted</h2>
         <hr class="separator">
         <p>Your report has been logged and will be addressed shortly.</p>
@@ -179,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script src="../JS/script.js"></script>
 <script src="../JS/script4.js"></script>
+
 
 
 </body>

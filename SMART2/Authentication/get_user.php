@@ -6,7 +6,7 @@ $mysqli = require __DIR__ . "/../database.php"; // Make sure this file exists
 
 session_start();
 
-if (!isset($_SESSION["school_id"])) {
+if (!isset($_SESSION["id"])) {
     echo json_encode(["error" => "User not logged in"]);
     exit;
 }

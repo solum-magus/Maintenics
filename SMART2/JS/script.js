@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent the default form submission (refreshing page)
 
-        // Check if the required fields (location and problem) are filled out
-        const location = document.getElementById("location");
+        // Check if the required fields (plocation and problem) are filled out
+        const plocation = document.getElementById("plocation");
         const problem = document.getElementById("problem");
 
-        if (location.value && problem.value) {
+        if (plocation.value && problem.value) {
             // If both fields are filled, show the modal
             showModal();
             form.reset(); // Optionally reset the form after submission
@@ -73,4 +73,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     highlightIcon(); // Run the function when the page loads
 });
+
 

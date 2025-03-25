@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             session_regenerate_id();
 
             $_SESSION["fname"] = $user["full_name"];
-            $_SESSION["school_id"] = $user["school_id"];
+            $_SESSION["id"] = $user["school_id"];
             $_SESSION["position"] = $user["position"];
             $_SESSION["bio"] = $user["bio"];
             $_SESSION["userstatus"] = $userstatus;

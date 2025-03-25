@@ -78,7 +78,7 @@ if ($result->num_rows > 0) {
 
             <?php endif; ?>
 
-                <select class="dropdown">
+            <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
                     <option value="">Profile</option>
                     <option value="settings">Settings</option>
                     <option value="logout">Logout</option>

@@ -67,7 +67,7 @@
             <span class="position">NULL</span>
 
             <?php endif; ?>
-                <select class="dropdown">
+            <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
                     <option value="">Profile</option>
                     <option value="settings">Settings</option>
                     <option value="logout">Logout</option>
@@ -103,10 +103,11 @@
     </div>
 </div>
 
-
 <div class="form-container">
-    <h2 class="form-title">Good day, Leiby! Reporting an issue? <br> Fill out the form below!</h2>
+    <h2 class="form-title">Good day, <span id="username"></span>! Reporting an issue? <br> Fill out the form below!</h2>
     <form id="reportForm">
+        <input type="hidden" id="rname" name="rname">
+
         <select id="location" required>
             <option value="" disabled selected>Location of Issue</option>
             <option>Ampi</option>
@@ -124,9 +125,46 @@
         <textarea id="description" placeholder="Description (optional)"></textarea>
 
         <button type="submit">Submit</button>
-        
     </form>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Fetch the user's full name (stored as rname) from userinfo table
+    fetch("../Authentication/get_user.php")
+    .then(response => response.json())
+    .then(data => {
+        if (data.rname) {
+            document.getElementById("username").innerText = data.rname; // Show the name
+            document.getElementById("rname").value = data.rname; // Assign to hidden input
+        } else {
+            alert("Error fetching user data: " + data.error);
+        }
+    });
+
+    // Handle form submission
+    document.getElementById("reportForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let formData = new FormData();
+        formData.append("rname", document.getElementById("rname").value); // Use full_name as rname
+        formData.append("location", document.getElementById("location").value);
+        formData.append("problem", document.getElementById("problem").value);
+        formData.append("description", document.getElementById("description").value);
+
+        fetch("submit_report.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data); // Show success message
+            document.getElementById("reportForm").reset(); // Reset form
+        });
+    });
+});
+</script>
+
 
 <div id="successModal" class="modal">
     <div class="modal-content">

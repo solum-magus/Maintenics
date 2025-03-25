@@ -67,3 +67,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     highlightIcon();
 });
+
+function handleProfileChange(value) {
+    if (value === "settings") {
+        window.location.href = "Settings.php"; // Redirect to settings page
+    } else if (value === "logout") {
+        window.location.href = "../Authentication/signout.php"; // Redirect to signout script
+    }
+}

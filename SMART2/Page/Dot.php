@@ -22,7 +22,7 @@
             <div class="user-top">
                 <span class="username">Leiby Rose M.</span>
                 <span class="position">Student</span>
-                <select class="dropdown">
+                <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
                     <option value="">Profile</option>
                     <option value="settings">Settings</option>
                     <option value="logout">Logout</option>

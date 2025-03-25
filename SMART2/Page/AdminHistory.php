@@ -77,22 +77,22 @@ $feedback="";
 
         <div class="user-info">
             <div class="user-top">
-            <?php if (isset($fname) && isset($position)):  ?>
+                <?php if (isset($fname) && isset($position)):  ?>
 
-            <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
-            <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
+                <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
 
-            <?php else: ?>
+                <?php else: ?>
 
-            <span class="username">NULL</span>
-            <span class="position">NULL</span>
+                <span class="username">NULL</span>
+                <span class="position">NULL</span>
 
-            <?php endif; ?>
+                <?php endif; ?>
 
-                <select class="dropdown">
-                    <option value="">Profile</option>
-                    <option value="settings">Settings</option>
-                    <option value="logout">Logout</option>
+                <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
+                        <option value="">Profile</option>
+                        <option value="settings">Settings</option>
+                        <option value="logout">Logout</option>
                 </select>
             </div>
         </div>

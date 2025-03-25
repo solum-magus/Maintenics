@@ -1,0 +1,24 @@
+<?php
+session_start();
+$mysqli = require __DIR__ . "/../database.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $rname = $_POST["rname"]; // This was fetched as full_name from userinfo
+    $location = $_POST["location"];
+    $problem = $_POST["problem"];
+    $description = $_POST["description"];
+
+    // Insert into reportdetails
+    $stmt = $conn->prepare("INSERT INTO reportdetails (rname, location, problem, description) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $rname, $location, $problem, $description);
+
+    if ($stmt->execute()) {
+        echo "Report submitted successfully!";
+    } else {
+        echo "Error submitting report.";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>

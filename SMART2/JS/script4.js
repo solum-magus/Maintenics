@@ -2,6 +2,23 @@ document.addEventListener("DOMContentLoaded", function() {
     // Get the Dots icon and sidebar
     const dotsIcon = document.getElementById("Dots");
     const sidebar = document.getElementById("sidebar");
+    // Create a close button inside the sidebar
+    const closeDots = document.createElement("img");
+    closeDots.src = "../Assets/dots.svg";
+    closeDots.classList.add("logo");
+    closeDots.id = "CloseDots";
+    sidebar.insertBefore(closeDots, sidebar.firstChild);
+
+    // Function to toggle sidebar visibility
+    function toggleSidebar() {
+        sidebar.classList.toggle("active");
+        content.classList.toggle("active");
+    }
+    // Add event listener to the Dots icon to toggle the sidebar
+    dotsIcon.addEventListener("click", toggleSidebar);
+    closeDots.addEventListener("click", toggleSidebar);
+    // Add event listener to the Dots icon to toggle the sidebar
+    dotsIcon.addEventListener("click", toggleSidebar);
 
     // Check localStorage for sidebar state
     if (localStorage.getItem("sidebarState") === "open") {

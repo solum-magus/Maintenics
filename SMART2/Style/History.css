@@ -153,12 +153,12 @@ h1 {
 	
 }
 
-.rating {
+/*.rating {
     display: flex;
     gap: 5px;
     position: absolute;
-    top: 10%; /* Adjusts to slightly above */
-    right: 10%; /* Adjusts to right */
+    top: 10%;
+    right: 10%;
     align-items: flex-start;
 }
 
@@ -170,4 +170,102 @@ h1 {
 
 .star.selected {
     color: gold;
+}
+
+STAR */
+
+#aa svg{
+    color: #444;
+    margin-right: 0;
+  }
+  input {
+    display: none;
+    
+  }
+  label {
+    cursor: pointer;
+    margin: 0 5px;
+    
+}
+input:not(:checked) ~ label:hover,
+input:checked ~ label:hover ~ label{
+    color: #fd4
+}
+
+input:checked ~ label{
+    color: #fd4
+}
+        
+#exxport {
+    display: flex;
+    width: 30%;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.25);
+    background-color: #7ea1d7;
+} #exxport:hover {
+    background-color: #f7b717;
+} #exxport:active {
+    background-color: #ffc125;
+    transform: scale(0. 8s);
+    animation: ease;
+}
+
+
+#feedbackbutton
+ {
+    margin-top: 10px; 
+    padding: 10px; 
+    background-color:
+    #90a4cc; color: 
+    white; 
+    border: none;
+    width: 100%;
+    cursor: pointer; 
+
+    border-radius: 1rem;
+}
+
+#feedbackbutton:hover{
+    background-color: #f7b717;
+} #feedbackbutton:active{
+    background-color: #ffc125;
+    transform: scale(0.8);
+    animation: ease;
+}
+
+
+.rating {
+    
+    display: flex;
+    flex-direction: row-reverse; /* This is the magic 🔑 */
+    gap: 5px; /* Space between stars */
+}
+
+.rating input {
+    display: none; /* Hide the radio buttons */
+}
+
+.rating label {
+    cursor: pointer;
+}
+
+.rating label svg {
+    fill: #352f2f; /* Default gray stars */
+    transition: fill 0.3s;
+}
+
+.rating input:checked ~ label svg {
+    fill: #FFD700; /* Gold Stars for Selected Stars */
+}
+
+.rating label:hover svg,
+.rating label:hover ~ label svg {
+    fill: #FFD700; /* Hover Effect */
 }

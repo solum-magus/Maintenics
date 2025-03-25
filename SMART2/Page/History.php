@@ -135,14 +135,86 @@ $feedback="";
 </div>
 
 <div class="box">
-    <span class="overlayt" id="status-text">Status: Resolved</span>
+
+<?php 
+                        // Loop through all reports and display 'em
+                        foreach ($reports as $report): 
+                        ?>
+                          <div id="aa">
+                            <div class="report
+                                <?php
+                                    // Change div class based on stats 
+                                    echo strtolower($report['status']);
+                                ?>">
+                                <table>
+                                <tr>
+                        <th>
+                                <h3 class="overlayt" id="status-text">Status: <?= $report['status'] ?></h3>
+                                <p>Report ID: <?= $report['report_id'] ?></p>
+                                <p>Problem: <?= $report['problem'] ?></p>
+                                <p>Date Reported: <?= $report['date_reported'] ?></p>
+                                <p>Date Resolved: <?= $report['date_resolved'] ?: "Not yet resolved" ?></p>
+                        </th>
+
+                    <?php if ($position != "Maintenance Staff") : ?>
+                                <div class="rate">
+                                <th>
+
+                            <form method="POST" action="../Authentication/sendfeedback.php">
+                            <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
+
+                            <div class="rating">
+                            <?php 
+                                $rated = $report['rating']; // Previous rating from the database
+                                for ($i = 5; $i >= 1; $i--) : ?>  <!-- Reverse the loop -->
+                                    <input type="radio" name="rating<?= $report['report_id'] ?>" 
+                                        id="rating<?= $i ?>_<?= $report['report_id'] ?>" 
+                                        value="<?= $i ?>" 
+                                        <?= ($i == $rated) ? 'checked' : '' ?>> <!-- Show selected star -->
+
+                                    <label for="rating<?= $i ?>_<?= $report['report_id'] ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="24" height="24">
+                                            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                                        </svg>
+                                    </label>
+                            <?php endfor; ?>
+
+
+                        </div>
+
+
+                    <?php if (empty($feedback)) { ?>
+                        <textarea name="feedback" rows="4" style="width: 100%; margin-top: 10px; padding: 10px; text-align: left;" >
+                            <?= htmlspecialchars($report['feedback'] ?? '') ?></textarea>
+
+                    <?php } else { ?>
+                        <textarea name="feedback" placeholder="Leave your feedback here..." rows="4" style="width: 100%; margin-top: 10px; padding: 10px;"></textarea>
+                    <?php } ?>
+
+
+                            <button type="submit" name="submit_feedback" id="feedbackbutton">Submit</button>
+                        </form>
+
+                        <?php endif ?>
+                        </th>
+                            </div>
+
+
+                        </th>
+                        </tr>
+                        </table>
+                            </div>
+                </div>                                             
+                        <?php endforeach; ?>
+
+    <!--<span class="overlayt" id="status-text">Status: Resolved</span>
     <div class="rating">
         <span class="star" data-value="1">&#9733;</span>
         <span class="star" data-value="2">&#9733;</span>
         <span class="star" data-value="3">&#9733;</span>
         <span class="star" data-value="4">&#9733;</span>
         <span class="star" data-value="5">&#9733;</span>
-    </div>
+    </div>-->
 </div>
 
 <script src="../JS/script1.js"></script>

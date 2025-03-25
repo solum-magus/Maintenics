@@ -33,17 +33,18 @@ body {
 
 .logos {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     flex-grow: 1;
 }
 
 .logo {
-    width: 100px;
+    width: 84px;
     height: auto;
-    margin: 0 40px;
+    margin: 0 30px;
     cursor: pointer;
     transition: filter 0.3s ease;
+   
 }
 
 .logo:hover {
@@ -72,9 +73,12 @@ body {
 
 .username {
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     margin-right: 10px;
+}
+.position {
+    font-size: 13px;
 }
 
 .dropdown {
@@ -147,3 +151,170 @@ body {
   .setting-choice:hover {
     color: #007bff; 
   }
+  @media (max-width: 1024px) {
+    .sticky-header {
+        padding: 40px;
+		width: 100%;
+    }
+	
+    .logo {
+        width: 46px;
+        margin: 0px 55px 0px 0px;
+        
+		
+    }
+    .username {
+        font-size: 11px;
+		margin-right: 10px;
+    }
+	.position {
+        font-size: 10px;
+    }
+    .dropdown {
+        font-size: 12px;
+    }
+	.sidebar {
+        width: 320px;
+    }
+    .content.active {
+        margin-left: 320x;
+    }
+	.sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+
+    
+}
+@media (max-width: 768px) {
+    .sticky-header {
+        padding: 19px;
+        width: 100%;
+    }
+
+    .logo {
+        width: 39px;
+        margin: 0px 25px 0px 0px;
+    }
+
+    .username {
+        font-size: 10px;
+        margin-right: 10px;
+    }
+
+    .position {
+        font-size: 9px;
+    }
+
+    .dropdown {
+        font-size: 10px;
+    }
+
+    .sidebar {
+        width: 290px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Push content and footer apart */
+        height: 100%;
+        padding: 10px;
+    }
+
+    .sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+
+    
+    .container {
+        width: 60%;
+        height: auto;
+        text-align: center;
+        align-items: center;
+        font-size: 20px;
+        margin-left: 100px;
+        margin-right: 95px;
+        margin-top: 10px;
+      
+    }
+    .pfp{
+    width: 80%;
+    }
+    .settings {       
+       
+        margin: 40px 50px 0 10px;
+    }
+    .setting-choice {
+        font-size: 25px;
+        margin: 15px 50px 0 10px;
+    }
+}
+@media (max-width: 425px) {
+    .sticky-header {
+        padding: 30px;
+		width: 100%;
+    }
+	
+    .logo {
+        width: 25px;
+        margin: 0px 20px 0px 0px;
+        
+		
+    }
+    .username {
+        font-size: 5px;
+		margin-right: 10px;
+    }
+	.position {
+        font-size: 5px;
+    }
+    .dropdown {
+        font-size: 6px;
+    }
+	.sidebar {
+        width: 320px;
+    }
+    .content.active {
+        margin-left: 320x;
+    }
+	.sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+
+    
+}
+@media (max-width: 320px) {
+    .sticky-header {
+        padding: 20px;
+		width: 100%;
+    }
+	
+    .logo {
+        width: 20px;
+        margin: 0px 15px 0px 0px;
+        
+		
+    }
+    .username {
+        font-size: 5px;
+		margin-right: 10px;
+    }
+	.position {
+        font-size: 5px;
+    }
+    .dropdown {
+        font-size: 6px;
+    }
+	.sidebar {
+        width: 320px;
+    }
+    .content.active {
+        margin-left: 320x;
+    }
+	.sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+
+    
+}

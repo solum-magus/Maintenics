@@ -113,8 +113,17 @@ if ($result->num_rows > 0) {
 				<div class="container">
 		  <img class="pfp" src="../Assets/profile.png" alt="Profile Picture">
 		  <div class="text">
-			<h2>Leiby Rose</h2>
-			<p>Student</p>
+          <?php if (isset($fname) && isset($position)):  ?>
+
+            <h2><?= htmlspecialchars($user["full_name"]) ?></h2>
+            <p><?= htmlspecialchars($user["position"]) ?></p>
+
+            <?php else: ?>
+
+            <span class="username">NULL</span>
+            <span class="position">NULL</span>
+
+            <?php endif; ?>
 		  </div>
 		</div>
 		
@@ -136,5 +145,3 @@ if ($result->num_rows > 0) {
 
   </body>
   </html>
-  
- 

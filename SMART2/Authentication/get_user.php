@@ -11,7 +11,7 @@ if (!isset($_SESSION["id"])) {
     exit;
 }
 
-$school_id = $_SESSION["school_id"];
+$school_id = $_SESSION["id"];
 
 // Use `$mysqli` (not `$conn`) for database queries
 $sql = "SELECT full_name FROM userinfo WHERE school_id = ?";

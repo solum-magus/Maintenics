@@ -41,11 +41,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["bio"] = $user["bio"];
             $_SESSION["userstatus"] = $userstatus;
 
-            // Redirect based on position
-            $redirectPage = ($user["position"] === "Admin" || $user["position"] === "Maintenance Staff") 
-                ? "../Page/AdminHome.php" 
-                : "../Page/Home.php";
-
+            switch ($user["position"]) {
+                case "Admin":
+                    $redirectPage = "../Page/AdminHome.php";
+                    break;
+                case "Maintenance Staff":
+                    $redirectPage = "../Page/MaintenanceHome.php";
+                    break;
+                case "Student":
+                case "Teacher":
+                    $redirectPage = "../Page/Home.php";
+                    break;
+                default:
+                    $redirectPage = "../index.php"; // Fallback for unknown positions
+            }
+            
             header("Location: $redirectPage");
             exit();
         } else {

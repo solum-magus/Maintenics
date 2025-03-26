@@ -49,17 +49,38 @@ if ($result->num_rows > 0) {
     <div class="header-container">
         <div class="logos">
             <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
-            <?php if ($_SESSION["position"] == "Admin" || $_SESSION["position"] == "Maintenance Staff"): ?>
+            <?php
+            switch ($position) {
+                case "Admin":
+                    ?>
+                    <a href="AdminHome.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="AdminHistory.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
 
-            <a href="AdminHome.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-            <a href="AdminHistory.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
-
-            <?php else: ?>
-
-            <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-            <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
-
-            <?php endif ?>
+                case "Maintenance Staff":
+                    ?>
+                    <a href="MaintenanceHome.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            
+                case "Student":
+                case "Teacher":
+                    ?>
+                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            
+                default:
+                    ?>
+                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            }
+            ?>
             <a href="Notification.php"><img src="../Assets/notification.svg" class="logo" alt="Notifications" id="Notifications"></a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
         </div>

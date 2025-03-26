@@ -152,20 +152,69 @@ if ($result->num_rows > 0) {
 		
 		 
 		  <div class="settings">
-			<div class="setting-choice">Change Password</div>
-			
-            <div class="setting-choice">
-                <label for="darkModeToggle">Dark Mode</label>
-                <input type="checkbox" id="darkModeToggle">
-            </div>
-	
-			<div class="setting-choice">Privacy & Policy</div>
+                <div class="setting-choice" id="changePasswordBtn">Change Password</div>
+                
+                <div class="setting-choice">
+                    <label for="darkModeToggle">Dark Mode</label>
+                    <input type="checkbox" id="darkModeToggle">
+                </div>
+        
+                <div class="setting-choice" id="privacyPolicyBtn">Privacy & Policy</div>
 
-			<div class="setting-choice">Contact Us</div>
-		  </div>
+                <div class="setting-choice" id="contactUsBtn">Contact Us</div>
+            </div>
 		</div>
 
-	
+        <!-- Privacy Policy Modal -->
+        <div id="privacyModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Privacy & Policy</h2>
+                <br>
+                <h3>Information We Collect</h3>
+                <ul>
+                    <strong>Personal Information</strong> – Name, email address, school ID, and position (Student, Teacher, Maintenance Staff, Admin).
+                    <br>
+                    <strong>Usage Data</strong> – Information about how you interact with our platform.
+                    <br>
+                    <strong>Device Information</strong> – Your device type, browser, and IP address.
+                </ul>
+
+                <br><br>
+                <h3>How We Use Your Information</h3>
+                <ul>
+                    Provide and improve our platform’s services.
+                    Notify maintenance staff about reported issues.
+                    Secure user authentication and access control.
+                </ul>
+                <br>
+                <h3>Data Protection & Security</h3>
+                <ul>
+                <p>We implement strict security measures to safeguard your personal data against unauthorized access, alteration, or disclosure.</p>
+                </ul>
+
+                <br>
+                <h3>Sharing of Information</h3>
+                <ul>
+                    <strong>School Administration & Maintenance Staff</strong> – To process issue reports.
+                    <strong>Legal Authorities</strong> – If required by law.
+                </ul>
+
+                <br>
+                <h3>Cookies & Tracking</h3>
+                <ul>
+                <p>We use cookies to enhance user experience and track platform performance.</p>
+                </ul>
+
+                <br>
+                <h3>Your Rights</h3>
+                <ul>
+                <p>You have the right to access, modify, or delete your personal data by contacting us.</p>
+                </ul>
+            </div>
+        </div>
+
+
   <script src="../JS/script3.js"></script>
   <script src="../JS/script4.js"></script>
 

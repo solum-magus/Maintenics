@@ -27,7 +27,7 @@ $position = $user["position"];
 $full_name = $user["full_name"] ?? "";
 $first_name = explode(" ", trim($full_name))[0];
 
-$sql = "SELECT report_id, rname, plocation, problem, pdescription, status FROM reportdetails";
+$sql = "SELECT report_id, rname, plocation, problem, pdescription, status, date_reported FROM reportdetails";
 $result = $Testsql->query($sql);
 
 if ($result->num_rows > 0) {
@@ -96,6 +96,7 @@ foreach ($reports as $report) {
                     break;
             }
             ?>
+
             <a href="Notification.php"><img src="../Assets/notification.svg" class="logo" alt="Notifications" id="Notifications"></a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
         </div>
@@ -173,6 +174,7 @@ foreach ($reports as $report) {
 
 					  <tr>
 					    <th class="cth">Report ID</th>
+                        <th class="cth">Date Reported</th>
 					    <th class="cth">Location</th>
 						<th class="cth">Problem</th>
 						<th class="cth">Description</th>
@@ -182,6 +184,7 @@ foreach ($reports as $report) {
                       <?php foreach ($reports as $report): ?>
 					  <tr>
                         <td><?= $report['report_id']; ?></td>
+                        <td><?= $report['date_reported']; ?></td>
                         <td><?= $report['plocation']; ?></td>
                         <td><?= $report['problem']; ?></td>
                         <td><?= $report['pdescription']; ?></td>

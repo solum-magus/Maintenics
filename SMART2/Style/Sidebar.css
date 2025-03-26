@@ -123,6 +123,9 @@ s
     background-color: #333; /* Dark gray for buttons */
     color: white;
 }
+.dark-mode .form-container .form-title {
+     color: red !important; 
+}
 
 /* Fix input fields for visibility */
 .dark-mode input, 

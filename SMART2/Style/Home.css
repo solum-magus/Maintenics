@@ -7,11 +7,6 @@
 body {
     font-family: Poppins, serif;
     background-color: #f2f2f2;
-    background-image: url('../Assets/bg.png');
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    background-repeat: no-repeat;
 }
 
 .sticky-header {
@@ -33,17 +28,18 @@ body {
 
 .logos {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     flex-grow: 1;
 }
 
 .logo {
-    width: 100px;
+    width: 84px;
     height: auto;
-    margin: 0 40px;
+    margin: 0 30px;
     cursor: pointer;
     transition: filter 0.3s ease;
+   
 }
 
 .logo:hover {
@@ -56,8 +52,8 @@ body {
     filter: brightness(0.8);
     border-bottom: 2px solid #fff;
     background-color: rgba(0, 63, 125, 0.2);
+    filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
-
 .user-info {
     display: flex;
     flex-direction: column;
@@ -75,7 +71,7 @@ display: inline-block}
 
 .username {
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     margin-right: 10px;
 	display: flex;
@@ -83,8 +79,7 @@ display: inline-block}
 }
 
 .position{
-	display: block;
-    font-size: 16px;
+    font-size: 13px;
 	/*margin-top: 40px; 
 	margin-left: 40px;*/
 }
@@ -97,12 +92,12 @@ display: inline-block}
     font-size: 14px;
     cursor: pointer;
     margin-bottom: 0;
-    box-shadow: none !important;
 }
 
 .dropdown option {
     background-color: #333;
 }
+
 
 .form-container {
     background: white;
@@ -146,6 +141,9 @@ select, textarea {
     background-color: #f2f2f2;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
     width: 100%;
+}
+.user-top select {
+    box-shadow: none !important;
 }
 
 textarea {
@@ -259,3 +257,195 @@ p {
     cursor: pointer;
 }
 
+@media (max-width: 1024px) {
+    .sticky-header {
+        padding: 30px;
+		width: 100%;
+    }
+	
+    .logo {
+        width: 46px;
+        margin: 0px 55px 0px 0px;
+        
+		
+    }
+    .username {
+        font-size: 11px;
+		margin-right: 10px;
+    }
+	.position {
+        font-size: 10px;
+    }
+    .dropdown {
+        font-size: 12px;
+    }
+	.sidebar {
+        width: 320px;
+    }
+    .content.active {
+        margin-left: 320x;
+    }
+	.sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+    .form-container {       
+        padding: 20px;        
+        width: 600px;       
+        text-align: center;
+        margin: 0;
+        position: fixed;
+        top: 250px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1100;
+        padding-bottom: 30px;
+    }
+
+    
+}
+@media (max-width: 768px) {
+    .sticky-header {
+        padding: 17px;
+        width: 100%;
+    }
+
+    .logo {
+        width: 39px;
+        margin: 0px 20px 0px 0px;
+    }
+
+    .username {
+        font-size: 10px;
+        margin-right: 10px;
+    }
+
+    .position {
+        font-size: 9px;
+    }
+
+    .dropdown {
+        font-size: 10px;
+    }
+
+    .sidebar {
+        width: 290px;
+        
+    }
+
+    .sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+
+    
+    
+    .form-container {       
+        padding: 20px;        
+        width: 450px;       
+        text-align: center;
+        margin: 0;
+        position: fixed;
+        top: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1100;
+        padding-bottom: 25px;
+    }
+}
+@media (max-width: 425px) {
+    .sticky-header {
+        padding: 14px;
+		width: 100%;
+    }
+	
+    .logo {
+        width: 25px;
+        margin: 0px 20px 0px 0px;
+        
+		
+    }
+    .username {
+        font-size: 5px;
+		margin-right: 10px;
+    }
+	.position {
+        font-size: 5px;
+    }
+    .dropdown {
+        font-size: 6px;
+    }
+	.sidebar {
+        width: 320px;
+    }
+    .content.active {
+        margin-left: 320x;
+    }
+	.sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+    .form-container {       
+        padding: 20px;        
+        width: 400px;       
+        text-align: center;
+        margin: 0;
+        position: fixed;
+        height: 73%;
+        top: 100px;
+        left: 48%;
+        transform: translateX(-50%);
+        z-index: 1100;
+        padding-bottom: 25px;
+    }
+
+    
+}
+@media (max-width: 320px) {
+    .sticky-header {
+        padding: 10px;
+		width: 100%;
+    }
+	
+    .logo {
+        width: 20px;
+        margin: 0px 15px 0px 0px;
+        
+		
+    }
+    .username {
+        font-size: 5px;
+		margin-right: 10px;
+    }
+	.position {
+        font-size: 5px;
+    }
+    .dropdown {
+        font-size: 6px;
+    }
+	.sidebar {
+        width: 320px;
+    }
+    .content.active {
+        margin-left: 320x;
+    }
+	.sidebar .company-name h2,
+    .sidebar .company-name h3 {
+        font-size: 20px;
+    }
+    .form-container {       
+        padding: 5px;        
+        width: 250px;       
+        text-align: center;
+        margin: 0;
+        position: fixed;
+        height: 75%;
+        top: 100px;
+        left: 48%;
+        transform: translateX(-50%);
+        z-index: 1100;
+        padding-bottom: 25px;
+    }
+
+    
+}

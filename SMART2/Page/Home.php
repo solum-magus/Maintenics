@@ -17,7 +17,6 @@
         $fname = $mysqli->real_escape_string($_SESSION["fname"]);
         $position = $mysqli->real_escape_string($_SESSION["position"]);
 
-
         $sql = "SELECT * FROM userinfo
                 WHERE full_name = '$fname'
                 AND position = '$position'";
@@ -27,6 +26,9 @@
         $user = $result->fetch_assoc();
 
         $school_id = $user["school_id"] ?? null;
+
+        $full_name = $user["full_name"] ?? "";
+        $first_name = explode(" ", trim($full_name))[0];
 
     }
 
@@ -108,7 +110,7 @@
 </div>
 
 <div class="form-container">
-    <h2 class="form-title">Good day, <span id="username"></span>! Reporting an issue? <br> Fill out the form below!</h2>
+    <h2 class="form-title">Good day, <?= htmlspecialchars($first_name) ?>! Reporting an issue? <br> Fill out the form below!</h2>
     <form id="reportForm">
         <input type="hidden" id="rname" name="rname">
 

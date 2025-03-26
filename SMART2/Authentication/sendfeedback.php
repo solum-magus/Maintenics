@@ -1,5 +1,5 @@
 <?php
-include 'database.php'; // Your DB connection
+require __DIR__ . '/../database.php';
 
 if (isset($_POST['submit_feedback'])) {
     $report_id = $_POST['report_id'];
@@ -8,7 +8,7 @@ if (isset($_POST['submit_feedback'])) {
 
     if (!empty($report_id) && !empty($rating) && !empty($feedback)) {
         $sql = "UPDATE reportdetails SET rating = ?, feedback = ? WHERE report_id = ?";
-        $stmt = $conn->prepare($sql);
+        $stmt = $mysqli->prepare($sql);
         $stmt->bind_param("isi", $rating, $feedback, $report_id);
 
         if ($stmt->execute()) {
@@ -18,7 +18,7 @@ if (isset($_POST['submit_feedback'])) {
         }
 
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } else {
         echo "<script>alert('Already rated this report!'); window.location.href='../Page/History.php';</script>";
     }

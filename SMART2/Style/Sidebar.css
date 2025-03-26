@@ -102,17 +102,49 @@ body {
     cursor: pointer;
 }
 
-body.dark-mode {
-    background: #121212;
+/* Dark Mode */
+.dark-mode {
+    background-image: none; /* Remove background image */
+    background-color: #121212;  /* Dark background */
+    color: #ffffff;  /* Light text */
+}
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode span,
+.dark-mode label,
+.dark-mode a {
+    color: white !important;
+}
+s
+/* Ensure specific elements are visible in dark mode */
+.dark-mode .setting-choice {
+    background-color: #333; /* Dark gray for buttons */
     color: white;
 }
 
-/* Example: Change elements */
-.dark-mode .navbar {
-    background: #222;
+/* Fix input fields for visibility */
+.dark-mode input, 
+.dark-mode textarea {
+    background-color: #222;
+    color: white;
+    border: 1px solid #555;
 }
 
-.dark-mode .card {
-    background: #333;
+/* Fix links */
+.dark-mode a {
+    color: #4a90e2; /* Light blue */
+}
+
+/* Fix buttons */
+.dark-mode button {
+    background-color: #444;
     color: white;
+    border: none;
+}
+
+/* Optional: Toggle switch design */
+#darkModeToggle {
+    accent-color: white; /* Ensure checkbox is visible */
 }

@@ -25,6 +25,8 @@ if ($result->num_rows > 0) {
 } else {
     $user = null; // No user found
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -131,8 +133,11 @@ if ($result->num_rows > 0) {
 		  <div class="settings">
 			<div class="setting-choice">Change Password</div>
 			
-			<div class="setting-choice">Dark Mode</div>
-			
+            <div class="setting-choice">
+                <label for="darkModeToggle">Dark Mode</label>
+                <input type="checkbox" id="darkModeToggle">
+            </div>
+	
 			<div class="setting-choice">Privacy & Policy</div>
 
 			<div class="setting-choice">Contact Us</div>
@@ -142,6 +147,10 @@ if ($result->num_rows > 0) {
 	
   <script src="../JS/script3.js"></script>
   <script src="../JS/script4.js"></script>
+
+  <script>
+    sessionStorage.setItem("darkMode", "<?php echo $_SESSION['dark_mode'] ?? 0; ?>");
+  </script>
 
   </body>
   </html>

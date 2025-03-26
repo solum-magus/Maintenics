@@ -34,3 +34,46 @@ document.addEventListener("DOMContentLoaded", function() {
 
     highlightIcon(); // Run the function when the page loads
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const body = document.body;
+
+    // 🔹 Fetch Dark Mode Setting from DB on Page Load
+    fetch("../Authentication/darkmode/update-darkmode.php", { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched dark mode setting:", data);
+            if (data.darkMode === 1) {
+                body.classList.add("dark-mode");
+                darkModeToggle.checked = true;
+            } else {
+                body.classList.remove("dark-mode");
+                darkModeToggle.checked = false;
+            }
+        })
+        .catch(error => console.error("Error fetching dark mode setting:", error));
+
+    // 🔹 Toggle Dark Mode and Save to DB
+    darkModeToggle.addEventListener("change", function () {
+        let darkMode = darkModeToggle.checked ? "1" : "0";
+
+        console.log("Sending update: darkMode =", darkMode);
+
+        fetch("../Authentication/darkmode/update-darkmode.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "darkMode=" + encodeURIComponent(darkMode)
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("Server Response:", data);
+            if (data.trim() === "success") {
+                body.classList.toggle("dark-mode", darkModeToggle.checked);
+            } else {
+                console.error("Update failed:", data);
+            }
+        })
+        .catch(error => console.error("Error updating dark mode:", error));
+    });
+});

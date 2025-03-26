@@ -101,3 +101,18 @@ body {
     width: 23%;
     cursor: pointer;
 }
+
+body.dark-mode {
+    background: #121212;
+    color: white;
+}
+
+/* Example: Change elements */
+.dark-mode .navbar {
+    background: #222;
+}
+
+.dark-mode .card {
+    background: #333;
+    color: white;
+}

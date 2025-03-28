@@ -196,7 +196,7 @@ if ($result->num_rows > 0) {
                 <br>
                 <h3>Sharing of Information</h3>
                 <ul>
-                    <strong>School Administration & Maintenance Staff</strong> – To process issue reports.
+                    <strong>School Administration & Maintenance Staff</strong> – To process issue reports. <br>
                     <strong>Legal Authorities</strong> – If required by law.
                 </ul>
 

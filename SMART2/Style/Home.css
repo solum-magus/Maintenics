@@ -449,3 +449,7 @@ p {
 .dark-mode #problem {
     color: black !important; 
 }
+
+.dark-mode .modal-content {
+    background-color: #4d4747 !important;
+}

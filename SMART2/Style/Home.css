@@ -444,3 +444,8 @@ p {
 
     
 }
+
+.dark-mode #plocation, 
+.dark-mode #problem {
+    color: black !important; 
+}

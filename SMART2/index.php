@@ -260,7 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <div class="col-6 d-flex justify-content-center align-items-center" style="height: 100vh; width: 100vh;">
-            <img src="Assets/stuff.svg">
+            <img id="stuff" src="Assets/stuff.svg">
         </div>
     </div>
 

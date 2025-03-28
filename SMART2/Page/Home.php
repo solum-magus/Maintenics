@@ -194,8 +194,9 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.text())
         .then(data => {
+            console.log("Submit Response:", data); // Log submission response
             document.getElementById("reportForm").reset(); // Reset form
-        });
+        }) ;
     });
 });
 

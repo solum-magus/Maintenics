@@ -1,10 +1,10 @@
 <?php
-header("Content-Type: application/json"); // Set response to JSON format
+session_start();
 
 // Include database connection
 $mysqli = require __DIR__ . "/../database.php"; // Make sure this file exists
 
-session_start();
+header("Content-Type: application/json"); // Set response to JSON format
 
 if (!isset($_SESSION["id"])) {
     echo json_encode(["error" => "User not logged in"]);
@@ -22,7 +22,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("i", $school_id);s
+$stmt->bind_param("i", $school_id); // ✅ Removed extra "s"
 $stmt->execute();
 $result = $stmt->get_result();
 

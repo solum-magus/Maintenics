@@ -139,11 +139,12 @@
     </div>
 </div>
 
+<!-- Now use PHP to print the name -->
 <div class="form-container">
-    <h2 class="form-title">Good day, <?= htmlspecialchars($first_name) ?>! Reporting an issue? <br> Fill out the form below!</h2>
+    <h2 class="form-title">Good day, <?= $first_name ?>! Reporting an issue?</h2>
     <form id="reportForm">
-        <input type="hidden" id="rname" name="rname">
-
+        <input type="hidden" id="rname" name="rname" value="<?= $full_name ?>"> <!-- ✅ Pre-fill rname -->
+        
         <select id="plocation" required>
             <option value="" disabled selected>Location of Issue</option>
             <option>Ampi</option>
@@ -162,6 +163,8 @@
 
         <button type="submit">Submit</button>
     </form>
+</div>
+
 </div>
 
 <script>

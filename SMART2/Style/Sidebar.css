@@ -3,6 +3,8 @@
 }
 
 body {
+    font-family: Poppins, serif;
+    background-color: #f2f2f2;
     background-image: url('../Assets/bg.png');
     background-size: cover;
     background-position: center;

@@ -22,7 +22,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("i", $school_id);s
+$stmt->bind_param("i", $school_id);
 $stmt->execute();
 $result = $stmt->get_result();
 

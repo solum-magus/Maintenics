@@ -23,17 +23,18 @@
 
 .logos {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     flex-grow: 1;
 }
 
 .logo {
-    width: 100px;
+    width: 84px;
     height: auto;
-    margin: 0 40px;
+    margin: 0 30px;
     cursor: pointer;
     transition: filter 0.3s ease;
+   
 }
 
 .logo:hover {
@@ -46,8 +47,8 @@
     filter: brightness(0.8);
     border-bottom: 2px solid #fff;
     background-color: rgba(0, 63, 125, 0.2);
+    filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
-
 .user-info {
     display: flex;
     flex-direction: column;
@@ -60,24 +61,14 @@
     align-items: center;
 }
 
-.username, .position {
-    display: inline-block;
-}
-
 .username {
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     margin-right: 10px;
-    display: flex;
-    white-space: nowrap;
 }
-
 .position {
-    display: block;
-    font-size: 16px !important;
-    /*margin-top: 40px; 
-    margin-left: 40px;*/
+    font-size: 13px;
 }
 
 .dropdown {

@@ -333,12 +333,13 @@
 }
 
 .modal-content {
-    background-color: white;
+    background-color: #003f7d;
     padding: 20px;
     border-radius: 10px;
     width: 50%;
-    text-align: justify;
+    text-align: center;
     position: relative;
+    color: white;
 }
 
 .close {
@@ -354,7 +355,7 @@
 }
 
 /* Ensure the modal is hidden by default */
-#privacyModal {
+.modal {
     display: none; /* Hide modal initially */
     position: fixed;
     top: 0;
@@ -364,6 +365,12 @@
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     justify-content: center;
     align-items: center;
+}
+
+.modal-content .logo {
+    display: block; /* Makes the image behave like a block element */
+    margin: 10px auto; /* Centers the image horizontally */
+    max-width: 100px; /* Adjust the size as needed */
 }
 
 .dark-mode .modal-content{

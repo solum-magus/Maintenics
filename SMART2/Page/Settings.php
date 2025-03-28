@@ -215,6 +215,26 @@ if ($result->num_rows > 0) {
         </div>
 
 
+        <!-- Contact Us Modal -->
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Contact Us</h2>
+                <p>If you have any questions, feel free to reach out:</p>
+                <ul>
+                    <strong>Email:</strong> MaintenicsSmart@gmail.com
+                    <br>
+                    <strong>Phone:</strong> +63 912 345 6789
+                    <br>
+                    <strong>Office:</strong> STI College Meycauayan, Bulacan 
+                    <br>
+                    <img src="../Assets/companyl.svg" alt="Company Logo" class="logo">
+                </ul>
+
+            </div>
+        </div>
+
+
   <script src="../JS/script3.js"></script>
   <script src="../JS/script4.js"></script>
 

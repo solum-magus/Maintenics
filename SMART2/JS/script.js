@@ -1,76 +1,77 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Modal Elements
     const modal = document.getElementById("successModal");
     const closeModal = document.getElementById("closeModal");
     const form = document.getElementById("reportForm");
 
-    // Ensure modal elements exist before using them
-    if (modal && closeModal && form) {
-        // Show Modal Function
-        function showModal() {
-            modal.style.display = "flex"; // Show modal
-        }
+    // Function to show the modal
+    function showModal() {
+        modal.style.display = "flex"; // Use flexbox to center the modal
+    }
 
-        // Hide Modal Function
-        function hideModal() {
-            modal.style.display = "none";
-        }
-
-        // Form Submit Event
-        form.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent page refresh
-
-            const plocation = document.getElementById("plocation");
-            const problem = document.getElementById("problem");
-
-            if (plocation?.value && problem?.value) {
-                showModal();
-                form.reset(); // Reset form after submission
-            } else {
-                alert("Please fill out all required fields.");
-            }
-        });
-
-        // Close Modal Button
-        closeModal.addEventListener("click", hideModal);
-
-        // Start with modal hidden
+    // Function to hide the modal
+    function hideModal() {
         modal.style.display = "none";
     }
 
-    // Highlight Active Icon in Sidebar
-    const currentPath = window.location.pathname.toLowerCase();
+    // Form submit event listener
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent the default form submission (refreshing page)
 
-    const icons = {
-        home: document.getElementById("Home"),
-        history: document.getElementById("History"),
-        notif: document.getElementById("Notifications"),
-        settings: document.getElementById("Settings"),
-    };
+        // Check if the required fields (plocation and problem) are filled out
+        const plocation = document.getElementById("plocation");
+        const problem = document.getElementById("problem");
 
-    // Remove 'active' class from all icons
-    function removeActiveClass() {
-        Object.values(icons).forEach(icon => icon?.classList.remove("active"));
-    }
+        if (plocation.value && problem.value) {
+            // If both fields are filled, show the modal
+            showModal();
+            form.reset(); // Optionally reset the form after submission
+        } else {
+            alert("Please fill out all required fields.");
+        }
+    });
 
-    // Highlight the correct icon
-    function highlightIcon() {
-        removeActiveClass();
-        if (currentPath.includes("home")) icons.home?.classList.add("active");
-        else if (currentPath.includes("history")) icons.history?.classList.add("active");
-        else if (currentPath.includes("notif")) icons.notif?.classList.add("active");
-        else if (currentPath.includes("settings")) icons.settings?.classList.add("active");
-    }
+    // Close the modal when the close button is clicked
+    closeModal.addEventListener("click", hideModal);
 
-    highlightIcon(); // Run when page loads
-
-    // Ensure report form exists before adding event listener
-    if (form) {
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            console.log("Form submitted!");
-        });
-    } else {
-        console.error("reportForm not found in DOM!");
-    }
+    // Ensure the modal is hidden when the page loads (start in a hidden state)
+    modal.style.display = "none";
 });
+
+	document.addEventListener("DOMContentLoaded", function() {
+    // Get the current URL path
+    const currentPath = window.location.pathname;
+
+    // Get all icons by their IDs
+    const homeIcon = document.getElementById("Home");
+    const historyIcon = document.getElementById("History");
+    const notifIcon = document.getElementById("Notifications");
+    const settingsIcon = document.getElementById("Settings");
+
+    // Function to remove the 'active' class from all icons
+    function removeActiveClass() {
+        homeIcon.classList.remove("active");
+        historyIcon.classList.remove("active");
+        notifIcon.classList.remove("active");
+        settingsIcon.classList.remove("active");
+    }
+
+    // Function to add 'active' class to the appropriate icon
+    function highlightIcon() {
+        removeActiveClass(); // Remove active class from all icons
+
+        // Check the current URL path and add 'active' to the corresponding icon
+        if (currentPath.includes("home")) {
+            homeIcon.classList.add("active");
+        } else if (currentPath.includes("history")) {
+            historyIcon.classList.add("active");
+        } else if (currentPath.includes("notif")) {
+            notifIcon.classList.add("active");
+        } else if (currentPath.includes("settings")) {
+            settingsIcon.classList.add("active");
+        }
+    }
+
+    highlightIcon(); // Run the function when the page loads
+});
+
+

@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Poppins, serif;
-    background-color: #f2f2f2;
-}
-
 .sticky-header {
     position: sticky;
     top: 0;

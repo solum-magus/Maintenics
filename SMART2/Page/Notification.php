@@ -181,15 +181,20 @@ if ($reports->num_rows > 0) {
 
 <?php foreach ($pendingReports as $report): ?>
     <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>">
-        <span class="overlayt">Report Submitted!</span>
+        <span class="overlayt">A report was submitted!<br>
+    <?php if ($_SESSION['position'] === 'Maintenance Staff'): ?>
+        Report ID: <?= htmlspecialchars($report["report_id"]) ?></span>
+    <?php else: ?>
+    </span>
+    <?php endif; ?>
         <span class="timestamp"><?= timeAgo($report['date_reported']) ?></span>
 
         <?php if ($_SESSION['position'] === 'Maintenance Staff'): ?>
-            <form method="POST" action="../Authentication/update_report.php">
+            <!--<form method="POST" action="../Authentication/update_report.php">
                 <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
                 <input type="hidden" name="status" value="Ongoing">
                 <button type="submit">Take Action</button>
-            </form>
+            </form>-->
         <?php endif; ?>
     </div>
 <?php endforeach; ?>

@@ -11,6 +11,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     min-height: 100vh;
+    transition: all 0.1s ease-in-out;
 }
 
 /* Sidebar styles */
@@ -106,7 +107,7 @@ body {
 
 /* Dark Mode */
 .dark-mode {
-    background-image: none; /* Remove background image */
+    background-image: url('../Assets/bg1.png');
     background-color: #1F1F1F;  /* Dark background */
     color: #ffffff;  /* Light text */
 }
@@ -134,7 +135,7 @@ s
 .dark-mode input, 
 .dark-mode textarea {
     background-color: #ffffff;
-    color: #333;
+    color: white;
     border: 1px solid #555;
 }
 

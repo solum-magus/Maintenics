@@ -26,6 +26,16 @@ $user = $result->fetch_assoc();
 $sql = "SELECT * FROM userinfo WHERE position = '$position'";
 $result = $Testsql->query($sql);
 
+$sql = "SELECT problem, COUNT(problem) AS count 
+        FROM reportdetails 
+        GROUP BY problem 
+        ORDER BY count DESC 
+        LIMIT 3";
+
+$stmt = $Testsql->prepare($sql);
+$stmt->execute();
+$topIssues = $stmt->get_result();
+
 $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback, rid 
         FROM reportdetails 
         WHERE status = 'Resolved' 
@@ -148,24 +158,28 @@ $feedback="";
 		 <div class="container">
         <div class="title">Report History</div>
         <div class="box">
-            <div class="heading">Most Common Issue</div>
+            <div class="heading">Most Common Issues</div>
             <table class="table">
                 <tr>
                     <th>Issue</th>
                     <th>Reported Times</th>
                 </tr>
-                <tr class="highlight">
-                    <td>Aircon</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>TV</td>
-                    <td>00</td>
-                </tr>
-                <tr>
-                    <td>Door</td>
-                    <td>00</td>
-                </tr>
+                    <?php 
+                        $firstRow = true; // Flag to highlight the first row
+
+                        if ($topIssues->num_rows > 0) {
+                            while ($row = $topIssues->fetch_assoc()) {
+                                $highlightClass = $firstRow ? 'highlight' : ''; // Highlight only the first row
+                                echo "<tr class='$highlightClass'>";
+                                echo "<td>" . htmlspecialchars($row['problem']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['count']) . "</td>";
+                                echo "</tr>";
+                                $firstRow = false; // Only first row gets highlighted
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No reports available</td></tr>";
+                        }
+                    ?>
             </table>
         </div>
     </div>

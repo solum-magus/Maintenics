@@ -260,3 +260,13 @@ textarea {
     background-color: #ffc125;
     transform: scale(0.8);
 }
+
+/* Dark Mode */
+.dark-mode input {
+    color: #003f7d !important;
+}
+
+.dark-mode .box {
+    background-color: #616161;
+    border: 3px solid #DFF2EB;
+}

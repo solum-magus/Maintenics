@@ -205,3 +205,9 @@ h1 {
 	align-items: center;
 	
 }
+
+/* Dark Mode */
+.dark-mode .box1,
+.dark-mode .box {
+    background-color: #616161;
+}

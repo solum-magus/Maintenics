@@ -76,6 +76,31 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
     </div>
 </header>
 
+<div class="sidebar" id="sidebar">
+    <div class="logo-section">
+        <img src="../Assets/companyl.svg" alt="Company Logo" class="logo">
+        <div class="company-name">
+            <h2>Maintenics</h2>
+            <h3>Smart</h3>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="company-info">
+        <div class="vision">
+            <h4>Vision</h4>
+            <p>To be the leading provider of innovative maintenance solutions.</p>
+        </div>
+        <div class="mission">
+            <h4>Mission</h4>
+            <p>Deliver reliable, sustainable, and effective solutions for our clients.</p>
+        </div>
+        <div class="color-value">
+            <h4>Color Value</h4>
+            <p>#00FF00</p> <!-- Replace with your actual color code -->
+        </div>
+    </div>
+</div>
+
 <div class="filters">
     <label for="problem">Filter by Problem:</label>
     <select id="problem">

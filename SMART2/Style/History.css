@@ -89,12 +89,19 @@ h1 {
     font-size: 44.6px;
     color: black;
     padding-left: 50px;
-    margin-bottom: -30px;
-    bottom: 70%;
-	position: absolute;
-    top: 22%; 
-    right: 78%; 
 	white-space: nowrap;
+}
+
+.report-h {
+    text-align: left;
+    padding-left: 50px;
+    margin-bottom: 20px; /* Controls distance between text and boxes */
+    margin-top: -20px;
+}
+
+.report-h {
+    font-size: 44.6px;
+    color: black;
 }
 
 .filters {

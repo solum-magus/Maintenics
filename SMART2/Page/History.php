@@ -22,12 +22,21 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-$sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-        FROM reportdetails 
-        WHERE status = 'Resolved' AND rid = ? 
-        ORDER BY date_reported DESC";
+if ($position === "Maintenance Staff") {
+    $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
+            FROM reportdetails 
+            WHERE status = 'Resolved'
+            ORDER BY date_reported DESC";
+} else {
+    $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
+            FROM reportdetails 
+            WHERE status = 'Resolved' AND rid = ? 
+            ORDER BY date_reported DESC";
+}
 $stmt = $Testsql->prepare($sql);
-$stmt->bind_param("i", $rid);
+if ($position !== "Maintenance Staff") {
+    $stmt->bind_param("i", $rid);
+}
 $stmt->execute();
 $Report = $stmt->get_result();
 $reports = $Report->fetch_all(MYSQLI_ASSOC);
@@ -67,7 +76,6 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
     </div>
 </header>
 
-<h1>Report History</h1>
 <div class="filters">
     <label for="problem">Filter by Problem:</label>
     <select id="problem">
@@ -78,6 +86,10 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
     </select>
     <label for="date">Filter by Date:</label>
     <input type="date" id="date">
+</div>
+
+<div class="report-h">
+<h1>Report History</h1>
 </div>
 
 <?php if (!empty($reports)): ?>

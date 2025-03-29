@@ -173,8 +173,11 @@ if ($reports->num_rows > 0) {
     </form>
 </div>
 
-<div class="notification-container">
+<div class="notif-h">
 <h1> Notifications </h1>
+</div>
+
+<div class="notification-container">
 
 <?php foreach ($pendingReports as $report): ?>
     <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>">

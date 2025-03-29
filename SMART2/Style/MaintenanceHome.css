@@ -129,7 +129,6 @@
 }
 
 table, th, td, tr {
-    border: 1px solid black;
     text-align: center;  
     margin-left: auto;
     background-color: white;
@@ -155,3 +154,21 @@ table, th, td, tr {
     width: 80%;
     margin: 10px auto;
   }
+
+
+/* Dark Mode */
+.dark-mode .dashboard {
+    background-color: #616161;
+}
+.dark-mode .separator {
+    background-color: #434343;
+}
+
+.dark-mode table {
+    background-color: #434343;
+    border: none;
+}
+.dark-mode td, th {
+    background-color: #616161;
+    border: none;
+}

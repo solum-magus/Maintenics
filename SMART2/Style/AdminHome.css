@@ -125,3 +125,8 @@
     text-decoration: none;
     font-size: 12px;
 }
+
+/* Dark Mode */
+.dark-mode .card {
+    background-color: #616161;
+}

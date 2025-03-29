@@ -121,3 +121,14 @@
         .highlight {
             background-color: #ffeb99;
         }
+
+/* Dark Mode */
+.dark-mode .box {
+    background-color: #616161;
+}
+.dark-mode .heading {
+    color: white;
+}
+.dark-mode .highlight {
+    background-color: #444444;
+}

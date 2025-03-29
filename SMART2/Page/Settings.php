@@ -165,6 +165,41 @@ if ($result->num_rows > 0) {
             </div>
 		</div>
 
+        <!-- Change Password Modal -->
+        <div id="passwordModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Change Password</h2>
+
+                <!-- Display error/success messages -->
+                <?php if (isset($_SESSION["error"])): ?>
+                    <p class="error"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION["success"])): ?>
+                    <p class="success"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
+                <?php endif; ?>
+
+                <form action="../Authentication/change_pass.php" method="POST">
+                    <label for="school_id">School ID:</label>
+                    <input type="text" id="school_id" name="school_id" required>
+
+                    <br>
+                    <label for="current_password">Current Password:</label>
+                    <input type="password" id="current_password" name="current_password" required>
+                    <br>
+                    <label for="new_password">New Password:</label>
+                    <input type="password" id="new_password" name="new_password" required>
+                    <br>
+                    <label for="confirm_password">Confirm New Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <br>
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+        </div>
+
+
         <!-- Privacy Policy Modal -->
         <div id="privacyModal" class="modal">
             <div class="modal-content">

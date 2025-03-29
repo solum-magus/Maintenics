@@ -60,3 +60,4 @@ function setupModal(buttonId, modalId) {
 // Setup modals for Privacy Policy and Contact Us
 setupModal("privacyPolicyBtn", "privacyModal");
 setupModal("contactUsBtn", "contactModal");
+setupModal("changePasswordBtn", "passwordModal");

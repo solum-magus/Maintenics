@@ -182,7 +182,7 @@ if ($reports->num_rows > 0) {
 <?php foreach ($pendingReports as $report): ?>
     <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>">
         <span class="overlayt">A report was submitted!<br>
-    <?php if ($_SESSION['position'] === 'Maintenance Staff'): ?>
+    <?php if ($_SESSION['position'] === 'Maintenance Staff' || $_SESSION['position'] === 'Admin'): ?>
         Report ID: <?= htmlspecialchars($report["report_id"]) ?></span>
     <?php else: ?>
     </span>

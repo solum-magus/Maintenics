@@ -161,18 +161,6 @@ h1 {
     margin-top: 0px; /* Keep the first box positioned correctly */
 }
 
-.overlayt {
-    position: absolute;
-    top: 20%; /* Adjusts the vertical position */
-    right: 74%; /* Adjusts the horizontal position */
-    transform: translate(-50%, -50%); /* Centers the text */
-    color: rgba(0, 0, 0, 0.7); /* Text color */
-    font-size: 26.8px; /* Text size */
-    font-weight: bold;
-	align-items: center;
-	
-}
-
 .notification {
   display: flex;
   justify-content: space-between;
@@ -194,17 +182,16 @@ h1 {
   color: #888;
 }
 
-.overlayt1 {
-    position: absolute;
-    top: 20%; /* Adjusts the vertical position */
-    right: 74%; /* Adjusts the horizontal position */
-    transform: translate(-50%, -50%); /* Centers the text */
-    color: rgba(0, 0, 0, 0.7); /* Text color */
-    font-size: 26.8px; /* Text size */
+.overlayt {
+    font-size: 26.8px;
     font-weight: bold;
-	align-items: center;
-	
+    color: rgba(0, 0, 0, 0.7);
+    margin-top: -70px;
+    flex-grow: 1; /* Allows text to take available space */
 }
+
+
+
 
 /* Dark Mode */
 .dark-mode .box1,

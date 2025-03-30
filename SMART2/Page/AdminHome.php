@@ -39,7 +39,7 @@ $latestReportQuery = "SELECT problem, plocation FROM reportdetails ORDER BY repo
 $latestReportResult = $Testsql->query($latestReportQuery);
 $latestReport = $latestReportResult->fetch_assoc();
 
-$sql = "SELECT report_id, rname, plocation, problem, pdescription FROM reportdetails";
+$sql = "SELECT report_id, rname, plocation, problem, pdescription, status FROM reportdetails";
 $result = $Testsql->query($sql);
 
 if ($result->num_rows > 0) {
@@ -165,7 +165,7 @@ if ($result->num_rows > 0) {
         <div class="card">
             <h3>Latest Report</h3>
             <p><?= $latestReport ? htmlspecialchars($latestReport['problem']) . " - " . htmlspecialchars($latestReport['plocation']) : "No reports available" ?></p>
-            <a href="#" class="view-btn">View all</a>
+            <div class="setting-choice" id="viewReportBtn">View all</div>
         </div>
     </div>
 
@@ -196,6 +196,42 @@ if ($result->num_rows > 0) {
                             </td>
                         </tr>
                     <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+    <div id="reportModal" style= "display: none;" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Report ID</th>
+                            <th>From</th>
+                            <th>Location</th>
+                            <th>Problem</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php if (!empty($reports)): ?>
+                        <?php foreach ($reports as $row): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($row['report_id']) ?></td>
+                            <td><?= htmlspecialchars($row['rname']) ?></td>
+                            <td><?= htmlspecialchars($row['plocation']) ?></td>
+                            <td><?= htmlspecialchars($row['problem']) ?></td>
+                            <td><?= htmlspecialchars($row['pdescription']) ?></td>
+                            <td><?= htmlspecialchars($row['status']) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6">No reports available</td>
+                        </tr>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>

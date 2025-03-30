@@ -37,6 +37,7 @@ if ($result->num_rows === 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
     <link href="../Style/MaintenanceHome.css" rel="stylesheet">
+    <link href="../Style/ManageEdit.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
 </head>
 <body>
@@ -131,13 +132,13 @@ if ($result->num_rows === 1) {
     </div>
 </div>
 
-<div>
+<div class="set">
 <h2><b>Edit User</b></h2>
         <form action="../Authentication/Admin/edit.php" method="post">
             <input type="hidden" name="school_id" value="<?= htmlspecialchars($user['school_id']) ?>">
 
             <div class="mb-3">
-                <label for="full_name" class="form-label">School ID or Phone Number</label>
+                <label for="full_name" class="form-label">School ID or Phone Number</label> <br>
                 <input type="text" name="school_id" class="form-control"
                 oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12);" 
                 pattern="[0-9]{11,12}" minlength="11" maxlength="12"
@@ -145,12 +146,12 @@ if ($result->num_rows === 1) {
             </div>
 
             <div class="mb-3">
-                <label for="full_name" class="form-label">Full Name</label>
+                <label for="full_name" class="form-label">Full Name</label> <br>
                 <input type="text" name="full_name" class="form-control" value="<?= htmlspecialchars($user['full_name']) ?>" required>
             </div>
 
             <div class="mb-3">
-                <label for="position" class="form-label">Position</label>
+                <label for="position" class="form-label">Position</label> <br>
                 <select name="position" class="form-control" required>
                     <option value="Admin" <?= $user['position'] == 'Admin' ? 'selected' : '' ?>>Admin</option>
                     <option value="Maintenance Staff" <?= $user['position'] == 'Maintenance Staff' ? 'selected' : '' ?>>Maintenance Staff</option>
@@ -160,7 +161,7 @@ if ($result->num_rows === 1) {
             </div>
 
             <div class="mb-3">
-                <label for="userstatus" class="form-label">Status</label>
+                <label for="userstatus" class="form-label">Status</label> <br>
                 <select name="userstatus" class="form-control" required>
                     <option value="Approved" <?= $user['userstatus'] == 'Approved' ? 'selected' : '' ?>>Approved</option>
                     <option value="Pending" <?= $user['userstatus'] == 'Pending' ? 'selected' : '' ?>>Pending</option>

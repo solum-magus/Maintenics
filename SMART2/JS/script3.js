@@ -65,3 +65,4 @@ setupModal("privacyPolicyBtn", "privacyModal");
 setupModal("contactUsBtn", "contactModal");
 setupModal("changePasswordBtn", "passwordModal");
 setupModal("manageUserBtn", "manageModal");
+setupModal("viewReportBtn", "reportModal");

@@ -135,7 +135,7 @@ s
 .dark-mode input, 
 .dark-mode textarea {
     background-color: #ffffff;
-    color: white;
+    color: rgb(0, 0, 0);
     border: 1px solid #555;
 }
 

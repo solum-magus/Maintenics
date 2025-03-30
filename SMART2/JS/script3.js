@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 // Function to handle modal open/close
 function setupModal(buttonId, modalId) {
+
+setTimeout(() => {
     const modal = document.getElementById(modalId);
     const button = document.getElementById(buttonId);
     const closeBtn = modal.querySelector(".close");
@@ -55,9 +57,11 @@ function setupModal(buttonId, modalId) {
             modal.style.display = "none";
         }
     });
+}, 100);
 }
 
 // Setup modals for Privacy Policy and Contact Us
 setupModal("privacyPolicyBtn", "privacyModal");
 setupModal("contactUsBtn", "contactModal");
 setupModal("changePasswordBtn", "passwordModal");
+setupModal("manageUserBtn", "manageModal");

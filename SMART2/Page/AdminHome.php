@@ -24,6 +24,20 @@ $user = $result->fetch_assoc();
 $fname = $user["full_name"];
 $position = $user["position"];
 
+$userQuery = "SELECT full_name, school_id, position, userstatus FROM userinfo";
+$userResult = $Testsql->query($userQuery);
+
+$totalReportsQuery = "SELECT COUNT(*) AS total FROM reportdetails";
+$totalReportsResult = $Testsql->query($totalReportsQuery);
+$totalReports = $totalReportsResult->fetch_assoc()['total'] ?? 0;
+
+$inProgressQuery = "SELECT COUNT(*) AS in_progress FROM reportdetails WHERE status = 'Pending'";
+$inProgressResult = $Testsql->query($inProgressQuery);
+$inProgressReports = $inProgressResult->fetch_assoc()['in_progress'] ?? 0;
+
+$latestReportQuery = "SELECT problem, plocation FROM reportdetails ORDER BY report_id DESC LIMIT 1";
+$latestReportResult = $Testsql->query($latestReportQuery);
+$latestReport = $latestReportResult->fetch_assoc();
 
 $sql = "SELECT report_id, rname, plocation, problem, pdescription FROM reportdetails";
 $result = $Testsql->query($sql);
@@ -138,25 +152,58 @@ if ($result->num_rows > 0) {
         <div class="card">
             <h3>User Management</h3>
             <p>Manage student and staff accounts</p>
-            <a href="#" class="view-btn">View all</a>
+            <div class="setting-choice" id="manageUserBtn">View all</div>
         </div>
         <div class="card">
             <h3>Total Reports</h3>
-            <p>0</p>
+            <p><?= $totalReports ?></p>
         </div>
         <div class="card">
             <h3>Reports In Progress</h3>
-            <p>0</p>
+            <p><?= $inProgressReports ?></p>
         </div>
         <div class="card">
             <h3>Latest Report</h3>
-            <p>Broken Heart - Room 103</p>
+            <p><?= $latestReport ? htmlspecialchars($latestReport['problem']) . " - " . htmlspecialchars($latestReport['plocation']) : "No reports available" ?></p>
             <a href="#" class="view-btn">View all</a>
         </div>
     </div>
 
+    <div id="manageModal" style= "display: none;" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>School ID</th>
+                            <th>Position</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php while ($row = $userResult->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($row['full_name']) ?></td>
+                            <td><?= htmlspecialchars($row['school_id']) ?></td>
+                            <td><?= htmlspecialchars($row['position']) ?></td>
+                            <td><?= htmlspecialchars($row['userstatus']) ?></td>
+                            <td>
+                                <a href="ManageEdit.php?id=<?= $row['school_id'] ?>" class="button">Edit</a>
+                                <a href="../Authentication/Admin/delete.php?id=<?= $row['school_id'] ?>" class="button"
+                                    onclick="return confirm('This action is irreversible, are you sure you want to delete this user?');">Delete</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
 
 <script src="../JS/script.js"></script>
+<script src="../JS/script3.js"></script>
 <script src="../JS/script4.js"></script>
 </body>
 </html>

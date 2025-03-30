@@ -25,12 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         echo "<script>
         alert('User updated successfully!');
-        window.location.href = '../../Pages/Manage.php';
+        window.location.href = '../../Page/AdminHome.php';
         </script>";
     } else {
         echo "<script>
         alert('Error updating user.');
-        window.location.href = '../../Pages/Manage.php';
+        window.location.href = '../../Page/AdminHome.php';
         </script>";
     }
 }

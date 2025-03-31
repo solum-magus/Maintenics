@@ -142,6 +142,13 @@
     font-size: 12px;
   }
 
+#a, #b {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Modal */
 table {
     width: 99%;

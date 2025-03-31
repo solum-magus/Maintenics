@@ -36,6 +36,9 @@
         unset($_SESSION["report_submitted"]); // Remove session first
     }
 
+    $_SESSION["id"] = $school_id;  // ✅ Ensure session stores school_id
+
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +97,7 @@
             <div class="user-top">
             <?php if (isset($fname) && isset($position)):  ?>
 
-            <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
+            <span class="username" id="username"><?= htmlspecialchars($user["full_name"]) ?></span>
             <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
 
             <?php else: ?>

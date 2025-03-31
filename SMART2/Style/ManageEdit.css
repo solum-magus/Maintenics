@@ -21,8 +21,33 @@
 .set input {
     width: 100%;
     font-size: 1rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .set select, .set option, .set button {
     font-size: 1rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+input, select, button {
+    margin-block: 10px;
+}
+h2 {
+    margin-bottom: 10px;
+}
+
+.btn {
+    padding: 5px;
+    background-color: green;
+    border: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    color: white;
 }

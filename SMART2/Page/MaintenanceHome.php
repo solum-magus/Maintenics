@@ -189,7 +189,14 @@ foreach ($reports as $report) {
                         <td><?= $report['problem']; ?></td>
                         <td><?= $report['pdescription']; ?></td>
                         <td><?= $report['status']; ?></td>
-                        <td></td>
+                        <td>
+                        <select onchange="updateStatus(<?= $report['report_id']; ?>, this.value)">
+                            <option value="Pending" <?= $report['status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                            <option value="Ongoing" <?= $report['status'] === 'Ongoing' ? 'selected' : '' ?>>Ongoing</option>
+                            <option value="Resolved" <?= $report['status'] === 'Resolved' ? 'selected' : '' ?>>Resolved</option>
+                            <option value="Rejected" <?= $report['status'] === 'Rejected' ? 'selected' : '' ?>>Rejected</option>
+                        </select>
+                        </td>
 					  </tr>
 					  <?php endforeach; ?>
 
@@ -199,5 +206,6 @@ foreach ($reports as $report) {
 
 <script src="../JS/script.js"></script>
 <script src="../JS/script4.js"></script>
+<script src="../JS/script5.js"></script>
 </body>
 </html>

@@ -55,3 +55,14 @@ h2 {
 .btn:last-child {
     background-color: grey;
 }
+
+/* dark mode */
+.dark-mode .set {
+    background-color: #616161;
+}
+
+.dark-mode .form-control,
+.dark-mode select {
+    background-color: rgb(121, 121, 121);
+    color: white;
+}

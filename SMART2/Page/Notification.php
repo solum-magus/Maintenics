@@ -198,13 +198,6 @@ if ($reports->num_rows > 0) {
     </span>
     <?php endif; ?>
         <span class="timestamp"><?= timeAgo($report['date_reported']) ?></span>
-
-        <?php if ($_SESSION['position'] === 'Maintenance Staff'): ?>
-            <form method="POST" action="../Authentication/update_report.php">
-                <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
-                <input type="hidden" name="status" value="Ongoing">
-                <button type="submit">Take Action</button>
-            </form>
         <?php endif; ?>
     </div>
 <?php endforeach; ?>

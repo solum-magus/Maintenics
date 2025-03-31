@@ -10,7 +10,10 @@
     $insert = $mysqli->stmt_init();
 
     $insert->prepare($sql);
-
+    
+    if ($rid === null) {
+        die("Error: rid is NULL. Check form submission.");
+    }
     $insert->bind_param("ssssi",
                         $_POST["rname"],
                         $_POST["plocation"],

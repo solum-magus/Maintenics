@@ -144,7 +144,8 @@
     <h2 class="form-title">Good day, <?= $first_name ?>! Reporting an issue?</h2>
     <form id="reportForm">
         <input type="hidden" id="rname" name="rname" value="<?= $full_name ?>"> <!-- ✅ Pre-fill rname -->
-        
+        <input type="hidden" id="rid" name="rid">
+
         <select id="plocation" required>
             <option value="" disabled selected>Location of Issue</option>
             <option>Ampi</option>
@@ -169,39 +170,40 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Fetch the user's full name (stored as rname) from userinfo table
     fetch("../Authentication/get_user.php")
     .then(response => response.json())
     .then(data => {
-        if (data.rname) {
-            document.getElementById("username").innerText = data.rname; // Show the name
-            document.getElementById("rname").value = data.rname; // Assign to hidden input
+        if (data.rname && data.rid) {
+            document.getElementById("username").innerText = data.rname;
+            document.getElementById("rname").value = data.rname;
+            document.getElementById("rid").value = data.rid;  // ✅ Add rid
         } else {
             alert("Error fetching user data: " + data.error);
         }
     });
 
-    // Handle form submission
     document.getElementById("reportForm").addEventListener("submit", function(event) {
         event.preventDefault();
 
         let formData = new FormData();
-        formData.append("rname", document.getElementById("rname").value); // Use full_name as rname
+        formData.append("rname", document.getElementById("rname").value);
+        formData.append("rid", document.getElementById("rid").value);  // ✅ Include rid
         formData.append("plocation", document.getElementById("plocation").value);
         formData.append("problem", document.getElementById("problem").value);
         formData.append("pdescription", document.getElementById("pdescription").value);
 
-        fetch("../Authentication/submit_report.php", {
+        fetch("../Authentication/makereport.php", {
             method: "POST",
             body: formData
         })
         .then(response => response.text())
         .then(data => {
-            console.log("Submit Response:", data); // Log submission response
-            document.getElementById("reportForm").reset(); // Reset form
-        }) ;
+            console.log("Submit Response:", data);
+            document.getElementById("reportForm").reset();
+        });
     });
 });
+
 
 
 </script>

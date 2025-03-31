@@ -40,6 +40,12 @@ if ($position !== "Maintenance Staff") {
 $stmt->execute();
 $Report = $stmt->get_result();
 $reports = $Report->fetch_all(MYSQLI_ASSOC);
+
+if (!$stmt->execute()) {
+    die("Query execution failed: " . $stmt->error);
+}
+
+
 ?>
 
 <!DOCTYPE html>

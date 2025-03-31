@@ -376,3 +376,38 @@
 .dark-mode .modal-content{
     background-color: #616161;
 }
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align */
+    gap: 10px; /* Spacing between fields */
+}
+
+.modal-content label {
+    display: block;
+    font-size: 16px;
+    text-align: left;
+    width: 100%;
+    font-weight: bold;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.modal-content button {
+    width: 30%;
+    padding: 5px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

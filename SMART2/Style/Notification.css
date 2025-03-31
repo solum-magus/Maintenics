@@ -144,12 +144,12 @@ h1 {
 .box1 {
     display: flex;
     background-color: #9ebceb;
-    padding: 70px;
+    padding: 50px;
     border-radius: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     width: 90%;
     margin: auto;
-    margin-top: 90px;
+    margin-top: 30px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -192,9 +192,11 @@ h1 {
 
 
 
-
 /* Dark Mode */
-.dark-mode .box1,
 .dark-mode .box {
     background-color: #616161;
+}
+
+.dark-mode .box1{
+    background-color: #a5a5a5;
 }

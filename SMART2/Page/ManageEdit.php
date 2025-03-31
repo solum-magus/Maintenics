@@ -169,8 +169,8 @@ if ($result->num_rows === 1) {
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary" id="final">Update User</button>
-            <a href="AdminHome.php" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn" id="final">Update User</button>
+            <a href="AdminHome.php" class="btn">Cancel</a>
         </form>
 </div>
 

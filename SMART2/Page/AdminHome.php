@@ -154,12 +154,12 @@ if ($result->num_rows > 0) {
             <p>Manage student and staff accounts</p>
             <div class="setting-choice" id="manageUserBtn">View all</div>
         </div>
-        <div class="card">
-            <h3>Total Reports</h3>
+        <div class="card" id="a">
+            <h3><b>Total Reports</b></h3>
             <p><?= $totalReports ?></p>
         </div>
-        <div class="card">
-            <h3>Reports In Progress</h3>
+        <div class="card" id="b">
+            <h3><b>Reports In Progress</b></h3>
             <p><?= $inProgressReports ?></p>
         </div>
         <div class="card">

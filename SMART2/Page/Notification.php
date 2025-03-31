@@ -1,5 +1,6 @@
 <?php 
 session_start();
+date_default_timezone_set('Asia/Manila'); // Change if needed
 
 if (!isset($_SESSION["position"])) {
     echo "<script>
@@ -26,8 +27,14 @@ $sql = "SELECT * FROM reportdetails WHERE status IN ('Pending', 'Ongoing', 'Reso
 $reports = $Testsql->query($sql);
 
 function timeAgo($timestamp) {
-    $timeDiff = time() - strtotime($timestamp); // Difference in seconds
+    $timestampUnix = strtotime($timestamp); // Convert timestamp to Unix time
+    $currentTime = time(); // Get current Unix time
+    $timeDiff = $currentTime - $timestampUnix; // Difference in seconds
 
+
+    if ($timeDiff < 0) {
+        return "Just now";
+    }
     if ($timeDiff < 60) {
         return $timeDiff . " seconds ago";
     } elseif ($timeDiff < 3600) {
@@ -38,6 +45,7 @@ function timeAgo($timestamp) {
         return floor($timeDiff / 86400) . " days ago";
     }
 }
+
 
 $pendingReports = [];
 $ongoingReports = [];
@@ -110,7 +118,9 @@ if ($reports->num_rows > 0) {
             }
             ?>
 
-            <a href="Notification.php"><img src="../Assets/notification.svg" class="logo" alt="Notifications" id="Notifications"></a>
+            <a href="Notification.php">
+                <img src="../Assets/notification.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications">
+            </a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
         </div>
 
@@ -190,11 +200,11 @@ if ($reports->num_rows > 0) {
         <span class="timestamp"><?= timeAgo($report['date_reported']) ?></span>
 
         <?php if ($_SESSION['position'] === 'Maintenance Staff'): ?>
-            <!--<form method="POST" action="../Authentication/update_report.php">
+            <form method="POST" action="../Authentication/update_report.php">
                 <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
                 <input type="hidden" name="status" value="Ongoing">
                 <button type="submit">Take Action</button>
-            </form>-->
+            </form>
         <?php endif; ?>
     </div>
 <?php endforeach; ?>

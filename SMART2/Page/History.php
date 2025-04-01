@@ -1,5 +1,6 @@
 <?php 
 session_start();
+require_once __DIR__ . "/../Authentication/checknotif.php";
 
 if (!isset($_SESSION["position"])) {
     echo "<script>
@@ -72,6 +73,9 @@ if (!empty($params)) {
 $stmt->execute();
 $Report = $stmt->get_result();
 $reports = $Report->fetch_all(MYSQLI_ASSOC);
+
+$hasUnread = checkUnreadNotifications($mysqli);
+
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +95,7 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
             <?php $homePage = ($position == "Admin") ? "AdminHome.php" : (($position == "Maintenance Staff") ? "MaintenanceHome.php" : "Home.php"); ?>
             <a href="<?= $homePage ?>"><img src="../Assets/home.svg" class="logo" alt="Home"></a>
             <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History"></a>
-            <a href="Notification.php"><img src="../Assets/notification.svg" class="logo" alt="Notifications"></a>
+            <a href="Notification.php"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings"></a>
         </div>
         <div class="user-info">

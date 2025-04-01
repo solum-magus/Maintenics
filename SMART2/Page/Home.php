@@ -1,6 +1,7 @@
 <?php
 
     session_start();
+    require_once __DIR__ . "/../Authentication/checknotif.php";
 
     if (!isset($_SESSION["position"])) {
         echo "<script>
@@ -38,6 +39,7 @@
 
     $_SESSION["id"] = $school_id;  // ✅ Ensure session stores school_id
 
+    $hasUnread = checkUnreadNotifications($mysqli);
 
 ?>
 
@@ -89,7 +91,7 @@
                     break;
             }
             ?>
-            <a href="Notification.php"><img src="../Assets/notification.svg" class="logo" alt="Notifications" id="Notifications"></a>
+            <a href="Notification.php"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
         </div>
 

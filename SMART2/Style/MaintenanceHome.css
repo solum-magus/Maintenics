@@ -154,6 +154,9 @@ table, th, td, tr {
     width: 80%;
     margin: 10px auto;
   }
+table select {
+    border: none;
+}
 
 
 /* Dark Mode */
@@ -168,7 +171,8 @@ table, th, td, tr {
     background-color: #434343;
     border: none;
 }
-.dark-mode td, th {
+.dark-mode td, .dark-mode th, .dark-mode table select {
     background-color: #616161;
     border: none;
+    color: white;
 }

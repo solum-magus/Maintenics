@@ -22,30 +22,56 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-if ($position === "Maintenance Staff") {
-    $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-            FROM reportdetails 
-            WHERE status = 'Resolved'
-            ORDER BY date_reported DESC";
-} else {
-    $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-            FROM reportdetails 
-            WHERE status = 'Resolved' AND rid = ? 
-            ORDER BY date_reported DESC";
-}
-$stmt = $Testsql->prepare($sql);
+// Retrieve filters from GET parameters
+$selectedProblem = $_GET['problem'] ?? '';
+$selectedDate = $_GET['date'] ?? '';
+
+// Base SQL query
+$sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
+        FROM reportdetails 
+        WHERE status = 'Resolved'";
+
+// If user is not maintenance staff, filter by `rid`
 if ($position !== "Maintenance Staff") {
-    $stmt->bind_param("i", $rid);
+    $sql .= " AND rid = ?";
 }
+
+// Apply additional filters if selected
+if (!empty($selectedProblem)) {
+    $sql .= " AND problem = ?";
+}
+if (!empty($selectedDate)) {
+    $sql .= " AND DATE(date_reported) = ?";
+}
+
+// Prepare statement
+$stmt = $Testsql->prepare($sql);
+
+// Bind parameters dynamically
+$paramTypes = "";
+$params = [];
+
+if ($position !== "Maintenance Staff") {
+    $paramTypes .= "i";
+    $params[] = $rid;
+}
+if (!empty($selectedProblem)) {
+    $paramTypes .= "s";
+    $params[] = $selectedProblem;
+}
+if (!empty($selectedDate)) {
+    $paramTypes .= "s";
+    $params[] = $selectedDate;
+}
+
+// Bind parameters if needed
+if (!empty($params)) {
+    $stmt->bind_param($paramTypes, ...$params);
+}
+
 $stmt->execute();
 $Report = $stmt->get_result();
 $reports = $Report->fetch_all(MYSQLI_ASSOC);
-
-if (!$stmt->execute()) {
-    die("Query execution failed: " . $stmt->error);
-}
-
-
 ?>
 
 <!DOCTYPE html>
@@ -108,15 +134,20 @@ if (!$stmt->execute()) {
 </div>
 
 <div class="filters">
-    <label for="problem">Filter by Problem:</label>
-    <select id="problem">
-        <option value="">Select Problem</option>
-        <option value="TV">TV</option>
-        <option value="Broken Chair">Broken Chair</option>
-        <option value="No Wi-Fi">No Wi-Fi</option>
-    </select>
-    <label for="date">Filter by Date:</label>
-    <input type="date" id="date">
+<form method="GET" action="History.php">
+        <label for="problem">Filter by Problem:</label>
+        <select id="problem" name="problem">
+            <option value="">Select Problem</option>
+            <option value="TV" <?= ($selectedProblem === "TV") ? "selected" : "" ?>>TV</option>
+            <option value="Broken Chair" <?= ($selectedProblem === "Broken Chair") ? "selected" : "" ?>>Broken Chair</option>
+            <option value="No Wi-Fi" <?= ($selectedProblem === "No Wi-Fi") ? "selected" : "" ?>>No Wi-Fi</option>
+        </select>
+
+        <label for="date">Filter by Date:</label>
+        <input type="date" id="date" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
+
+        <button type="submit">Apply Filters</button>
+    </form>
 </div>
 
 <div class="report-h">

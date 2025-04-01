@@ -137,7 +137,7 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
 <form method="GET" action="History.php">
         <label for="problem">Filter by Problem:</label>
         <select id="problem" name="problem">
-            <option value="">Select Problem</option>
+            <option value="">All</option>
             <option value="TV" <?= ($selectedProblem === "TV") ? "selected" : "" ?>>TV</option>
             <option value="Broken Chair" <?= ($selectedProblem === "Broken Chair") ? "selected" : "" ?>>Broken Chair</option>
             <option value="No Wi-Fi" <?= ($selectedProblem === "No Wi-Fi") ? "selected" : "" ?>>No Wi-Fi</option>
@@ -156,10 +156,10 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
 
 <?php if (!empty($reports)): ?>
     <?php foreach ($reports as $report): ?>
-        <div class="box">
+        <div class="box report <?= strtolower($report['status']) ?>">
             <div class="report-container">
-                <div class="report <?= strtolower($report['status']) ?>">
-                    <h3 class="overlayt" id="status-text">Status: <?= $report['status'] ?></h3>
+                <div>
+                    <h3 class="overlayt" id="status-text">Status: <?= htmlspecialchars($report['status']) ?></h3>
                     <p>Report ID: <?= $report['report_id'] ?></p>
                     <p>Problem: <?= $report['problem'] ?></p>
                     <p>Date Reported: <?= $report['date_reported'] ?></p>

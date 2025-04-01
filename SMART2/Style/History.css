@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.report.rejected h3 {
+    color: grey;
+}
+
 .sticky-header {
     position: sticky;
     top: 0;
@@ -154,7 +158,7 @@ h1 {
     align-self: flex-start; /* Aligns text to the start of the container */
     margin-left: 10px; /* Adds spacing from the left */
     margin-bottom: 30px;
-    color: rgba(0, 0, 0, 0.7); /* Text color */
+    color: green; /* Text color */
     font-size: 26.8px; /* Text size */
     font-weight: bold;
 	
@@ -275,5 +279,5 @@ textarea {
 
 .dark-mode .box {
     background-color: #616161;
-    border: 3px solid #DFF2EB;
+    border: 3px solid #a0e8a0;
 }

@@ -176,16 +176,16 @@ $hasUnread = checkUnreadNotifications($mysqli);
                     <th>Reported Times</th>
                 </tr>
                     <?php 
-                        $firstRow = true; // Flag to highlight the first row
+                        $firstRow = true;
 
                         if ($topIssues->num_rows > 0) {
                             while ($row = $topIssues->fetch_assoc()) {
-                                $highlightClass = $firstRow ? 'highlight' : ''; // Highlight only the first row
+                                $highlightClass = $firstRow ? 'highlight' : '';
                                 echo "<tr class='$highlightClass'>";
                                 echo "<td>" . htmlspecialchars($row['problem']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['count']) . "</td>";
                                 echo "</tr>";
-                                $firstRow = false; // Only first row gets highlighted
+                                $firstRow = false;
                             }
                         } else {
                             echo "<tr><td colspan='2'>No reports available</td></tr>";
@@ -202,20 +202,35 @@ $hasUnread = checkUnreadNotifications($mysqli);
                     <th>Times Reported</th>
                 </tr>
                     <?php 
-                        $firstRow = true; // Flag to highlight the first row
+                        $firstRow = true;
 
                         if ($affectedLocations->num_rows > 0) {
                             while ($row = $affectedLocations->fetch_assoc()) {
-                                $highlightClass = $firstRow ? 'highlight' : ''; // Highlight only the first row
+                                $highlightClass = $firstRow ? 'highlight' : '';
                                 echo "<tr class='$highlightClass'>";
                                 echo "<td>" . htmlspecialchars($row['plocation']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['count']) . "</td>";
                                 echo "</tr>";
-                                $firstRow = false; // Only first row gets highlighted
+                                $firstRow = false;
                             }
                         } else {
                             echo "<tr><td colspan='2'>No reports available</td></tr>";
                         }
+                    ?>
+            </table>
+        </div>
+
+        <div class="box">
+            <div class="heading">Most Rated Staff</div>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Completed Tasks</th>
+                    <th>Average Rating</th>
+                </tr>
+                    <?php 
+                        $firstRow = true;
+                        //mmmyeah no done yet
                     ?>
             </table>
         </div>

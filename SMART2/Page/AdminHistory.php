@@ -1,5 +1,6 @@
 <?php 
 session_start();
+require_once __DIR__ . "/../Authentication/checknotif.php";
 
 if (!isset($_SESSION["position"])) {
     echo "<script>
@@ -53,6 +54,8 @@ if ($Report->num_rows > 0) {
     }
 }
 $feedback="";
+$hasUnread = checkUnreadNotifications($mysqli);
+
 ?>
 
 <!DOCTYPE html>
@@ -102,7 +105,7 @@ $feedback="";
             }
             ?>
 
-            <a href="Notification.php"><img src="../Assets/notification.svg" class="logo" alt="Notifications" id="Notifications"></a>
+            <a href="Notification.php"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
         </div>
 

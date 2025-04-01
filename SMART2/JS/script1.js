@@ -19,10 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log('status-text element not found!');
         }
     }
-
-    // Automatically set the status to 'Resolved' for testing
-    updateStatus('Resolved');
-
+    
     // Get the current URL path
     const currentPath = window.location.pathname;
     console.log('Current Path:', currentPath); // Log the current path

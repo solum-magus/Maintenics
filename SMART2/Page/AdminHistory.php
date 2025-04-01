@@ -32,10 +32,18 @@ $sql = "SELECT problem, COUNT(problem) AS count
         GROUP BY problem 
         ORDER BY count DESC 
         LIMIT 3";
-
 $stmt = $Testsql->prepare($sql);
 $stmt->execute();
 $topIssues = $stmt->get_result();
+
+$sql = "SELECT plocation, COUNT(plocation) AS count 
+        FROM reportdetails 
+        GROUP BY plocation 
+        ORDER BY count DESC 
+        LIMIT 3";
+$stmt = $Testsql->prepare($sql);
+$stmt->execute();
+$affectedLocations = $stmt->get_result();
 
 $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback, rid 
         FROM reportdetails 
@@ -185,6 +193,33 @@ $hasUnread = checkUnreadNotifications($mysqli);
                     ?>
             </table>
         </div>
+
+        <div class="box">
+            <div class="heading">Most Affected Locations</div>
+            <table class="table">
+                <tr>
+                    <th>Location</th>
+                    <th>Times Reported</th>
+                </tr>
+                    <?php 
+                        $firstRow = true; // Flag to highlight the first row
+
+                        if ($affectedLocations->num_rows > 0) {
+                            while ($row = $affectedLocations->fetch_assoc()) {
+                                $highlightClass = $firstRow ? 'highlight' : ''; // Highlight only the first row
+                                echo "<tr class='$highlightClass'>";
+                                echo "<td>" . htmlspecialchars($row['plocation']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['count']) . "</td>";
+                                echo "</tr>";
+                                $firstRow = false; // Only first row gets highlighted
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No reports available</td></tr>";
+                        }
+                    ?>
+            </table>
+        </div>
+
     </div>
 
 <script src="../JS/script.js"></script>

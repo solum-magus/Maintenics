@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . "/../Authentication/checknotif.php";
 
 $mysqli = require __DIR__ . "/../database.php";
 $position = $_SESSION["position"];
@@ -29,6 +30,9 @@ if ($result->num_rows === 1) {
     echo "User not found.";
     exit();
 }
+
+$hasUnread = checkUnreadNotifications($mysqli);
+
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +83,7 @@ if ($result->num_rows === 1) {
             }
             ?>
 
-            <a href="Notification.php"><img src="../Assets/notification.svg" class="logo" alt="Notifications" id="Notifications"></a>
+<a href="Notification.php"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
         </div>
 

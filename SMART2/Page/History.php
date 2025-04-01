@@ -146,7 +146,7 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
         <label for="date">Filter by Date:</label>
         <input type="date" id="date" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
 
-        <button type="submit">Apply Filters</button>
+        <button type="submit" id="btn">Go</button>
     </form>
 </div>
 

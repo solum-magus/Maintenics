@@ -32,13 +32,19 @@
     flex-grow: 1;
 }
 
+/* Ensure .logo-link behaves like a link and doesn’t affect layout */
+.logo-link {
+    text-decoration: none; /* Remove underline or any default link styles */
+    display: inline-block; /* Ensure it behaves like an inline element */
+}
+
+/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
     margin: 0 30px;
     cursor: pointer;
     transition: filter 0.3s ease;
-   
 }
 
 .logo:hover {
@@ -52,6 +58,21 @@
     border-bottom: 2px solid #fff;
     background-color: rgba(0, 63, 125, 0.2);
     filter: sepia(1) saturate(5) hue-rotate(10deg);
+}
+
+/* You have multiple .logo.active definitions — keep only the one you need */
+.logo.active {
+    filter: brightness(1.2);
+    background-color: #0066cc;
+    border-radius: 5px;
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+.logo.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-bottom: 2px solid white;
 }
 .user-info {
     display: flex;
@@ -280,4 +301,131 @@ textarea {
 .dark-mode .box {
     background-color: #616161;
     border: 3px solid #a0e8a0;
+}
+@media (max-width: 1024px) {
+    .sticky-header {
+        padding: 30px;
+        width: 100%;
+    }
+    .logo {
+        width: 60px;
+        margin: 0 40px;
+    }
+    .username {
+        font-size: 12px;
+    }
+    .filters {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .filters select, .filters input {
+        width: 80%;
+    }
+    .box {
+        padding: 50px;
+    }
+    .report-h {
+        margin-top: 20px; /* Adjust this value to increase spacing */
+    }
+}
+
+@media (max-width: 768px) {
+    .sticky-header {
+        padding: 20px;
+    }
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .logos {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    .logo {
+        width: 50px;
+        margin: 0 20px;
+    }
+    .user-info {
+        align-items: center;
+        margin-top: 10px;
+    }
+    .username {
+        font-size: 13px;
+    }
+    .filters {
+        flex-direction: column;
+        width: 100%;
+        padding-right: 20px;
+        align-items: center;
+    }
+    .filters select, .filters input {
+        width: 90%;
+    }
+    .box {
+        padding: 30px;
+        flex-direction: column;
+        text-align: center;
+    }
+    .report-h {
+        padding-left: 0px;
+        margin-top: 20px; /* Adjust this value to increase spacing */
+    }
+}
+
+@media (max-width: 425px) {
+    .sticky-header {
+        padding: 15px;
+    }
+    .logo {
+        width: 40px;
+        margin: 0 10px;
+    }
+    .username {
+        font-size: 11px;
+    }
+    .filters {
+        flex-direction: column;
+        padding-right: 30px;
+    }
+    .filters select, .filters input {
+        width: 100%;
+    }
+    .box {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 32px;
+        padding-left: 20px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 320px) {
+    .sticky-header {
+        padding: 10px;
+    }
+    .logo {
+        width: 30px;
+        margin: 0 5px;
+    }
+    .username {
+        font-size: 10px;
+    }
+    .filters {
+        flex-direction: column;
+        padding: 10px;
+        align-items: center;
+    }
+    .filters select, .filters input {
+        width: 100%;
+    }
+    .box {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 26px;
+        padding-left: 15px;
+        text-align: center;
+    }
 }

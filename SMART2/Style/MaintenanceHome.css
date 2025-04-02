@@ -188,28 +188,26 @@ table select {
 @media (max-width: 1024px) {
     .sticky-header {
         padding: 40px;
-        width: 100%;
+		width: 100%;
     }
-
+	
     .logo {
         width: 46px;
-        margin: 0px 30px 0px 0px;
+        margin: 0px 55px 0px 0px;
+        
+		
     }
-
     .username {
         font-size: 11px;
-        margin-right: 10px;
+		margin-right: 10px;
     }
-
-    .position {
+	.position {
         font-size: 10px;
     }
-
     .dropdown {
         font-size: 12px;
     }
-
-    .sidebar {
+	.sidebar {
         width: 320px;
     }
 

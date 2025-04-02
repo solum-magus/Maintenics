@@ -64,6 +64,21 @@ if ($Report->num_rows > 0) {
 $feedback="";
 $hasUnread = checkUnreadNotifications($mysqli);
 
+$sql = "SELECT sname, 
+               COUNT(report_id) AS completed_tasks, 
+               AVG(rating) AS average_rating
+        FROM reportdetails
+        WHERE status = 'Resolved' 
+          AND rating IS NOT NULL 
+          AND sname <> ''
+        GROUP BY sname
+        ORDER BY average_rating DESC, completed_tasks DESC
+        LIMIT 5";
+
+$stmt = $Testsql->prepare($sql);
+$stmt->execute();
+$topStaff = $stmt->get_result();
+
 ?>
 
 <!DOCTYPE html>
@@ -230,7 +245,18 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 </tr>
                     <?php 
                         $firstRow = true;
-                        //mmmyeah no done yet
+                        if ($topStaff->num_rows > 0) {
+                            while ($row = $topStaff->fetch_assoc()) {
+                                $highlightClass = $firstRow ? 'highlight' : '';
+                                echo "<tr class='$highlightClass'>";
+                                echo "<td>" . htmlspecialchars($row['sname']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['completed_tasks']) . "</td>";
+                                echo "<td>" . number_format($row['average_rating'], 2) . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>No ratings available</td></tr>";
+                        }
                     ?>
             </table>
         </div>
@@ -239,6 +265,5 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
 <script src="../JS/script.js"></script>
 <script src="../JS/script4.js"></script>
-<script src="../JS/script6.js"></script>
 </body>
 </html>

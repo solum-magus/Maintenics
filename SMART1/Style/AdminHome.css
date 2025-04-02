@@ -85,7 +85,6 @@
     background-color: #333;
 }
 
-
 .dashboard {
     display: flex;
     justify-content: center;
@@ -181,6 +180,7 @@ h2 {
 .modal {
     display: none; /* Initially hidden */
     position: fixed;
+    height: 80vh;
     z-index: 1000;
     left: 0;
     top: 0;
@@ -193,6 +193,8 @@ h2 {
 }
 
 .modal-content {
+    max-height: 75vh; /* Limit the height */
+    overflow-y: auto;
     background-color: whitesmoke;
     padding: 20px;
     border-radius: 10px;
@@ -230,6 +232,7 @@ h2 {
 .dark-mode .modal-content {
     background-color: #434343;
 }
+
 @media (max-width: 1024px) {
     .sticky-header {
         padding: 40px;
@@ -269,6 +272,7 @@ h2 {
     }
     .card {
         width: 250px;
+        margin-top: 5%;
     }
 
     
@@ -311,6 +315,10 @@ h2 {
         padding: 4px;
     }
 
+    .card {
+        margin-top: 3%;
+    }
+
     
 }
 @media (max-width: 425px) {
@@ -348,6 +356,9 @@ h2 {
 	.sidebar .company-name h2,
     .sidebar .company-name h3 {
         font-size: 20px;
+    }
+    .card {
+        margin-top: 3%;
     }
 
     
@@ -388,6 +399,8 @@ h2 {
     .sidebar .company-name h3 {
         font-size: 20px;
     }
-
+    .card {
+        margin-top: 3%;
+    }
     
 }

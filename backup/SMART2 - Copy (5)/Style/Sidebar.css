@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: #f2f2f2;
+    background-image: url('../Assets/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    transition: all 0.1s ease-in-out;
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed; /* Fix the sidebar on the screen */
+    top: 0;
+    left: -300px; /* Sidebar hidden by default */
+    width: 300px; /* Adjust sidebar width to fit both logo and text */
+    height: 100%;
+    background-color:  #003f7d;
+    color: white;
+    padding: 20px;
+    padding-left: 10px; /* Reduce or remove */
+    transition: left 0.3s ease;
+    z-index: 9999; /* Ensure it appears above the navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align content to the left */
+}
+
+.sidebar .logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0;  /* Remove any unwanted padding */
+    margin: 0;   /* Remove any unwanted margin */
+}
+
+
+.sidebar .logo {
+    width: 50%; /* Adjust logo size */
+    height: auto;
+    margin: 0; /* Remove any unwanted margin */
+    padding: 0; /* Remove any unwanted padding */
+}
+
+
+/* Company name and product name */
+.sidebar .company-name h2,
+.sidebar .company-name h3 {
+    margin: 10%;
+    font-size: 25px; /* Adjust the text size if necessary */
+    color: white;
+}
+
+/* Separator to create space */
+.sidebar .separator {
+    height: 20px;
+    width: 100%;
+}
+
+/* Company Info Section (Vision, Mission, etc.) */
+.sidebar .company-info {
+    margin-top: 20px;
+    text-align: left; /* Align text to the left for better readability */
+    width: 100%;
+}
+
+.sidebar .company-info div {
+    margin-bottom: 20px;
+}
+
+.sidebar .company-info h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.sidebar .company-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Active state to show the sidebar */
+.sidebar.active {
+    left: 0;
+}
+
+/* Content adjustment when sidebar is visible */
+.content.active {
+    margin-left: 300px; /* Adjust content margin to accommodate sidebar width */
+}
+.sidebar #CloseDots {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 23%;
+    cursor: pointer;
+}
+
+/* Dark Mode */
+.dark-mode {
+    background-image: url('../Assets/bg1.png');
+    background-color: #1F1F1F;  /* Dark background */
+    color: #ffffff;  /* Light text */
+}
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode span,
+.dark-mode label,
+.dark-mode a {
+    color: white !important;
+}
+s
+/* Ensure specific elements are visible in dark mode */
+.dark-mode .setting-choice {
+    background-color: #333; /* Dark gray for buttons */
+    color: white;
+}
+
+.dark-mode .form-container .form-title {
+     color: #ffb74d !important; 
+}
+
+/* Fix input fields for visibility */
+.dark-mode input, 
+.dark-mode textarea {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 1px solid #555;
+}
+
+/* Fix links */
+.dark-mode a {
+    color: #4a90e2; /* Light blue */
+}
+
+/* Fix buttons */
+.dark-mode button {
+    background-color: #444;
+    color: white;
+    border: none;
+}
+
+/* Optional: Toggle switch design */
+#darkModeToggle {
+    accent-color: white; /* Ensure checkbox is visible */
+}
+
+.dark-mode .form-container {
+    background-color: #616161;
+}

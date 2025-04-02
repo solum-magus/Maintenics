@@ -180,6 +180,7 @@ h2 {
 .modal {
     display: none; /* Initially hidden */
     position: fixed;
+    height: 80vh;
     z-index: 1000;
     left: 0;
     top: 0;
@@ -192,6 +193,8 @@ h2 {
 }
 
 .modal-content {
+    max-height: 75vh; /* Limit the height */
+    overflow-y: auto;
     background-color: whitesmoke;
     padding: 20px;
     border-radius: 10px;

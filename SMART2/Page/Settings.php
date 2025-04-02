@@ -260,9 +260,13 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 <h2>Contact Us</h2>
                 <p>If you have any questions, feel free to reach out:</p>
                 <ul>
-                    <strong>Email:</strong> MaintenicsSmart@gmail.com
+                    <strong>Email:</strong> Maintenics.smart@gmail.com 
                     <br>
-                    <strong>Phone:</strong> +63 912 345 6789
+                    <strong>Phone:</strong> 09531345208 
+                    <br>
+                    <strong>Instagram:</strong> smart@maintenics 
+                    <br>
+                    <strong>Facebook:</strong> SMART@Maintenics 
                     <br>
                     <strong>Office:</strong> STI College Meycauayan, Bulacan 
                     <br>

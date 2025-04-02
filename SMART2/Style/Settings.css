@@ -411,3 +411,10 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.qr {
+    max-width: 200px;
+    align-self: center;
+    justify-content: center;
+    margin-top: 30px;
+}

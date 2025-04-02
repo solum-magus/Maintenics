@@ -239,5 +239,6 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
 <script src="../JS/script.js"></script>
 <script src="../JS/script4.js"></script>
+<script src="../JS/script6.js"></script>
 </body>
 </html>

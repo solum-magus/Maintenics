@@ -273,6 +273,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
   <script src="../JS/script3.js"></script>
   <script src="../JS/script4.js"></script>
+  <script src="../JS/script6.js"></script>
 
   <script>
     sessionStorage.setItem("darkMode", "<?php echo $_SESSION['dark_mode'] ?? 0; ?>");

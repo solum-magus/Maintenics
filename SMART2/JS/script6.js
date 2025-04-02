@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Retrieve the soundPlayed flag from sessionStorage
     let soundPlayed = sessionStorage.getItem("soundPlayed") === 'true'; 
-
+s
     function fetchNotifications() {
         fetch("../Authentication/fetch_notifications.php")
             .then(response => response.json())

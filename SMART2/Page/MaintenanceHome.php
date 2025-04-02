@@ -28,7 +28,23 @@ $position = $user["position"];
 $full_name = $user["full_name"] ?? "";
 $first_name = explode(" ", trim($full_name))[0];
 
-$sql = "SELECT report_id, rname, plocation, problem, pdescription, status, date_reported FROM reportdetails";
+$sql = "SELECT report_id, rname, plocation, problem, pdescription, status, date_reported, sid 
+        FROM reportdetails 
+        ORDER BY 
+            CASE 
+                WHEN status = 'Ongoing' THEN 1 
+                WHEN status = 'Pending' THEN 2 
+                ELSE 3 
+            END, 
+            CASE 
+                WHEN status IN ('Ongoing', 'Pending') THEN date_reported 
+                ELSE NULL 
+            END ASC, 
+            CASE 
+                WHEN status NOT IN ('Ongoing', 'Pending') THEN date_reported 
+                ELSE NULL 
+            END DESC";
+
 $result = $Testsql->query($sql);
 
 if ($result->num_rows > 0) {
@@ -40,6 +56,7 @@ if ($result->num_rows > 0) {
 $totalReports = count($reports);
 $pendingReports = 0;
 $resolvedReports = 0;
+
 // Count pending and resolved reports
 foreach ($reports as $report) {
     if (strtolower($report['status']) === 'pending') {
@@ -50,7 +67,56 @@ foreach ($reports as $report) {
 }
 
 $hasUnread = checkUnreadNotifications($mysqli);
-        
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['take_action'])) {
+    $reportId = $_POST['report_id'];
+    $status = 'Ongoing';
+    $sid = $_SESSION['id'];
+    $sname = $_SESSION['fname'];
+
+    // Update the report's status to "Ongoing" and assign staff member
+    $sql = "UPDATE reportdetails SET status = ?, sname = ?, sid = ? WHERE report_id = ?";
+    $stmt = $Testsql->prepare($sql);
+    $stmt->bind_param("ssii", $status, $sname, $sid, $reportId);
+    $stmt->execute();
+
+    // Redirect to reload the page and reflect changes
+    header("Location: MaintenanceHome.php"); // Ensure this redirects back to the page
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_resolved'])) {
+    $reportId = $_POST['report_id'];
+    $status = 'Resolved'; // Update status to 'Resolved'
+    $sid = $_SESSION['id'];
+    $sname = $_SESSION['fname'];
+
+    // Update the report's status to "Resolved" and assign staff member (optional)
+    $sql = "UPDATE reportdetails SET status = ? WHERE report_id = ?";
+    $stmt = $Testsql->prepare($sql);
+    $stmt->bind_param("si", $status, $reportId);
+    $stmt->execute();
+
+    // Redirect to reload the page and reflect changes
+    header("Location: MaintenanceHome.php"); // Ensure this redirects back to the page
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reject_report'])) {
+    $reportId = $_POST['report_id'];
+    $status = 'Rejected'; // Update status to 'Rejected'
+
+    // Update the report's status to "Rejected"
+    $sql = "UPDATE reportdetails SET status = ? WHERE report_id = ?";
+    $stmt = $Testsql->prepare($sql);
+    $stmt->bind_param("si", $status, $reportId);
+    $stmt->execute();
+
+    // Redirect to reload the page and reflect changes
+    header("Location: MaintenanceHome.php"); // Ensure this redirects back to the page
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +166,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
             }
             ?>
 
-<a href="Notification.php"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
+            <a href="Notification.php"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
             <a href="Settings.php"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
         </div>
 
@@ -155,57 +221,62 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
 <p id="greet">Good day, <?= htmlspecialchars($first_name) ?>! Got a problem? Solve it with SMART!</p>
 
-		<div class="dashboard">
-        <div class="card">
-            <h3>Total Reports</h3>
-            <p><?= $totalReports; ?></p>
-        </div>
-        <div class="separator"></div>
-        <div class="card">
-            <h3>Pending Reports</h3>
-            <p><?= $pendingReports; ?></p>
-        </div>
-        <div class="separator"></div>
-        <div class="card">
-            <h3>Resolved Reports</h3>
-            <p><?= $resolvedReports; ?></p>
-        </div>
+<div class="dashboard">
+    <div class="card">
+        <h3>Total Reports</h3>
+        <p><?= $totalReports; ?></p>
     </div>
+    <div class="separator"></div>
+    <div class="card">
+        <h3>Pending Reports</h3>
+        <p><?= $pendingReports; ?></p>
+    </div>
+    <div class="separator"></div>
+    <div class="card">
+        <h3>Resolved Reports</h3>
+        <p><?= $resolvedReports; ?></p>
+    </div>
+</div>
 
-    <div class="row" id="main1">
-			        <table style="width: 95%; height: 95%; margin-right: auto; margin-block: 2%;">
+<div class="row" id="main1">
+    <table style="width: 95%; height: 95%; margin-right: auto; margin-block: 2%;">
 
-					  <tr>
-					    <th class="cth">Report ID</th>
-                        <th class="cth">Date Reported</th>
-					    <th class="cth">Location</th>
-						<th class="cth">Problem</th>
-						<th class="cth">Description</th>
-                        <th class="cth">Status</th>
-                        <th class="cth">Action</th>
-					  </tr>
-                      <?php foreach ($reports as $report): ?>
-					  <tr>
-                        <td><?= $report['report_id']; ?></td>
-                        <td><?= $report['date_reported']; ?></td>
-                        <td><?= $report['plocation']; ?></td>
-                        <td><?= $report['problem']; ?></td>
-                        <td><?= $report['pdescription']; ?></td>
-                        <td><?= $report['status']; ?></td>
-                        <td>
-                        <select onchange="updateStatus(<?= $report['report_id']; ?>, this.value)">
-                            <option value="Pending" <?= $report['status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
-                            <option value="Ongoing" <?= $report['status'] === 'Ongoing' ? 'selected' : '' ?>>Ongoing</option>
-                            <option value="Resolved" <?= $report['status'] === 'Resolved' ? 'selected' : '' ?>>Resolved</option>
-                            <option value="Rejected" <?= $report['status'] === 'Rejected' ? 'selected' : '' ?>>Rejected</option>
-                        </select>
-                        </td>
-					  </tr>
-					  <?php endforeach; ?>
+        <tr>
+            <th class="cth">Report ID</th>
+            <th class="cth">Date Reported</th>
+            <th class="cth">Location</th>
+            <th class="cth">Problem</th>
+            <th class="cth">Description</th>
+            <th class="cth">Status</th>
+            <th class="cth">Action</th>
+        </tr>
+        <?php foreach ($reports as $report): ?>
+        <tr>
+            <td><?= $report['report_id']; ?></td>
+            <td><?= $report['date_reported']; ?></td>
+            <td><?= $report['plocation']; ?></td>
+            <td><?= $report['problem']; ?></td>
+            <td><?= $report['pdescription']; ?></td>
+            <td><?= $report['status']; ?></td>
+            <td>
+                <?php if ($report['status'] === 'Pending'): ?>
+                    <form method="POST" action="">
+                        <input type="hidden" name="report_id" value="<?= $report['report_id']; ?>">
+                        <button type="submit" name="take_action" class="take-action-btn">Take Action</button>
+                    </form>
+                <?php elseif ($report['status'] === 'Ongoing' && $report['sid'] == $_SESSION['id']): ?>
+                    <form method="POST" action="">
+                        <input type="hidden" name="report_id" value="<?= $report['report_id']; ?>">
+                        <button type="submit" name="mark_resolved" class="resolved-btn">Mark as Resolved</button>
+                        <button type="submit" name="reject_report" class="reject-btn" id="reject_<?= $report['report_id']; ?>">False Report</button>
+                    </form>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
 
-				   </table>
-                </div>
-
+    </table>
+</div>
 
 <script src="../JS/script.js"></script>
 <script src="../JS/script4.js"></script>

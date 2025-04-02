@@ -120,7 +120,6 @@
 
 .dashboard .separator {
     height: 100px;
-    background-color: #ccc;
     width: 2px; 
     margin-block: 10px;
     margin-left: 10;
@@ -225,7 +224,6 @@ table select {
 
     .dashboard .separator {
         height: 100px;
-        background-color: #ccc;
         width: 2px;
     }
 
@@ -260,7 +258,6 @@ table select {
 
     .separator {
         height: 100px;
-        background-color: #ccc;
         width: 2px;
     }
 }
@@ -312,7 +309,6 @@ table select {
         height: 100px;
         width: 1px;
         margin-block: 15px;
-        background-color: #ccc;
     }
 
     #main1 {
@@ -339,7 +335,6 @@ table select {
 
     .separator {
         height: 80px;
-        background-color: #ccc;
         width: 1px;
         margin-block: 15px;
         display: block; /* Ensure separator is visible */
@@ -409,7 +404,6 @@ table select {
 
     .separator {
         height: 60px; /* Shorter separator for smaller screens */
-        background-color: #ccc;
         width: 1px;
         margin-block: 15px;
         display: block; /* Ensure separator is visible */
@@ -499,7 +493,6 @@ table select {
 
     .separator {
         height: 40px; /* Even shorter separator for very small screens */
-        background-color: #ccc;
         width: 1px;
         margin-block: 15px;
         display: block; /* Ensure separator is visible */

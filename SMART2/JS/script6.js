@@ -2,16 +2,29 @@ document.addEventListener("DOMContentLoaded", function () {
     let lastPlayedReportId = sessionStorage.getItem("lastPlayedReportId") || null;
     const notifIcon = document.getElementById("Notifications"); // Ensure this is the correct element
 
+    // Retrieve the soundPlayed flag from sessionStorage
+    let soundPlayed = sessionStorage.getItem("soundPlayed") === 'true'; 
+
     function fetchNotifications() {
         fetch("../Authentication/fetch_notifications.php")
             .then(response => response.json())
             .then(data => {
                 console.log("Fetched notification data:", data); // Log fetched data to see what you receive
                 if (data.new) {
-                    lastPlayedReportId = data.report.report_id; // Update the last played report ID
-                    sessionStorage.setItem("lastPlayedReportId", lastPlayedReportId); // Store in session storage
+                    // Check if the current report is different from the last played one
+                    if (lastPlayedReportId !== data.report.report_id) {
+                        lastPlayedReportId = data.report.report_id; // Update the last played report ID
+                        sessionStorage.setItem("lastPlayedReportId", lastPlayedReportId); // Store in session storage
+                        soundPlayed = false;  // Reset the soundPlayed flag for the new report
+                        sessionStorage.setItem("soundPlayed", 'false'); // Persist the flag in sessionStorage
+                    }
+
                     changeNotificationIcon(true);
-                    playNotificationSound();  // Always play sound for new notification
+                    if (!soundPlayed) {  // Play sound only once for the new notification
+                        playNotificationSound();
+                        soundPlayed = true;  // Mark sound as played
+                        sessionStorage.setItem("soundPlayed", 'true'); // Persist the flag in sessionStorage
+                    }
                     updateNotificationUI(data.report);
                 } else {
                     changeNotificationIcon(false); // Reset to default icon if no new notification
@@ -38,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const box = document.createElement("div");
         box.className = "box1";
         box.setAttribute("data-id", report.report_id);
-        box.innerHTML = `
+        box.innerHTML = ` 
             <span class="overlayt">A report was submitted!<br>
             Report ID: ${report.report_id}</span>
             <span class="timestamp">${timeAgo(report.date_reported)}</span>

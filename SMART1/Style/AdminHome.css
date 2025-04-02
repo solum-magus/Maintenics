@@ -28,19 +28,13 @@
     flex-grow: 1;
 }
 
-/* Ensure .logo-link behaves like a link and doesn’t affect layout */
-.logo-link {
-    text-decoration: none; /* Remove underline or any default link styles */
-    display: inline-block; /* Ensure it behaves like an inline element */
-}
-
-/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
     margin: 0 30px;
     cursor: pointer;
     transition: filter 0.3s ease;
+   
 }
 
 .logo:hover {
@@ -54,21 +48,6 @@
     border-bottom: 2px solid #fff;
     background-color: rgba(0, 63, 125, 0.2);
     filter: sepia(1) saturate(5) hue-rotate(10deg);
-}
-
-/* You have multiple .logo.active definitions — keep only the one you need */
-.logo.active {
-    filter: brightness(1.2);
-    background-color: #0066cc;
-    border-radius: 5px;
-    color: white;
-    border-bottom: 2px solid white;
-}
-
-.logo.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-bottom: 2px solid white;
 }
 .user-info {
     display: flex;
@@ -105,7 +84,6 @@
 .dropdown option {
     background-color: #333;
 }
-
 
 .dashboard {
     display: flex;
@@ -202,6 +180,7 @@ h2 {
 .modal {
     display: none; /* Initially hidden */
     position: fixed;
+    height: 80vh;
     z-index: 1000;
     left: 0;
     top: 0;
@@ -214,6 +193,8 @@ h2 {
 }
 
 .modal-content {
+    max-height: 75vh; /* Limit the height */
+    overflow-y: auto;
     background-color: whitesmoke;
     padding: 20px;
     border-radius: 10px;
@@ -251,6 +232,7 @@ h2 {
 .dark-mode .modal-content {
     background-color: #434343;
 }
+
 @media (max-width: 1024px) {
     .sticky-header {
         padding: 40px;
@@ -290,6 +272,7 @@ h2 {
     }
     .card {
         width: 250px;
+        margin-top: 5%;
     }
 
     
@@ -332,6 +315,10 @@ h2 {
         padding: 4px;
     }
 
+    .card {
+        margin-top: 3%;
+    }
+
     
 }
 @media (max-width: 425px) {
@@ -369,6 +356,9 @@ h2 {
 	.sidebar .company-name h2,
     .sidebar .company-name h3 {
         font-size: 20px;
+    }
+    .card {
+        margin-top: 3%;
     }
 
     
@@ -409,6 +399,65 @@ h2 {
     .sidebar .company-name h3 {
         font-size: 20px;
     }
+    .card {
+        margin-top: 3%;
+    }
 
-    
+}
+
+
+
+
+
+
+
+/**/
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* Adjust width for smaller screens */
+        max-height: 70vh; /* Reduce height */
+        padding: 15px;
+    }
+
+    .modal-content .logo {
+        max-width: 80px; /* Adjust logo size */
+    }
+
+    .close {
+        top: 5px;
+        right: 10px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 425px) {
+    .modal-content {
+        width: 95%; /* Increase width for smaller screens */
+        max-height: 65vh;
+        padding: 10px;
+    }
+
+    .modal-content .logo {
+        max-width: 70px;
+    }
+
+    .close {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 320px) {
+    .modal-content {
+        width: 98%;
+        max-height: 60vh;
+        padding: 8px;
+    }
+
+    .modal-content .logo {
+        max-width: 60px;
+    }
+
+    .close {
+        font-size: 16px;
+    }
 }

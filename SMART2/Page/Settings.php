@@ -164,6 +164,8 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 <div class="setting-choice" id="privacyPolicyBtn">Privacy & Policy</div>
 
                 <div class="setting-choice" id="contactUsBtn">Contact Us</div>
+
+                <img src="../Assets/QR.svg" class="qr">
             </div>
 		</div>
 
@@ -280,4 +282,4 @@ $hasUnread = checkUnreadNotifications($mysqli);
   </script>
 
   </body>
-  </html>
+</html>

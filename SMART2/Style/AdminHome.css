@@ -404,3 +404,60 @@ h2 {
     }
 
 }
+
+
+
+
+
+
+
+/**/
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* Adjust width for smaller screens */
+        max-height: 70vh; /* Reduce height */
+        padding: 15px;
+    }
+
+    .modal-content .logo {
+        max-width: 80px; /* Adjust logo size */
+    }
+
+    .close {
+        top: 5px;
+        right: 10px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 425px) {
+    .modal-content {
+        width: 95%; /* Increase width for smaller screens */
+        max-height: 65vh;
+        padding: 10px;
+    }
+
+    .modal-content .logo {
+        max-width: 70px;
+    }
+
+    .close {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 320px) {
+    .modal-content {
+        width: 98%;
+        max-height: 60vh;
+        padding: 8px;
+    }
+
+    .modal-content .logo {
+        max-width: 60px;
+    }
+
+    .close {
+        font-size: 16px;
+    }
+}

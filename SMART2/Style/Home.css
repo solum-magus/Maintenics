@@ -28,13 +28,19 @@
     flex-grow: 1;
 }
 
+/* Ensure .logo-link behaves like a link and doesn’t affect layout */
+.logo-link {
+    text-decoration: none; /* Remove underline or any default link styles */
+    display: inline-block; /* Ensure it behaves like an inline element */
+}
+
+/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
     margin: 0 30px;
     cursor: pointer;
     transition: filter 0.3s ease;
-   
 }
 
 .logo:hover {
@@ -49,6 +55,23 @@
     background-color: rgba(0, 63, 125, 0.2);
     filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
+
+/* You have multiple .logo.active definitions — keep only the one you need */
+.logo.active {
+    filter: brightness(1.2);
+    background-color: #0066cc;
+    border-radius: 5px;
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+.logo.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+
 .user-info {
     display: flex;
     flex-direction: column;
@@ -254,7 +277,7 @@ p {
 
 @media (max-width: 1024px) {
     .sticky-header {
-        padding: 30px;
+        padding: 40px;
 		width: 100%;
     }
 	
@@ -301,26 +324,40 @@ p {
 }
 @media (max-width: 768px) {
     .sticky-header {
-        padding: 17px;
-        width: 100%;
+        padding: 20px;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logos {
+        justify-content: center;
+        margin-bottom: 10px;
     }
 
     .logo {
-        width: 39px;
-        margin: 0px 20px 0px 0px;
+        width: 40px;
+        margin: 0 30px;
+    }
+
+    .user-info {
+        align-items: center;
+        margin-top: 10px;
     }
 
     .username {
-        font-size: 10px;
-        margin-right: 10px;
+        font-size: 14px;
     }
 
     .position {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .dropdown {
-        font-size: 10px;
+        font-size: 12px;
+        padding: 4px;
     }
 
     .sidebar {
@@ -350,25 +387,29 @@ p {
 }
 @media (max-width: 425px) {
     .sticky-header {
-        padding: 14px;
-		width: 100%;
+        padding: 15px;
     }
-	
+
     .logo {
-        width: 25px;
-        margin: 0px 20px 0px 0px;
-        
-		
+        width: 40px;
+        margin: 0 15px;
     }
+
+    .user-info {
+        margin-top: 5px;
+    }
+
     .username {
-        font-size: 5px;
-		margin-right: 10px;
+        font-size: 12px;
     }
-	.position {
-        font-size: 5px;
+
+    .position {
+        font-size: 11px;
     }
+
     .dropdown {
-        font-size: 6px;
+        font-size: 10px;
+        padding: 3px;
     }
 	.sidebar {
         width: 320px;
@@ -399,25 +440,30 @@ p {
 @media (max-width: 320px) {
     .sticky-header {
         padding: 10px;
-		width: 100%;
     }
-	
+
     .logo {
-        width: 20px;
-        margin: 0px 15px 0px 0px;
-        
-		
+        width: 30px;
+        margin: 0 15px;
     }
+
+    .user-info {
+        margin-top: 5px;
+    }
+
     .username {
-        font-size: 5px;
-		margin-right: 10px;
+        font-size: 10px;
     }
-	.position {
-        font-size: 5px;
+
+    .position {
+        font-size: 10px;
     }
+
     .dropdown {
-        font-size: 6px;
+        font-size: 9px;
+        padding: 2px;
     }
+
 	.sidebar {
         width: 320px;
     }

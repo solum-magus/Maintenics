@@ -169,7 +169,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 <select name="userstatus" class="form-control" required>
                     <option value="Approved" <?= $user['userstatus'] == 'Approved' ? 'selected' : '' ?>>Approved</option>
                     <option value="Pending" <?= $user['userstatus'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
-                    <option value="Rejected" <?= $user['userstatus'] == 'Rejected' ? 'selected' : '' ?>>Rejected</option>
+                    <option value="Rejected" <?= $user['userstatus'] == 'Rejected' ? 'selected' : '' ?>>False Report</option>
                 </select>
             </div>
 

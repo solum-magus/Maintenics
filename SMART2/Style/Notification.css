@@ -395,7 +395,7 @@ h1 {
         padding-left: 0px;
     }
 
-    span {
+    .notification-container span {
         font-size: 1rem !important;
     }
 

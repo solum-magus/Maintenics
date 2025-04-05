@@ -467,12 +467,12 @@ table select {
     table {
         width: 20%;
         margin-top: 20px;
-        overflow-x: auto;
+        overflow-x: scroll;
     }
 
     th,
     td {
-        font-size: 6px;
+        font-size: 12px;
         padding: 3px;
     }
 
@@ -497,6 +497,10 @@ table select {
         width: 1px;
         margin-block: 15px;
         display: block; /* Ensure separator is visible */
+    }
+
+    button {
+        font-size: 8px;
     }
 }
 

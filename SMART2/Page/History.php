@@ -198,7 +198,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <p style="text-align: center; padding: 50px; font-size: 25px;">No reports found.</p>
+    <p class="feedback-submitted"><b>Feedback: <?= !empty($report['feedback']) ? htmlspecialchars($report['feedback']) : 'No feedback given.' ?></p>
 <?php endif; ?>
 
 <script src="../JS/script1.js"></script>

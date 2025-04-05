@@ -398,6 +398,8 @@ table select {
     .dashboard {
         gap: 15px;
         width: 70%;
+        font-size: 12px;
+        padding: 5px;
     }
 
     .separator {
@@ -479,6 +481,7 @@ table select {
         gap: 10px;
         height: 100px;
         font-size: 12px;
+        padding: 5px;
     }
 
     .card1,

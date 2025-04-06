@@ -174,7 +174,7 @@
                     }
                 }
             ?>
-            <option value="">Other</option>
+            <option value="Other">Other</option>
         </select>
 
         <select id="problem" name="problem" required>
@@ -190,7 +190,7 @@
                     }
                 }
             ?>
-            <option value="">Other</option>
+            <option value="Other">Other</option>
         </select>
 
         <textarea id="pdescription" placeholder="Description (optional)"></textarea>

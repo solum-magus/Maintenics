@@ -41,6 +41,16 @@
 
     $hasUnread = checkUnreadNotifications($mysqli);
 
+    $sql = "SELECT DISTINCT problemloc FROM problemdetail ORDER BY problemloc ASC";
+    $result = $mysqli->query($sql);
+
+    $locations = [];
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $locations[] = $row['problemloc'];
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -151,18 +161,36 @@
         <input type="hidden" id="rname" name="rname" value="<?= $full_name ?>"> <!-- ✅ Pre-fill rname -->
         <input type="hidden" id="rid" name="rid">
 
-        <select id="plocation" required>
+        <select id="plocation" name="plocation" required>
             <option value="" disabled selected>Location of Issue</option>
-            <option>Ampi</option>
-            <option>Room 101</option>
-            <option>Library</option>
+            <?php
+                $locationQuery = "SELECT DISTINCT problemloc FROM problemdetail ORDER BY problemloc ASC";
+                $locationResult = $mysqli->query($locationQuery);
+
+                if ($locationResult && $locationResult->num_rows > 0) {
+                    while ($row = $locationResult->fetch_assoc()) {
+                        $loc = htmlspecialchars($row['problemloc']);
+                        echo "<option value=\"$loc\">$loc</option>";
+                    }
+                }
+            ?>
+            <option value="">Other</option>
         </select>
 
-        <select id="problem" required>
+        <select id="problem" name="problem" required>
             <option value="" disabled selected>Problem Type</option>
-            <option>TV</option>
-            <option>Broken Chair</option>
-            <option>No Wi-Fi</option>
+            <?php
+                $probQuery = "SELECT DISTINCT probtype FROM problemdetail ORDER BY probtype ASC";
+                $probResult = $mysqli->query($probQuery);
+
+                if ($probResult && $probResult->num_rows > 0) {
+                    while ($row = $probResult->fetch_assoc()) {
+                        $prob = htmlspecialchars($row['probtype']);
+                        echo "<option value=\"$prob\">$prob</option>";
+                    }
+                }
+            ?>
+            <option value="">Other</option>
         </select>
 
         <textarea id="pdescription" placeholder="Description (optional)"></textarea>

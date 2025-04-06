@@ -192,7 +192,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
                         </form>
                     </div>
                 <?php else: ?>
-                    <p class="feedback-submitted"><b>Feedback:</b> "<?= htmlspecialchars($report['feedback']) ?>"</p>
+                    <p class="feedback-submitted"><b>Feedback:</b> <?= $report['feedback'] ? '"' . htmlspecialchars($report['feedback']) . '"' : "No feedback given." ?></p>
                 <?php endif; ?>
             </div>
         </div>

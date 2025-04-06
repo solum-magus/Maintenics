@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reject_report'])) {
             <td><?= $report['date_reported']; ?></td>
             <td><?= $report['plocation']; ?></td>
             <td><?= $report['problem']; ?></td>
-            <td><?= $report['pdescription']; ?></td>
+            <td><?= !empty($report['pdescription']) ? htmlspecialchars($report['pdescription']) : 'No description given.'; ?></td>
             <td><?= $report['status']; ?></td>
             <td>
                 <?php if ($report['status'] === 'Pending'): ?>

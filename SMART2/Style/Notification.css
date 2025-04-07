@@ -327,6 +327,9 @@ h1 {
         font-size: 25px;
         margin: 15px 50px 0 10px;
     }
+    .box1, .box{
+        padding: 30px !important;
+    }
 }
 @media (max-width: 425px) {
     .sticky-header {

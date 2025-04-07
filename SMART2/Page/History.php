@@ -193,7 +193,7 @@ $hasUnread = checkUnreadNotifications($Testsql);
                                     </label>
                                 <?php endfor; ?>
                             </div>
-                            <textarea name="feedback" placeholder="Leave your feedback here..." rows="4"></textarea>
+                            <textarea name="feedback" id="feedback"placeholder="Leave your feedback here..." rows="4"></textarea>
                             <button type="submit" name="submit_feedback" id="feedbackbutton">Submit</button>
                         </form>
                     </div>

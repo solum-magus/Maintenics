@@ -192,8 +192,8 @@ $hasUnread = checkUnreadNotifications($mysqli);
 <div class="notification-container">
 
 <?php foreach ($pendingReports as $report): ?>
-    <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>">
-        <span class="overlayt">A report was submitted!<br>
+    <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>" data-id="<?= $report['report_id'] ?>">
+    <span class="overlayt">A report was submitted!<br>
     <?php if ($_SESSION['position'] === 'Maintenance Staff' || $_SESSION['position'] === 'Admin'): ?>
         Report ID: <?= htmlspecialchars($report["report_id"]) ?></span>
     <?php else: ?>

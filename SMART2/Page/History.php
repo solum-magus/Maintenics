@@ -24,6 +24,7 @@ $rid = $_SESSION["id"];
 $fname = $_SESSION["fname"];
 $school_id = $_SESSION["id"] ?? null;
 
+// Get user info
 $sql = "SELECT full_name, position FROM userinfo WHERE school_id = ?";
 $stmt = $Testsql->prepare($sql);
 $stmt->bind_param("i", $school_id);
@@ -35,46 +36,42 @@ $user = $result->fetch_assoc();
 $selectedProblem = $_GET['problem'] ?? '';
 $selectedDate = $_GET['date'] ?? '';
 
-// Base SQL query
+// Start base query
 $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-        FROM reportdetails
-        WHERE status = 'Resolved'
-        ORDER BY report_id DESC";
+        FROM reportdetails 
+        WHERE status = 'Resolved'";
 
-// If user is not maintenance staff, filter by `rid`
-if ($position !== "Maintenance Staff") {
-    $sql .= " AND rid = ?";
-}
-
-// Apply additional filters if selected
-if (!empty($selectedProblem)) {
-    $sql .= " AND problem = ?";
-}
-if (!empty($selectedDate)) {
-    $sql .= " AND DATE(date_reported) = ?";
-}
-
-// Prepare statement
-$stmt = $Testsql->prepare($sql);
-
-// Bind parameters dynamically
+// Build WHERE conditions
+$conditions = [];
 $paramTypes = "";
 $params = [];
 
 if ($position !== "Maintenance Staff") {
+    $conditions[] = "rid = ?";
     $paramTypes .= "i";
     $params[] = $rid;
 }
 if (!empty($selectedProblem)) {
+    $conditions[] = "problem = ?";
     $paramTypes .= "s";
     $params[] = $selectedProblem;
 }
 if (!empty($selectedDate)) {
+    $conditions[] = "DATE(date_reported) = ?";
     $paramTypes .= "s";
     $params[] = $selectedDate;
 }
 
-// Bind parameters if needed
+// Add conditions to SQL if any
+if (!empty($conditions)) {
+    $sql .= " AND " . implode(" AND ", $conditions);
+}
+
+$sql .= " ORDER BY report_id DESC";
+
+// Prepare and execute statement
+$stmt = $Testsql->prepare($sql);
+
 if (!empty($params)) {
     $stmt->bind_param($paramTypes, ...$params);
 }
@@ -83,9 +80,9 @@ $stmt->execute();
 $Report = $stmt->get_result();
 $reports = $Report->fetch_all(MYSQLI_ASSOC);
 
-$hasUnread = checkUnreadNotifications($mysqli);
-
+$hasUnread = checkUnreadNotifications($Testsql);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

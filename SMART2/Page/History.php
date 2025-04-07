@@ -37,8 +37,9 @@ $selectedDate = $_GET['date'] ?? '';
 
 // Base SQL query
 $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-        FROM reportdetails 
-        WHERE status = 'Resolved'";
+        FROM reportdetails
+        WHERE status = 'Resolved'
+        ORDER BY report_id DESC";
 
 // If user is not maintenance staff, filter by `rid`
 if ($position !== "Maintenance Staff") {

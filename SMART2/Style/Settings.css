@@ -295,6 +295,28 @@
     .sidebar .company-name h3 {
         font-size: 20px;
     }
+    .container {
+        width: 50%;
+        
+        font-size: 0.6rem;
+        margin-left: 125px;
+        margin-right: 95px;
+        margin-top: 10px;
+      
+    }
+    .text{
+        margin-right: 75px;
+    }
+    
+    .pfp{
+    width: 83%;
+    margin-right: 1px;
+    align-items: center;
+
+    }
+    .settings{
+        font-size: 0.8rem;
+    }
 
     
 }
@@ -333,6 +355,25 @@
 	.sidebar .company-name h2,
     .sidebar .company-name h3 {
         font-size: 20px;
+    }
+    .container {
+        width: 60%;
+        gap: 55;
+        font-size: 15px;
+        margin-left: 80px;
+        margin-right: 95px;
+        margin-top: 10px;
+      
+    }
+    .text{
+        margin-right: 75px;
+    }
+    
+    .pfp{
+    width: 83%;
+    margin-right: 1px;
+    align-items: center;
+
     }
 
     
@@ -447,47 +488,3 @@
     justify-content: center;
     margin-top: 30px;
 }
-
-    .error, .success {
-        margin: 10px;
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-    .error {
-        color: red;
-        background: #ffe6e6;
-        border: 1px solid red;
-    }
-
-    .success {
-        color: green;
-        background: #e6ffe6;
-        border: 1px solid green;
-    }
-
-    .modal.show {
-        display: flex; /* only when .show is added */
-    }
-
-    .password-wrapper {
-        position: relative;
-        width: 100%;
-    }
-    
-    .password-wrapper input {
-        width: 100%;
-        padding-right: 40px; /* space for the icon */
-        box-sizing: border-box;
-    }
-    
-    .password-wrapper img {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-    }
-    

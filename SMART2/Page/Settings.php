@@ -189,9 +189,9 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
                     <label for="current_password">Current Password:</label>
                     <input type="password" id="current_password" name="current_password" required
-                    onblur="this.placeholder = 'Re-enter your password'"
+                    onblur="this.placeholder = 'Enter your password'"
                     onfocus="this.placeholder = ''"
-                    placeholder="Enter your password">
+                    placeholder="Enter your password"
                     <img src="../Assets/eye-alt.svg" onclick="showpass3()" class="pass-icon3" id="pass-icon3">
 
 
@@ -199,13 +199,13 @@ $hasUnread = checkUnreadNotifications($mysqli);
                     <input type="password" id="new_password" name="new_password" required
                     placeholder="Enter your password"
                     onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Enter your password'">
+                    onblur="this.placeholder = 'Enter your new password'">
                     <img src="../Assets/eye-alt.svg" onclick="showpass()" class="pass-icon" id="pass-icon">
 
                     <label for="confirm_password">Confirm New Password:</label>
                     <input type="password" id="confirm_password" name="confirm_password" required
                     placeholder="Re-enter your password"
-                    onblur="this.placeholder = 'Re-enter your password'"
+                    onblur="this.placeholder = 'Re-enter your new password'"
                     onfocus="this.placeholder = ''">
                     <img src="../Assets/eye-alt.svg" onclick="showpass2()" class="pass-icon2" id="pass-icon2">
 

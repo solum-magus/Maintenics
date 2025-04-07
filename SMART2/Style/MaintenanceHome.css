@@ -120,9 +120,10 @@
 
 .separator {
     width: 100%;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 20px 0;
+    height: 1px;
+    background-color: #ccc; /* Light grey color for the separator */
+    margin: 10px 0;
+    
 }
 
 .dashboard .separator {
@@ -265,11 +266,26 @@ table select {
         height: 100px;
         width: 2px;
     }
+    .resolved-btn, .reject-btn {
+        
+        padding: 5px 10px;
+        justify-content: space-between; 
+        
+        display: inline-block;
+    }
+    .resolved-btn{
+        margin-top: 10px;   /* Space from the top */
+        margin-bottom: 8px; 
+    }
+    .reject-btn{
+        margin-top: 8px;   /* Space from the top */
+        margin-bottom: 10px; 
+    }
 }
 
 @media (max-width: 768px) {
     .sticky-header {
-        padding: 20px;
+        padding: 15px;
     }
 
     .header-container {
@@ -317,20 +333,24 @@ table select {
     }
 
     #main1 {
-        display: block;
-        margin-left: 15px;
-        width: 90%;
+        overflow-x: auto; /* Enables horizontal scrolling */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
     }
 
     table {
-        overflow-x: auto;
-        margin-top: 10px;
+        width: 100%;
+        display: block; /* Ensures the table behaves like a block element */
+        white-space: nowrap; /* Prevents text from wrapping */
+    }
+
+    tr {
+        height: 55px;
     }
 
     th,
     td {
-        font-size: 10px;
-        padding: 6px;
+        font-size: 1rem;
+        padding: 8px;
     }
 
     .dashboard {
@@ -339,14 +359,36 @@ table select {
     }
 
     .separator {
-        height: 80px;
-        width: 1px;
-        margin-block: 15px;
-        display: block; /* Ensure separator is visible */
+        margin: 15px 0;
+    }
+
+    .take-action-btn {
+        font-size: 12px;
+    }
+
+    /* Make buttons stack vertically with space */
+    .resolved-btn,
+    .reject-btn {
+        font-size: 10px;
+        padding: 5px 10px;
+        display: block; /* Stack vertically */
+        width: 100%; /* Optional: makes them uniform in width */
+        box-sizing: border-box;
+    }
+
+    .resolved-btn {
+        margin-top: 10px;
+        margin-bottom: 8px;
+    }
+
+    .reject-btn {
+        margin-top: 8px;
+        margin-bottom: 10px;
     }
 }
 
-@media (max-width: 425px) {
+
+@media screen and (max-width: 425px) {
     .sticky-header {
         padding: 15px;
     }
@@ -387,20 +429,26 @@ table select {
     }
 
     #main1 {
-        display: block;
-        margin-left: 10px;
+        width: 100%;
+        overflow-y: auto; /* Enables horizontal scroll */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
     }
 
     table {
-        overflow-x: auto;
-        margin-top: 10px;
+        font-size: 13px;
     }
-
     th,
     td {
-        font-size: 8px;
+        font-size: 1rem;
         padding: 2px;
     }
+    table {
+        width: 100%;
+        display: block; /* Makes the table behave like a block element */
+        overflow-x: auto; /* Allow horizontal scroll */
+        white-space: nowrap; /* Prevents the text from breaking into new lines */
+    }
+
 
     .dashboard {
         gap: 15px;
@@ -410,10 +458,7 @@ table select {
     }
 
     .separator {
-        height: 60px; /* Shorter separator for smaller screens */
-        width: 1px;
-        margin-block: 15px;
-        display: block; /* Ensure separator is visible */
+        margin: 10px 0; /* Even smaller margin on phones */
     }
 
     .card1,
@@ -467,8 +512,7 @@ table select {
 
     #main1 {
         display: block;
-        margin: 5px 5px;
-        width: 50%;
+        margin: 5px 0px 0;
     }
 
     table {
@@ -479,8 +523,9 @@ table select {
 
     th,
     td {
-        font-size: 12px;
+        font-size: 1rem;
         padding: 3px;
+       
     }
 
     .dashboard {
@@ -500,10 +545,8 @@ table select {
     }
 
     .separator {
-        height: 40px; /* Even shorter separator for very small screens */
-        width: 1px;
-        margin-block: 15px;
-        display: block; /* Ensure separator is visible */
+        margin: 8px 0; /* Even more compact spacing */
+        height: 80px !important;
     }
 
     button {

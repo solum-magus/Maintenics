@@ -469,3 +469,25 @@
     .modal.show {
         display: flex; /* only when .show is added */
     }
+
+    .password-wrapper {
+        position: relative;
+        width: 100%;
+    }
+    
+    .password-wrapper input {
+        width: 100%;
+        padding-right: 40px; /* space for the icon */
+        box-sizing: border-box;
+    }
+    
+    .password-wrapper img {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    

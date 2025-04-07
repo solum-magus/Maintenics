@@ -105,9 +105,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_resolved'])) {
     $sname = $_SESSION['fname'];
 
     // Update the report's status to "Resolved" and assign staff member (optional)
-    $sql = "UPDATE reportdetails SET status = ? WHERE report_id = ?";
+    $sql = "UPDATE reportdetails SET status = ?, date_resolved = NOW() WHERE report_id = ?";
     $stmt = $Testsql->prepare($sql);
     $stmt->bind_param("si", $status, $reportId);
+    
     $stmt->execute();
 
     echo "<script>

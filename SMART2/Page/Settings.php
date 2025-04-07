@@ -169,36 +169,60 @@ $hasUnread = checkUnreadNotifications($mysqli);
             </div>
 		</div>
 
+        <?php
+            $showModal = false;
+            if (isset($_SESSION["error"]) || isset($_SESSION["success"])) {
+                $showModal = true;
+            }
+        ?>
         <!-- Change Password Modal -->
         <div id="passwordModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Change Password</h2>
 
-                <!-- Display error/success messages -->
-                <?php if (isset($_SESSION["error"])): ?>
-                    <p class="error"><?php echo $_SESSION["error"]; unset($_SESSION["error"]); ?></p>
-                <?php endif; ?>
 
-                <?php if (isset($_SESSION["success"])): ?>
-                    <p class="success"><?php echo $_SESSION["success"]; unset($_SESSION["success"]); ?></p>
-                <?php endif; ?>
 
                 <form action="../Authentication/change_pass.php" method="POST">
                     <label for="school_id">School ID:</label>
-                    <input type="text" id="school_id" name="school_id" required>
+                    <input type="text" id="school_id" name="school_id" value="<?= $id?>" readonly>
 
                     <label for="current_password">Current Password:</label>
-                    <input type="password" id="current_password" name="current_password" required>
+                    <input type="password" id="current_password" name="current_password" required
+                    onblur="this.placeholder = 'Re-enter your password'"
+                    onfocus="this.placeholder = ''"
+                    placeholder="Enter your password">
+                    <img src="../Assets/eye-alt.svg" onclick="showpass3()" class="pass-icon3" id="pass-icon3">
+
 
                     <label for="new_password">New Password:</label>
-                    <input type="password" id="new_password" name="new_password" required>
+                    <input type="password" id="new_password" name="new_password" required
+                    placeholder="Enter your password"
+                    onfocus="this.placeholder = ''"
+                    onblur="this.placeholder = 'Enter your password'">
+                    <img src="../Assets/eye-alt.svg" onclick="showpass()" class="pass-icon" id="pass-icon">
 
                     <label for="confirm_password">Confirm New Password:</label>
-                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <input type="password" id="confirm_password" name="confirm_password" required
+                    placeholder="Re-enter your password"
+                    onblur="this.placeholder = 'Re-enter your password'"
+                    onfocus="this.placeholder = ''">
+                    <img src="../Assets/eye-alt.svg" onclick="showpass2()" class="pass-icon2" id="pass-icon2">
 
+
+                                    
+                    <?php if (isset($_SESSION["error"])): ?>
+                        <div class="error"><?= $_SESSION["error"]; unset($_SESSION["error"]); ?></div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION["success"])): ?>
+                        <div class="success"><?= $_SESSION["success"]; unset($_SESSION["success"]); ?></div>
+                    <?php endif; ?>
+                    
                     <button type="submit">Change Password</button>
                 </form>
+
+
             </div>
         </div>
 
@@ -273,6 +297,17 @@ $hasUnread = checkUnreadNotifications($mysqli);
         </div>
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            <?php if ($showModal): ?>
+                const modal = document.getElementById("passwordModal");
+                if (modal) {
+                    modal.classList.add("show"); // add your modal-open class
+                }
+            <?php endif; ?>
+    });
+    
+</script>
   <script src="../JS/script3.js"></script>
   <script src="../JS/script4.js"></script>
   <script src="../JS/script6.js"></script>

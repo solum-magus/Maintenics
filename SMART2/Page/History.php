@@ -183,6 +183,8 @@ $hasUnread = checkUnreadNotifications($Testsql);
                     <div class="feedback-form">
                         <form method="POST" action="../Authentication/sendfeedback.php">
                             <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
+                            <textarea name="feedback" id="feedback"placeholder="Leave your feedback here..." rows="4"></textarea>
+
                             <div class="rating">
                                 <?php for ($i = 5; $i >= 1; $i--) : ?>
                                     <input type="radio" name="rating<?= $report['report_id'] ?>" id="rating<?= $i ?>_<?= $report['report_id'] ?>" value="<?= $i ?>" <?= ($i == $report['rating']) ? 'checked' : '' ?>>
@@ -193,8 +195,8 @@ $hasUnread = checkUnreadNotifications($Testsql);
                                     </label>
                                 <?php endfor; ?>
                             </div>
-                            <textarea name="feedback" id="feedback"placeholder="Leave your feedback here..." rows="4"></textarea>
                             <button type="submit" name="submit_feedback" id="feedbackbutton">Submit</button>
+
                         </form>
                     </div>
                 <?php else: ?>

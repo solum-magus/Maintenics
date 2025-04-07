@@ -282,13 +282,14 @@ textarea {
     display: flex;
     padding: 10px;
     background-color: #90a4cc;
+    width: 20%;
     color: white;
     border: none;
-    width: 20%;
     cursor: pointer;
     border-radius: 1rem;
     display: block;
     margin: auto;
+    text-align: center;
 }
 
 #feedbackbutton:hover {
@@ -300,13 +301,6 @@ textarea {
     transform: scale(0.8);
 }
 
-#feedback{
-    text-align: center;      /* Centers text horizontally */
-    vertical-align: middle;  /* Attempts to center text vertically (not fully effective in all browsers) */
-    padding-top: 5%;         /* Adjusts to simulate vertical centering */
-    resize: none;            /* Optional: Prevent resizing */
-}
-
 /* Dark Mode */
 .dark-mode input {
     color: #003f7d !important;
@@ -314,7 +308,7 @@ textarea {
 
 .dark-mode .box {
     background-color: #616161;
-    border: 3px solid #a77a3b;
+    border: 3px solid #a0e8a0;
 }
 @media (max-width: 1024px) {
     @media (max-width: 1024px) {
@@ -322,12 +316,9 @@ textarea {
             padding: 40px;
             width: 100%;
         }
-        
         .logo {
             width: 46px;
             margin: 0px 55px 0px 0px;
-            
-            
         }
         .username {
             font-size: 11px;
@@ -353,7 +344,16 @@ textarea {
     .report-h {
         margin-top: 20px; /* Adjust this value to increase spacing */
     }
+    textarea {
+        width: 70%;
+    }
 }
+}
+
+@media (max-width: 820px) {
+    #feedbackbutton {
+        width: fit-content;
+    }
 }
 
 @media (max-width: 768px) {
@@ -418,6 +418,9 @@ textarea {
         width: 100%;
         margin: 10px;
     }
+    textarea {
+        width: 90%;
+    }
 }
 
 @media (max-width: 425px) {
@@ -470,6 +473,10 @@ textarea {
     p {
         font-size: small;
     }
+    .rating svg {
+        width: 23px;
+        height: 23px;
+    }
 }
 
 @media (max-width: 320px) {
@@ -515,5 +522,9 @@ textarea {
         font-size: 26px;
         padding-left: 15px;
         text-align: center;
+    }
+    .rating svg {
+        width: 18px;
+        height: 18px;
     }
 }

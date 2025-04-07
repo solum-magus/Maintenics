@@ -272,7 +272,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <p>Our Terms & Conditions state that by using this app, you agree to act responsibly and follow all applicable laws. You are responsible for maintaining the confidentiality of your account credentials, and any activity under your account is your responsibility. We aim to keep the app running smoothly but cannot guarantee uninterrupted service. Updates may be rolled out to improve functionality, and it's your responsibility to keep the app updated. We reserve the right to terminate your access for violating these terms.</p>
                     <p>Our Privacy Policy outlines how we collect and use your personal data. We may collect information such as your name, email, and usage data to enhance your experience. We do not share your data with third parties without your consent, and we take necessary precautions to safeguard your information. However, no system is completely secure, and we cannot guarantee absolute protection. You have the right to request access to your data at any time.</p>
                     <p>By proceeding, you acknowledge that you have read and accept our Terms & Conditions and Privacy Policy.</p>
-                    <button onclick="navigateTo('signUpPage')" class="btn btn-primary">Proceed</button>
+                    <button onclick="navigateTo('signUpPage')" class="btn btn-primary center-button" id="btn">Proceed</button>
                 </div>
             </div>
 

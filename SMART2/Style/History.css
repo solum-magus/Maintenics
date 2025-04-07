@@ -306,6 +306,13 @@ textarea {
     color: #003f7d !important;
 }
 
+#feedback{
+    text-align: center;      /* Centers text horizontally */
+    vertical-align: middle;  /* Attempts to center text vertically (not fully effective in all browsers) */
+    padding-top: 5%;         /* Adjusts to simulate vertical centering */
+    resize: none;            /* Optional: Prevent resizing */
+}
+
 .dark-mode .box {
     background-color: #616161;
     border: 3px solid #a0e8a0;

@@ -191,7 +191,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
                     <input type="password" id="current_password" name="current_password" required
                     onblur="this.placeholder = 'Enter your password'"
                     onfocus="this.placeholder = ''"
-                    placeholder="Enter your password"
+                    placeholder="Enter your password">
                     <img src="../Assets/eye-alt.svg" onclick="showpass3()" class="pass-icon3" id="pass-icon3">
 
 

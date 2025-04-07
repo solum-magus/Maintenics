@@ -10,7 +10,7 @@ if (!isset($_SESSION["position"])) {
     exit();
 }
 
-if ($_SESSION["position"] === "Admin") {
+if ($_SESSION["position"] !== "Admin") {
     echo "<script>
     alert('You do not have permission to access this page.');
     window.location.href = '../index.php';
@@ -21,6 +21,7 @@ if ($_SESSION["position"] === "Admin") {
 $Testsql = require __DIR__ . "/../database.php";
 $position = $_SESSION["position"];
 $rid = $_SESSION["id"];
+
 $fname = $_SESSION["fname"];
 $school_id = $_SESSION["id"] ?? null;
 
@@ -31,59 +32,60 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-// Retrieve filters from GET parameters
-$selectedProblem = $_GET['problem'] ?? '';
-$selectedDate = $_GET['date'] ?? '';
+$sql = "SELECT * FROM userinfo WHERE position = '$position'";
+$result = $Testsql->query($sql);
 
-// Base SQL query
-$sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-        FROM reportdetails
-        WHERE status = 'Resolved'
-        ORDER BY report_id DESC";
-
-// If user is not maintenance staff, filter by `rid`
-if ($position !== "Maintenance Staff") {
-    $sql .= " AND rid = ?";
-}
-
-// Apply additional filters if selected
-if (!empty($selectedProblem)) {
-    $sql .= " AND problem = ?";
-}
-if (!empty($selectedDate)) {
-    $sql .= " AND DATE(date_reported) = ?";
-}
-
-// Prepare statement
+$sql = "SELECT problem, COUNT(problem) AS count 
+        FROM reportdetails 
+        GROUP BY problem 
+        ORDER BY count DESC 
+        LIMIT 3";
 $stmt = $Testsql->prepare($sql);
+$stmt->execute();
+$topIssues = $stmt->get_result();
 
-// Bind parameters dynamically
-$paramTypes = "";
-$params = [];
+$sql = "SELECT plocation, COUNT(plocation) AS count 
+        FROM reportdetails 
+        GROUP BY plocation 
+        ORDER BY count DESC 
+        LIMIT 3";
+$stmt = $Testsql->prepare($sql);
+$stmt->execute();
+$affectedLocations = $stmt->get_result();
 
-if ($position !== "Maintenance Staff") {
-    $paramTypes .= "i";
-    $params[] = $rid;
-}
-if (!empty($selectedProblem)) {
-    $paramTypes .= "s";
-    $params[] = $selectedProblem;
-}
-if (!empty($selectedDate)) {
-    $paramTypes .= "s";
-    $params[] = $selectedDate;
-}
+$sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback, rid 
+        FROM reportdetails 
+        WHERE status = 'Resolved' 
+        ORDER BY date_reported DESC";
 
-// Bind parameters if needed
-if (!empty($params)) {
-    $stmt->bind_param($paramTypes, ...$params);
-}
-
+$stmt = $Testsql->prepare($sql);
 $stmt->execute();
 $Report = $stmt->get_result();
-$reports = $Report->fetch_all(MYSQLI_ASSOC);
 
+$reports = [];
+
+if ($Report->num_rows > 0) {
+    while ($row = $Report->fetch_assoc()) { 
+        $reports[] = $row;  
+    }
+}
+$feedback="";
 $hasUnread = checkUnreadNotifications($mysqli);
+
+$sql = "SELECT sname, 
+               COUNT(report_id) AS completed_tasks, 
+               AVG(rating) AS average_rating
+        FROM reportdetails
+        WHERE status = 'Resolved' 
+          AND rating IS NOT NULL 
+          AND sname <> ''
+        GROUP BY sname
+        ORDER BY average_rating DESC, completed_tasks DESC
+        LIMIT 5";
+
+$stmt = $Testsql->prepare($sql);
+$stmt->execute();
+$topStaff = $stmt->get_result();
 
 ?>
 
@@ -92,32 +94,70 @@ $hasUnread = checkUnreadNotifications($mysqli);
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
-    <link href="../Style/History.css" rel="stylesheet">
+    <link href="../Style/AdminHistory.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
 </head>
 <body>
 
 <header class="sticky-header">
     <div class="header-container">
-    <div class="logos">
-    <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
-    
-    <?php
-    $homePage = ($position == "Admin") ? "AdminHome.php" : (($position == "Maintenance Staff") ? "MaintenanceHome.php" : "Home.php");
-    ?>
-    <a href="<?= $homePage ?>" class="logo-link" id="HomeLink"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-    <a href="History.php" class="logo-link" id="HistoryLink"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
-    <a href="Notification.php" class="logo-link" id="NotificationLink"><img src="../Assets/notification.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
-    <a href="Settings.php" class="logo-link" id="SettingsLink"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
-</div>
+        <div class="logos">
+            <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
+            <?php
+            switch ($position) {
+                case "Admin":
+                    ?>
+                    <a href="AdminHome.php" class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="AdminHistory.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+
+                case "Maintenance Staff":
+                    ?>
+                    <a href="MaintenanceHome.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            
+                case "Student":
+                case "Teacher":
+                    ?>
+                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            
+                default:
+                    ?>
+                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            }
+            ?>
+
+            <a href="Notification.php" class="logo-link"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
+            <a href="Settings.php" class="logo-link"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
+        </div>
+
         <div class="user-info">
             <div class="user-top">
-                <span class="username"><?= htmlspecialchars($user["full_name"] ?? "NULL") ?></span>
-                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+                <?php if (isset($fname) && isset($position)):  ?>
+
+                <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
+
+                <?php else: ?>
+
+                <span class="username">NULL</span>
+                <span class="position">NULL</span>
+
+                <?php endif; ?>
+
                 <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
-                    <option value="" disabled selected>Profile</option>
-                    <option value="settings">Settings</option>
-                    <option value="logout">Logout</option>
+                        <option value="" disabled selected>Profile</option>
+                        <option value="settings">Settings</option>
+                        <option value="logout">Logout</option>
                 </select>
             </div>
         </div>
@@ -149,70 +189,93 @@ $hasUnread = checkUnreadNotifications($mysqli);
     </div>
 </div>
 
-<div class="filters">
-<form method="GET" action="History.php">
-        <label for="problem">Filter by Problem:</label>
-        <select id="problem" name="problem">
-            <option value="">All</option>
-            <option value="TV" <?= ($selectedProblem === "TV") ? "selected" : "" ?>>TV</option>
-            <option value="Broken Chair" <?= ($selectedProblem === "Broken Chair") ? "selected" : "" ?>>Broken Chair</option>
-            <option value="No Wi-Fi" <?= ($selectedProblem === "No Wi-Fi") ? "selected" : "" ?>>No Wi-Fi</option>
-        </select>
+		 <div class="container">
+        <div class="title">Report History</div>
+        <div class="box">
+            <div class="heading">Most Common Issues</div>
+            <table class="table">
+                <tr>
+                    <th>Issue</th>
+                    <th>Reported Times</th>
+                </tr>
+                    <?php 
+                        $firstRow = true;
 
-        <label for="date">Filter by Date:</label>
-        <input type="date" id="date" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
-
-        <button type="submit" id="btn">Go</button>
-    </form>
-</div>
-
-<div class="report-h">
-<h1>Report History</h1>
-</div>
-
-<?php if (!empty($reports)): ?>
-    <?php foreach ($reports as $report): ?>
-        <div class="box report <?= strtolower($report['status']) ?>">
-            <div class="report-container">
-                <div>
-                    <h3 class="overlayt" id="status-text">Status: <?= htmlspecialchars($report['status']) ?></h3>
-                    <p>Report ID: <?= $report['report_id'] ?></p>
-                    <p>Problem: <?= $report['problem'] ?></p>
-                    <p>Date Reported: <?= $report['date_reported'] ?></p>
-                    <p>Date Resolved: <?= $report['date_resolved'] ?: "Not yet resolved" ?></p>
-                </div>
-                
-                <?php if ($position != "Maintenance Staff" && empty($report['feedback'])) : ?>
-                    <div class="feedback-form">
-                        <form method="POST" action="../Authentication/sendfeedback.php">
-                            <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
-                            <div class="rating">
-                                <?php for ($i = 5; $i >= 1; $i--) : ?>
-                                    <input type="radio" name="rating<?= $report['report_id'] ?>" id="rating<?= $i ?>_<?= $report['report_id'] ?>" value="<?= $i ?>" <?= ($i == $report['rating']) ? 'checked' : '' ?>>
-                                    <label for="rating<?= $i ?>_<?= $report['report_id'] ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="24" height="24">
-                                            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                                        </svg>
-                                    </label>
-                                <?php endfor; ?>
-                            </div>
-                            <textarea name="feedback" placeholder="Leave your feedback here..." rows="4"></textarea>
-                            <button type="submit" name="submit_feedback" id="feedbackbutton">Submit</button>
-                        </form>
-                    </div>
-                <?php else: ?>
-                    <p class="feedback-submitted"><b>Feedback:</b> <?= $report['feedback'] ? '"' . htmlspecialchars($report['feedback']) . '"' : "No feedback given." ?></p>
-                <?php endif; ?>
-            </div>
+                        if ($topIssues->num_rows > 0) {
+                            while ($row = $topIssues->fetch_assoc()) {
+                                $highlightClass = $firstRow ? 'highlight' : '';
+                                echo "<tr class='$highlightClass'>";
+                                echo "<td>" . htmlspecialchars($row['problem']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['count']) . "</td>";
+                                echo "</tr>";
+                                $firstRow = false;
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No reports available</td></tr>";
+                        }
+                    ?>
+            </table>
         </div>
-    <?php endforeach; ?>
-<?php else: ?>
-    <p class="feedback-submitted"><b>No recent reports.</p>
-<?php endif; ?>
 
-<script src="../JS/script1.js"></script>
+        <div class="box">
+            <div class="heading">Most Affected Locations</div>
+            <table class="table">
+                <tr>
+                    <th>Location</th>
+                    <th>Times Reported</th>
+                </tr>
+                    <?php 
+                        $firstRow = true;
+
+                        if ($affectedLocations->num_rows > 0) {
+                            while ($row = $affectedLocations->fetch_assoc()) {
+                                $highlightClass = $firstRow ? 'highlight' : '';
+                                echo "<tr class='$highlightClass'>";
+                                echo "<td>" . htmlspecialchars($row['plocation']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['count']) . "</td>";
+                                echo "</tr>";
+                                $firstRow = false;
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No reports available</td></tr>";
+                        }
+                    ?>
+            </table>
+        </div>
+
+        <div class="box">
+            <div class="heading">Most Rated Staff</div>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Completed Tasks</th>
+                    <th>Average Rating</th>
+                </tr>
+                    <?php 
+                        $firstRow = true;
+                        if ($topStaff->num_rows > 0) {
+                            while ($row = $topStaff->fetch_assoc()) {
+                                $highlightClass = $firstRow ? 'highlight' : '';
+                                echo "<tr class='$highlightClass'>";
+                                echo "<td>" . htmlspecialchars($row['sname']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['completed_tasks']) . "</td>";
+                                echo "<td>" . number_format($row['average_rating'], 2) . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>No ratings available</td></tr>";
+                        }
+                    ?>
+            </table>
+        </div>
+
+    </div>
+
+<script src="../JS/script.js"></script>
 <script src="../JS/script4.js"></script>
-<script src="../JS/script6.js"></script>
 <script src="../JS/script7.js"></script>
+<script src="../JS/script6.js"></script>
+
+
 </body>
 </html>

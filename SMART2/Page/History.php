@@ -37,8 +37,9 @@ $selectedDate = $_GET['date'] ?? '';
 
 // Base SQL query
 $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
-        FROM reportdetails 
-        WHERE status = 'Resolved'";
+        FROM reportdetails
+        WHERE status = 'Resolved'
+        ORDER BY report_id DESC";
 
 // If user is not maintenance staff, filter by `rid`
 if ($position !== "Maintenance Staff") {
@@ -206,9 +207,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <div id="Nofeedback">
-    <p class="feedback-submitted"><b id="NoReport">Feedback: <?= !empty($report['feedback']) ? htmlspecialchars($report['feedback']) : 'No feedback given.' ?></p>
-    </div>
+    <p class="feedback-submitted"><b>No recent reports.</p>
 <?php endif; ?>
 
 <script src="../JS/script1.js"></script>

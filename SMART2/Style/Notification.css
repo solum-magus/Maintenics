@@ -301,9 +301,10 @@ h1 {
         padding: 4px;
     }
 
-    
+    .notification-container span {
+        font-size: 1rem !important;
+    }
 
-    
     .container {
         width: 60%;
         height: auto;
@@ -365,11 +366,14 @@ h1 {
     }
     .mark-all-btn {
         margin-top: 7px;
-        margin-left: 70%;
       }
       h1 {
         font-size: 35px;
         
+    }
+
+    .notification-container span {
+        font-size: 12px !important;
     }
 
 
@@ -424,7 +428,7 @@ h1 {
     }
 
     .notification-container span {
-        font-size: 1rem !important;
+        font-size: 10px !important;
     }
 
       h1 {

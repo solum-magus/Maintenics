@@ -340,9 +340,6 @@ textarea {
         align-items: center;
         gap: 10px;
     }
-    .filters select, .filters input {
-        width: 80%;
-    }
     .box {
         padding: 50px;
     }
@@ -395,17 +392,24 @@ textarea {
         padding-right: 20px;
         align-items: center;
     }
-    .filters select, .filters input {
-        width: 90%;
-    }
     .box {
         padding: 30px;
         flex-direction: column;
-        text-align: center;
+        font-size: 1rem;
     }
     .report-h {
         padding-left: 0px;
         margin-top: 20px; /* Adjust this value to increase spacing */
+    }
+    form {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 610px) {
+    .filters select, .filters input {
+        width: 100%;
+        margin: 10px;
     }
 }
 
@@ -453,6 +457,12 @@ textarea {
         padding-left: 20px;
         text-align: center;
     }
+    h3 {
+        font-size: 20px !important;
+    }
+    p {
+        font-size: small;
+    }
 }
 
 @media (max-width: 320px) {
@@ -486,7 +496,6 @@ textarea {
     }
     .filters {
         flex-direction: column;
-        padding: 10px;
         align-items: center;
     }
     .filters select, .filters input {
@@ -500,21 +509,4 @@ textarea {
         padding-left: 15px;
         text-align: center;
     }
-}
-
-#Nofeedback{
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-}
-
-#NoReport{
-    font-size: 1.4rem;
-    color: #343a40	
-}
-.dark-mode #NoReport{
-    font-size: 1.4rem;
-    color: #fd7e14		
 }

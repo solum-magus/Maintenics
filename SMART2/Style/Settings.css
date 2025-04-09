@@ -28,13 +28,11 @@
     flex-grow: 1;
 }
 
-/* Ensure .logo-link behaves like a link and doesn’t affect layout */
 .logo-link {
-    text-decoration: none; /* Remove underline or any default link styles */
-    display: inline-block; /* Ensure it behaves like an inline element */
+    text-decoration: none; 
+    display: inline-block; 
 }
 
-/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
@@ -56,7 +54,6 @@
     filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
 
-/* You have multiple .logo.active definitions — keep only the one you need */
 .logo.active {
     filter: brightness(1.2);
     background-color: #0066cc;
@@ -384,12 +381,12 @@
 }
 
 .dark-mode .setting-choice:hover {
-    color: #00aaff !important; /* Adjust to a bright color for dark mode */
+    color: #00aaff !important;
 }
 
 
 .modal {
-    display: none; /* Initially hidden */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -424,23 +421,22 @@
     color: red;
 }
 
-/* Ensure the modal is hidden by default */
 .modal {
-    display: none; /* Hide modal initially */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background: rgba(0, 0, 0, 0.5); 
     justify-content: center;
     align-items: center;
 }
 
 .modal-content .logo {
-    display: block; /* Makes the image behave like a block element */
-    margin: 10px auto; /* Centers the image horizontally */
-    max-width: 100px; /* Adjust the size as needed */
+    display: block; 
+    margin: 10px auto; 
+    max-width: 100px; 
 }
 
 .dark-mode .modal-content{
@@ -450,8 +446,8 @@
 .modal-content form {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align */
-    gap: 10px; /* Spacing between fields */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .modal-content label {

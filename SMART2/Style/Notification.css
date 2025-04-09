@@ -39,13 +39,11 @@ body {
     flex-grow: 1;
 }
 
-/* Ensure .logo-link behaves like a link and doesn’t affect layout */
 .logo-link {
     text-decoration: none; /* Remove underline or any default link styles */
     display: inline-block; /* Ensure it behaves like an inline element */
 }
 
-/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
@@ -67,7 +65,6 @@ body {
     filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
 
-/* You have multiple .logo.active definitions — keep only the one you need */
 .logo.active {
     filter: brightness(1.2);
     background-color: #0066cc;
@@ -144,7 +141,7 @@ h1 {
 .notif-h {
     text-align: left;
     padding-left: 50px;
-    margin-bottom: 20px; /* Controls distance between text and boxes */
+    margin-bottom: 20px; 
     margin-top: 50px;
 }
 
@@ -185,7 +182,7 @@ h1 {
 
 .box:first-of-type, 
 .box1:first-of-type {
-    margin-top: 0px; /* Keep the first box positioned correctly */
+    margin-top: 0px;
 }
 
 .notification {
@@ -214,12 +211,11 @@ h1 {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.7);
 
-    flex-grow: 1; /* Allows text to take available space */
+    flex-grow: 1; 
 }
 
 
 
-/* Dark Mode */
 .dark-mode .box {
     background-color: #616161;
 }

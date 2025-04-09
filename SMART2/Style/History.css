@@ -39,13 +39,11 @@
     flex-grow: 1;
 }
 
-/* Ensure .logo-link behaves like a link and doesn’t affect layout */
 .logo-link {
-    text-decoration: none; /* Remove underline or any default link styles */
-    display: inline-block; /* Ensure it behaves like an inline element */
+    text-decoration: none; 
+    display: inline-block; 
 }
 
-/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
@@ -67,7 +65,6 @@
     filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
 
-/* You have multiple .logo.active definitions — keep only the one you need */
 .logo.active {
     filter: brightness(1.2);
     background-color: #0066cc;
@@ -134,7 +131,7 @@ h1 {
 .report-h {
     text-align: left;
     padding-left: 50px;
-    margin-bottom: 20px; /* Controls distance between text and boxes */
+    margin-bottom: 20px; 
     margin-top: -20px;
 }
 
@@ -182,12 +179,12 @@ h1 {
 }
 
 .overlayt {
-    position: relative; /* Removes absolute positioning */
-    align-self: flex-start; /* Aligns text to the start of the container */
-    margin-left: 10px; /* Adds spacing from the left */
+    position: relative; 
+    align-self: flex-start; 
+    margin-left: 10px; 
     margin-bottom: 30px;
-    color: green; /* Text color */
-    font-size: 26.8px; /* Text size */
+    color: green; 
+    font-size: 26.8px;
     font-weight: bold;
 	
 }
@@ -203,9 +200,9 @@ h1 {
 
 .report-container {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-columns: 1fr 1fr;
     width: 100%;
-    gap: 20px; /* Adjust spacing */
+    gap: 20px; 
     align-items: center;
 }
 
@@ -307,10 +304,10 @@ textarea {
 }
 
 #feedback{
-    text-align: center;      /* Centers text horizontally */
-    vertical-align: middle;  /* Attempts to center text vertically (not fully effective in all browsers) */
-    padding-top: 5%;         /* Adjusts to simulate vertical centering */
-    resize: none;            /* Optional: Prevent resizing */
+    text-align: center;     
+    vertical-align: middle; 
+    padding-top: 5%;         
+    resize: none;          
 }
 
 .dark-mode .box {
@@ -349,7 +346,7 @@ textarea {
         padding: 50px;
     }
     .report-h {
-        margin-top: 20px; /* Adjust this value to increase spacing */
+        margin-top: 20px; 
     }
     textarea {
         width: 70%;
@@ -413,7 +410,7 @@ textarea {
     }
     .report-h {
         padding-left: 0px;
-        margin-top: 20px; /* Adjust this value to increase spacing */
+        margin-top: 20px; 
     }
     form {
         margin-left: 10px;

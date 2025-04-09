@@ -28,13 +28,11 @@
     flex-grow: 1;
 }
 
-/* Ensure .logo-link behaves like a link and doesn’t affect layout */
 .logo-link {
-    text-decoration: none; /* Remove underline or any default link styles */
-    display: inline-block; /* Ensure it behaves like an inline element */
+    text-decoration: none; 
+    display: inline-block; 
 }
 
-/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
@@ -56,7 +54,6 @@
     filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
 
-/* You have multiple .logo.active definitions — keep only the one you need */
 .logo.active {
     filter: brightness(1.2);
     background-color: #0066cc;
@@ -207,35 +204,35 @@ body {
 
 /* Modal Styles */
 .modal {
-    display: none; /* Initially hidden */
+    display: none;
     position: fixed;
     z-index: 10000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-    display: flex; /* Flexbox to center content */
-    justify-content: center; /* Horizontally center */
-    align-items: center; /* Vertically center */
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
 
 .modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 300px; /* Adjust width as needed */
+    width: 300px; 
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content inside */
+    align-items: center; 
     position: relative;
 }
 
 .modal-image {
-    width: 500px; /* Image size */
+    width: 500px; 
     height: auto;
-    margin-bottom: -50px; /* Moves the image upwards */
+    margin-bottom: -50px;
 }
 
 h2 {

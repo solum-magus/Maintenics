@@ -124,7 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="row">
 
     <div class="col-6 d-flex justify-content-center align-items-center" style="height: 85%; ">
-    </div>
+</div>
+
 
         <div class="col-6 d-flex justify-content-center align-items-center" style="height: 100vh; width: 100vh;">
             <div class="page" id="welcomePage" style="display: block;">
@@ -204,12 +205,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <p style="color: red;"><?php echo $error_message; ?></p>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
-                        navigateTo('signUpPage');
+                        onclick="navigateTo('signInPage')";
                     });
                 </script>
             <?php endif; ?>
 
-            <button class="btn btn-primary">Create Account</button>
+            <button onclick="navigateTo('signInPage')" class="btn btn-primary">Create Account</button>
         </form>                
         <p>Already have an account? <a href="#" onclick="navigateTo('signInPage')">Sign in</a>.</p>
         <p>By signing up, you agree to our <a href="#" onclick="navigateTo('termsPage')">Terms and Policy</a>.</p>

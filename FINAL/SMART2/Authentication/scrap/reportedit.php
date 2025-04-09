@@ -12,7 +12,6 @@ if (!isset($_SESSION["position"]) || !isset($_SESSION["fname"]) || !isset($_SESS
 
 $Testsql = require __DIR__ . "/../database.php";
 
-// Handle Delete Actions
 if (isset($_GET['delete']) && isset($_GET['type'])) {
     $id = $_GET['id'];
     $type = $_GET['type'];
@@ -41,7 +40,6 @@ if (isset($_GET['delete']) && isset($_GET['type'])) {
     exit();
 }
 
-// Handle Add Location or Problem
 if (isset($_POST['add_location'])) {
     $newLocation = $_POST['location_name'];
     $addLocationQuery = "INSERT INTO problemdetail (problemloc) VALUES (?)";
@@ -87,7 +85,6 @@ if (isset($_POST['add_location'])) {
 <body>
     <h2>Add or Remove Locations and Problem Types</h2>
 
-    <!-- Add Location Form -->
     <h3>Add Location</h3>
     <form method="POST">
         <input type="text" name="location_name" placeholder="Enter Location" required>

@@ -1,5 +1,5 @@
 <?php
-session_start();  // Start the session to store errors
+session_start(); 
 echo "<pre>";
 print_r($_SESSION);
 echo "</pre>";
@@ -10,11 +10,9 @@ $error_message2 = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $mysqli = require __DIR__ . "/../database.php";
 
-    // Get user input
-    $entered_name = trim($_POST["signin_full_name"]); // Match input name from the form
+    $entered_name = trim($_POST["signin_full_name"]);
     $password = $_POST["signin_password"];
 
-    // Query to find user by full name
     $sql = "SELECT * FROM userinfo WHERE full_name = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param("s", $entered_name);
@@ -23,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $result->fetch_assoc();
 
     if ($user) {
-        // Check if the user is pending approval
         if ($user["userstatus"] === "Pending") {
             $_SESSION["error_message2"] = "Your account is still pending approval.";
             $_SESSION["entered_name"] = $entered_name;
@@ -31,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         }
 
-        // Verify password
         if (password_verify($password, $user["hashword"])) {
             session_regenerate_id();
 
@@ -53,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $redirectPage = "../Page/Home.php";
                     break;
                 default:
-                    $redirectPage = "../index.php"; // Fallback for unknown positions
+                    $redirectPage = "../index.php"; 
             }
             
             header("Location: $redirectPage");
@@ -67,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["error_message2"] = "Name not found. Please enter information correctly.";
     }
 
-    $_SESSION["entered_name"] = $entered_name; // Store input so it doesn’t reset
-    header("Location: ../index.php"); // Redirect back to index.php
+    $_SESSION["entered_name"] = $entered_name; 
+    header("Location: ../index.php");
     exit();
 }
 ?>

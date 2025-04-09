@@ -94,8 +94,8 @@ $hasUnread = checkUnreadNotifications($mysqli);
             
                 default:
                     ?>
-                    <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="Home.php"  ><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             }
@@ -247,56 +247,53 @@ $hasUnread = checkUnreadNotifications($mysqli);
         <div id="privacyModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2 style="text-align: center;">Privacy & Policy</h2>
+                <h2>Privacy & Policy</h2>
                 <br>
                 <h3>Information We Collect</h3>
+                <ul>
+                    <strong>Personal Information</strong> – Name, email address, school ID, and position (Student, Teacher, Maintenance Staff, Admin).
+                    <br>
+                    <strong>Usage Data</strong> – Information about how you interact with our platform.
+                    <br>
+                    <strong>Device Information</strong> – Your device type, browser, and IP address.
+                </ul>
+
+                <br><br>
+                <h3>How We Use Your Information</h3>
+                <ul>
+                    Provide and improve our platform’s services.
+                    Notify maintenance staff about reported issues.
+                    Secure user authentication and access control.
+                </ul>
                 <br>
+                <h3>Data Protection & Security</h3>
                 <ul>
-                    <li><strong>Personal Information</strong> – Name, email address, school ID, and position (Student, Teacher, Maintenance Staff, Admin).</li>
-                    <br>
-                    <li><strong>Usage Data</strong> – Information about how you interact with our platform.</li>
-                    <br>
-                    <li><strong>Device Information</strong> – Your device type, browser, and IP address.</li>
+                <p>We implement strict security measures to safeguard your personal data against unauthorized access, alteration, or disclosure.</p>
                 </ul>
 
-                <br><br>
-                <h3>How We Use Your Information</h3> <br>
+                <br>
+                <h3>Sharing of Information</h3>
                 <ul>
-                    <li>Provide and improve our platform’s services.</li>
-                    <br>
-                    <li>Notify maintenance staff about reported issues.</li>
-                    <br>
-                    <li>Secure user authentication and access control.</li>
-                </ul>
-                <br><br>
-                <h3>Data Protection & Security</h3> <br>
-                <ul>
-                    <li>We implement strict security measures to safeguard your personal data against unauthorized access, alteration, or disclosure.</li>
+                    <strong>School Administration & Maintenance Staff</strong> – To process issue reports. <br>
+                    <strong>Legal Authorities</strong> – If required by law.
                 </ul>
 
-                <br><br>
-                <h3>Sharing of Information</h3> <br>
+                <br>
+                <h3>Cookies & Tracking</h3>
                 <ul>
-                    <li><strong>School Administration & Maintenance Staff</strong> – To process issue reports.</li>
-                    <br>
-                    <li><strong>Legal Authorities</strong> – If required by law.</li>
+                <p>We use cookies to enhance user experience and track platform performance.</p>
                 </ul>
 
-                <br><br>
-                <h3>Cookies & Tracking</h3> <br>
+                <br>
+                <h3>Your Rights</h3>
                 <ul>
-                    <li>We use cookies to enhance user experience and track platform performance.</li>
-                </ul>
-
-                <br><br>
-                <h3>Your Rights</h3> <br>
-                <ul>
-                    <li>You have the right to access, modify, or delete your personal data by contacting us.</li>
+                <p>You have the right to access, modify, or delete your personal data by contacting us.</p>
                 </ul>
             </div>
         </div>
 
-        
+
+        <!-- Contact Us Modal -->
         <div id="contactModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>

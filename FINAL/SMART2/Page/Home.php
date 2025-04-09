@@ -92,14 +92,14 @@
             switch ($position) {
                 case "Admin":
                     ?>
-                    <a href="AdminHome.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="AdminHistory.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="AdminHome.php" ><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="AdminHistory.php" ><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
 
                 case "Maintenance Staff":
                     ?>
-                    <a href="MaintenanceHome.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="MaintenanceHome.php" ><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
                     <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
@@ -115,7 +115,7 @@
                 default:
                     ?>
                     <a href="Home.php" class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="History.php" ><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             }

@@ -40,7 +40,7 @@ $totalReportsQuery = "SELECT COUNT(*) AS total FROM reportdetails";
 $totalReportsResult = $Testsql->query($totalReportsQuery);
 $totalReports = $totalReportsResult->fetch_assoc()['total'] ?? 0;
 
-$inProgressQuery = "SELECT COUNT(*) AS in_progress FROM reportdetails WHERE status = 'Ongoing' OR 'Pending'";
+$inProgressQuery = "SELECT COUNT(*) AS in_progress FROM reportdetails WHERE status = 'Pending'";
 $inProgressResult = $Testsql->query($inProgressQuery);
 $inProgressReports = $inProgressResult->fetch_assoc()['in_progress'] ?? 0;
 
@@ -159,8 +159,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
                 default:
                     ?>
-                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="Home.php" class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             }

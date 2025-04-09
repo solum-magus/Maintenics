@@ -81,10 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sql = "INSERT INTO userinfo (position, full_name, school_id, hashword, userstatus) VALUES (?, ?, ?, ?, ?)";
         $insert = $mysqli->prepare($sql);
         $insert->bind_param("ssiss", $position, $full_name, $school_id, $hashword, $userstatus);
-
         try {
             $insert->execute();
-             header("Location: index.php#signInPage"); 
+            header("Location: index.php#signInPage"); 
             
         } catch (Exception) {
             $error_message = "An error occurred while creating the account.";
@@ -193,7 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </script>
             <?php endif; ?>
 
-            <button onclick="navigateTo('signInPage')" class="btn btn-primary">Create Account</button>
+            <button onclick="navigateTo('signUpPage')" class="btn btn-primary">Create Account</button>
         </form>                
         <p>Already have an account? <a href="#" onclick="navigateTo('signInPage')">Sign in</a>.</p>
         <p>By signing up, you agree to our <a href="#" onclick="navigateTo('termsPage')">Terms and Policy</a>.</p>
@@ -270,5 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="JS/script8.js"></script>
+   
+    
 </body>
 </html>

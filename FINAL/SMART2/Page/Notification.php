@@ -1,6 +1,6 @@
 <?php 
 session_start();
-date_default_timezone_set('Asia/Manila'); // Change if needed
+date_default_timezone_set('Asia/Manila');
 require_once __DIR__ . "/../Authentication/checknotif.php";
 
 if (!isset($_SESSION["position"])) {
@@ -50,9 +50,9 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
 }
 
 function timeAgo($timestamp) {
-    $timestampUnix = strtotime($timestamp); // Convert timestamp to Unix time
-    $currentTime = time(); // Get current Unix time
-    $timeDiff = $currentTime - $timestampUnix; // Difference in seconds
+    $timestampUnix = strtotime($timestamp);
+    $currentTime = time();
+    $timeDiff = $currentTime - $timestampUnix; 
 
 
     if ($timeDiff < 0) {

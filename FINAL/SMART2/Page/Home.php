@@ -41,10 +41,10 @@
     }
 
     if (isset($_SESSION["report_submitted"])) {
-        unset($_SESSION["report_submitted"]); // Remove session first
+        unset($_SESSION["report_submitted"]); 
     }
 
-    $_SESSION["id"] = $school_id;  // ✅ Ensure session stores school_id
+    $_SESSION["id"] = $school_id; 
 
     $hasUnread = checkUnreadNotifications($mysqli);
 

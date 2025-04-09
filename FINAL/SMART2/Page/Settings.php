@@ -12,19 +12,17 @@ if (!isset($_SESSION["position"])) {
 
 $mysqli = require __DIR__ . "/../database.php";
 
-// Escape session variables for security
 $fname = $mysqli->real_escape_string($_SESSION["fname"]);
 $position = $mysqli->real_escape_string($_SESSION["position"]);
 $id = $mysqli->real_escape_string($_SESSION["id"]);
 
-// Fetch user info from `userinfo` table
 $sql = "SELECT full_name, position FROM userinfo WHERE full_name = '$fname' AND position = '$position' AND school_id = '$id'";
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc(); // Fetch user details
+    $user = $result->fetch_assoc(); 
 } else {
-    $user = null; // No user found
+    $user = null; 
 }
 
 if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
@@ -320,7 +318,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
             <?php if ($showModal): ?>
                 const modal = document.getElementById("passwordModal");
                 if (modal) {
-                    modal.classList.add("show"); // add your modal-open class
+                    modal.classList.add("show");
                 }
             <?php endif; ?>
     });

@@ -89,10 +89,9 @@ $problemdetail2Result = $Testsql->query($problemdetailQuery);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['delete']) && isset($_POST['id'])) {
-        $type = $_POST['delete']; // location or problem
-        $id = $_POST['id']; // location or problem ID
+        $type = $_POST['delete']; 
+        $id = $_POST['id']; 
 
-        // Process deletion
         if ($type === "location") {
             $deleteQuery = "DELETE FROM problemlocations WHERE problemloc = ?";
         } elseif ($type === "problem") {
@@ -100,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (isset($deleteQuery)) {
-            // Prepare and execute the deletion query
             $stmt = $Testsql->prepare($deleteQuery);
             $stmt->bind_param("s", $id);
             $stmt->execute();

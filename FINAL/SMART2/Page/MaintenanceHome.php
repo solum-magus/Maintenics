@@ -64,7 +64,6 @@ $totalReports = count($reports);
 $pendingReports = 0;
 $resolvedReports = 0;
 
-// Count pending and resolved reports
 foreach ($reports as $report) {
     if (strtolower($report['status']) === 'pending') {
         $pendingReports++;
@@ -103,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['take_action'])) {
     $sid = $_SESSION['id'];
     $sname = $_SESSION['fname'];
 
-    // Update the report's status to "Ongoing" and assign staff member
     $sql = "UPDATE reportdetails SET status = ?, sname = ?, sid = ? WHERE report_id = ?";
     $stmt = $Testsql->prepare($sql);
     $stmt->bind_param("ssii", $status, $sname, $sid, $reportId);
@@ -122,11 +120,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['take_action'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_resolved'])) {
     $reportId = $_POST['report_id'];
-    $status = 'Resolved'; // Update status to 'Resolved'
+    $status = 'Resolved'; 
     $sid = $_SESSION['id'];
     $sname = $_SESSION['fname'];
 
-    // Update the report's status to "Resolved" and assign staff member (optional)
     $sql = "UPDATE reportdetails SET status = ?, date_resolved = NOW() WHERE report_id = ?";
     $stmt = $Testsql->prepare($sql);
     $stmt->bind_param("si", $status, $reportId);
@@ -146,9 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_resolved'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reject_report'])) {
     $reportId = $_POST['report_id'];
-    $status = 'Rejected'; // Update status to 'Rejected'
+    $status = 'Rejected'; 
 
-    // Update the report's status to "Rejected"
     $sql = "UPDATE reportdetails SET status = ? WHERE report_id = ?";
     $stmt = $Testsql->prepare($sql);
     $stmt->bind_param("si", $status, $reportId);

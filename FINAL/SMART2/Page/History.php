@@ -24,7 +24,6 @@ $rid = $_SESSION["id"];
 $fname = $_SESSION["fname"];
 $school_id = $_SESSION["id"] ?? null;
 
-// Get user info
 $sql = "SELECT full_name, position FROM userinfo WHERE school_id = ?";
 $stmt = $Testsql->prepare($sql);
 $stmt->bind_param("i", $school_id);
@@ -32,16 +31,13 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-// Retrieve filters from GET parameters
 $selectedProblem = $_GET['problem'] ?? '';
 $selectedDate = $_GET['date'] ?? '';
 
-// Start base query
 $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
         FROM reportdetails 
         WHERE status = 'Resolved'";
 
-// Build WHERE conditions
 $conditions = [];
 $paramTypes = "";
 $params = [];
@@ -62,14 +58,12 @@ if (!empty($selectedDate)) {
     $params[] = $selectedDate;
 }
 
-// Add conditions to SQL if any
 if (!empty($conditions)) {
     $sql .= " AND " . implode(" AND ", $conditions);
 }
 
 $sql .= " ORDER BY report_id DESC";
 
-// Prepare and execute statement
 $stmt = $Testsql->prepare($sql);
 
 if (!empty($params)) {

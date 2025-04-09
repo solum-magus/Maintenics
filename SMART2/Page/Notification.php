@@ -86,7 +86,6 @@ $hasUnread = checkUnreadNotifications($mysqli);
 <header class="sticky-header">
     <div class="header-container">
         <div class="logos">
-            <!-- Dots Icon, when clicked will show/hide sidebar -->
 
             <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
             <?php

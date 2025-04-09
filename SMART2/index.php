@@ -1,13 +1,10 @@
 <?php
 session_start();
-// Error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Database connection
 $mysqli = require __DIR__ . "/database.php";
 
-// Initialize error message
 $error_message2 = isset($_SESSION["error_message2"]) ? $_SESSION["error_message2"] : "";
 $entered_name = isset($_SESSION["entered_name"]) ? htmlspecialchars($_SESSION["entered_name"]) : "";
 
@@ -31,7 +28,6 @@ if (isset($_SESSION["position"])) {
     }
 }
 
-// Clear session error messages after displaying
 unset($_SESSION["error_message2"]);
 unset($_SESSION["entered_name"]);
 
@@ -42,29 +38,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $school_id = $_POST["school_id"];
     $position = trim($_POST["position"]);
 
-    // Validate Full Name
     if (strlen($full_name) < 3 || strlen($full_name) > 70) {
         $error_message = "Full name must be at least 3 characters or more."; 
     } elseif (!strpos($full_name, ' ')) { 
         $error_message = "Please insert your full name.";
     }
 
-    // Validate Password Length
     elseif (strlen($password) < 8) {
         $error_message = "Password must be at least 8 characters long.";
     }
 
-    // Validate Password Match
     elseif ($password !== $confirm_password) {
         $error_message = "Passwords do not match.";
     }
 
-    // Validate School ID (Only Numbers Allowed)
     elseif (!ctype_digit($school_id) || strlen($school_id) < 11 || strlen($school_id) > 12) {
         $error_message = "School ID must be 11-12 digits and contain only numbers.";
     }
 
-    // Check if School ID and name is already taken
     else {
         $sql_check = "SELECT * FROM userinfo WHERE school_id = ? OR full_name = ?";
         $stmt_check = $mysqli->prepare($sql_check);
@@ -83,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // If no errors, proceed with user registration
     if (empty($error_message)) {
         $hashword = password_hash($password, PASSWORD_DEFAULT);
         $userstatus = ($position === 'Maintenance Staff' || $position === 'Admin') ? "Pending" : "Approved";

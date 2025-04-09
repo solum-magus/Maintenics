@@ -117,26 +117,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <script src="index.js"></script>
 </head>
 <body>
-    <div class="row">
+<div class="container-fluid">
+        <div class="row justify-content-end align-items-center" style="min-height: 100vh;">
+            <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
 
-    <div class="col-6 d-flex justify-content-center align-items-center" style="height: 85%; ">
-</div>
-
-
-        <div class="col-6 d-flex justify-content-center align-items-center" style="height: 100vh; width: 100vh;">
-            <div class="page" id="welcomePage" style="display: block;">
-                <div class="content">
-                    <div class="header-flex">
-                        <img src="Assets/logo.svg" alt="SMART Logo" class="Logo">
-                        <h1>SMART</h1>
-                    </div>
-                    <h2>Welcome!</h2>
-                    <div class="mt-2">
-                        <button onclick="navigateTo('signInPage')" class="btn btn-primary mb-1">Sign In</button>
-                        <button onclick="navigateTo('signUpPage')" class="btn btn-primary">Sign Up</button>
+                <div class="page" id="welcomePage" style="display: block;">
+                    <div class="content">
+                        <div class="header-flex">
+                            <img src="Assets/logo.svg" alt="SMART Logo" class="Logo">
+                            <h1>SMART</h1>
+                        </div>
+                        <h2>Welcome!</h2>
+                        <div class="mt-2">
+                            <button onclick="navigateTo('signInPage')" class="btn btn-primary mb-1">Sign In</button>
+                            <button onclick="navigateTo('signUpPage')" class="btn btn-primary">Sign Up</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div class="page" id="signUpPage" style="display: none;">
     <div class="header-flex">

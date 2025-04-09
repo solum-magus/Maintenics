@@ -199,7 +199,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <img src="Assets/eye-alt.svg" onclick="showpass2()" class="pass-icon2" id="pass-icon2">
             </div>
 
-            <!-- Display Error Message -->
             <?php if (!empty($error_message)): ?>
                 <p style="color: red;"><?php echo $error_message; ?></p>
                 <script>

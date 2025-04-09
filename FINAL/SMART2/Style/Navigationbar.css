@@ -36,13 +36,11 @@
     flex-grow: 1;
 }
 
-/* Ensure .logo-link behaves like a link and doesn’t affect layout */
 .logo-link {
-    text-decoration: none; /* Remove underline or any default link styles */
-    display: inline-block; /* Ensure it behaves like an inline element */
+    text-decoration: none;
+    display: inline-block; 
 }
 
-/* Rest of your existing logo and active state styles */
 .logo {
     width: 84px;
     height: auto;
@@ -64,7 +62,6 @@
     filter: sepia(1) saturate(5) hue-rotate(10deg);
 }
 
-/* You have multiple .logo.active definitions — keep only the one you need */
 .logo.active {
     filter: brightness(1.2);
     background-color: #0066cc;

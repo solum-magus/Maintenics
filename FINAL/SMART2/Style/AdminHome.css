@@ -97,7 +97,7 @@ h2 {
 }
 
 .modal {
-    display: none; /* Initially hidden */
+    display: none; 
     position: fixed;
     height: 80vh;
     z-index: 1000;
@@ -112,7 +112,7 @@ h2 {
 }
 
 .modal-content {
-    max-height: 75vh; /* Limit the height */
+    max-height: 75vh;
     overflow-y: auto;
     background-color: whitesmoke;
     padding: 20px;
@@ -131,9 +131,9 @@ h2 {
 }
 
 .modal-content .logo {
-    display: block; /* Makes the image behave like a block element */
-    margin: 10px auto; /* Centers the image horizontally */
-    max-width: 100px; /* Adjust the size as needed */
+    display: block; 
+    margin: 10px auto; 
+    max-width: 100px; 
 }
 
 .dark-mode .modal-content{
@@ -207,13 +207,13 @@ h2 {
 
 @media (max-width: 768px) {
     .modal-content {
-        width: 90%; /* Adjust width for smaller screens */
-        max-height: 70vh; /* Reduce height */
+        width: 90%;
+        max-height: 70vh; 
         padding: 15px;
     }
 
     .modal-content .logo {
-        max-width: 80px; /* Adjust logo size */
+        max-width: 80px;
     }
 
     .close {
@@ -225,7 +225,7 @@ h2 {
 
 @media (max-width: 425px) {
     .modal-content {
-        width: 95%; /* Increase width for smaller screens */
+        width: 95%; 
         max-height: 65vh;
         padding: 10px;
     }

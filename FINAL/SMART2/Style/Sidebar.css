@@ -19,20 +19,20 @@ body {
 
 /* Sidebar styles */
 .sidebar {
-    position: fixed; /* Fix the sidebar on the screen */
+    position: fixed; 
     top: 0;
-    left: -300px; /* Sidebar hidden by default */
-    width: 300px; /* Adjust sidebar width to fit both logo and text */
+    left: -300px; 
+    width: 300px; 
     height: 100%;
     background-color:  #003f7d;
     color: white;
     padding: 20px;
-    padding-left: 10px; /* Reduce or remove */
+    padding-left: 10px; 
     transition: left 0.3s ease;
-    z-index: 9999; /* Ensure it appears above the navbar */
+    z-index: 9999; 
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align content to the left */
+    align-items: flex-start;
 }
 
 .sidebar .logo-section {
@@ -40,28 +40,27 @@ body {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    padding: 0;  /* Remove any unwanted padding */
-    margin: 0;   /* Remove any unwanted margin */
+    padding: 0;  
+    margin: 0;  
 }
 
 
 .sidebar .logo {
-    width: 50%; /* Adjust logo size */
+    width: 50%; 
     height: auto;
-    margin: 0; /* Remove any unwanted margin */
-    padding: 0; /* Remove any unwanted padding */
+    margin: 0; 
+    padding: 0; 
 }
 
 
-/* Company name and product name */
+
 .sidebar .company-name h2,
 .sidebar .company-name h3 {
     margin: 10%;
-    font-size: 25px; /* Adjust the text size if necessary */
+    font-size: 25px; 
     color: white;
 }
 
-/* Separator to create space */
 .sidebar .separator {
     height: 20px;
     width: 100%;
@@ -70,7 +69,7 @@ body {
 /* Company Info Section (Vision, Mission, etc.) */
 .sidebar .company-info {
     margin-top: 20px;
-    text-align: left; /* Align text to the left for better readability */
+    text-align: left;
     width: 100%;
 }
 
@@ -91,14 +90,12 @@ body {
     color: #ccc;
 }
 
-/* Active state to show the sidebar */
 .sidebar.active {
     left: 0;
 }
 
-/* Content adjustment when sidebar is visible */
 .content.active {
-    margin-left: 300px; /* Adjust content margin to accommodate sidebar width */
+    margin-left: 300px;
 }
 .sidebar #CloseDots {
     position: absolute;
@@ -111,8 +108,8 @@ body {
 /* Dark Mode */
 .dark-mode {
     background-image: url('../Assets/bg1.png');
-    background-color: #1F1F1F;  /* Dark background */
-    color: #ffffff;  /* Light text */
+    background-color: #1F1F1F;  
+    color: #ffffff;  
 }
 .dark-mode h1,
 .dark-mode h2,
@@ -124,9 +121,8 @@ body {
     color: white !important;
 }
 s
-/* Ensure specific elements are visible in dark mode */
 .dark-mode .setting-choice {
-    background-color: #333; /* Dark gray for buttons */
+    background-color: #333;
     color: white;
 }
 
@@ -134,7 +130,6 @@ s
      color: #ffb74d !important; 
 }
 
-/* Fix input fields for visibility */
 .dark-mode input, 
 .dark-mode textarea {
     background-color: #ffffff;
@@ -142,21 +137,18 @@ s
     border: 1px solid #555;
 }
 
-/* Fix links */
 .dark-mode a {
-    color: #4a90e2; /* Light blue */
+    color: #4a90e2; 
 }
 
-/* Fix buttons */
 .dark-mode button {
     background-color: #444;
     color: white;
     border: none;
 }
 
-/* Optional: Toggle switch design */
 #darkModeToggle {
-    accent-color: white; /* Ensure checkbox is visible */
+    accent-color: white; 
 }
 
 .dark-mode .form-container {

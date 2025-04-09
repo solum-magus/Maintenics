@@ -29,7 +29,7 @@ h1 {
 .notif-h {
     text-align: left;
     padding-left: 50px;
-    margin-bottom: 20px; /* Controls distance between text and boxes */
+    margin-bottom: 20px; 
     margin-top: 50px;
 }
 
@@ -70,7 +70,7 @@ h1 {
 
 .box:first-of-type, 
 .box1:first-of-type {
-    margin-top: 0px; /* Keep the first box positioned correctly */
+    margin-top: 0px;
 }
 
 .notification {
@@ -99,7 +99,7 @@ h1 {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.7);
 
-    flex-grow: 1; /* Allows text to take available space */
+    flex-grow: 1;
 }
 
 

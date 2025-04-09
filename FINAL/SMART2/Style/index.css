@@ -110,7 +110,7 @@ h2 {
 
 #btn {
 display: block;
-    margin: 20px auto 0 auto; /* Adds top margin and auto left/right */
+    margin: 20px auto 0 auto; 
     width: fit-content;
 }
 

@@ -94,11 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         try {
             $insert->execute();
-            echo "<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                customAlert('Account made successfully!');
-            });
-            </script>";
+             header("Location: index.php#signInPage"); 
             
         } catch (Exception) {
             $error_message = "An error occurred while creating the account.";

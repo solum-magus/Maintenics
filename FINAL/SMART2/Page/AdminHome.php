@@ -40,7 +40,7 @@ $totalReportsQuery = "SELECT COUNT(*) AS total FROM reportdetails";
 $totalReportsResult = $Testsql->query($totalReportsQuery);
 $totalReports = $totalReportsResult->fetch_assoc()['total'] ?? 0;
 
-$inProgressQuery = "SELECT COUNT(*) AS in_progress FROM reportdetails WHERE status = 'Pending'";
+$inProgressQuery = "SELECT COUNT(*) AS in_progress FROM reportdetails WHERE status = 'Ongoing' OR 'Pending'";
 $inProgressResult = $Testsql->query($inProgressQuery);
 $inProgressReports = $inProgressResult->fetch_assoc()['in_progress'] ?? 0;
 

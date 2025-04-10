@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (activeTab) {
         const activeLogo = document.querySelector(`#${activeTab}`);
         if (activeLogo) {
-            activeLogo.classList.add('active');
+            activeLogo.classList.add('active', 'HomeLink');
         }
     }
 

@@ -123,6 +123,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../Assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
+    <link rel="manifest" href="../Assets/site.webmanifest">
+
     <link href="../Style/AdminHome.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
     <link href="../Style/Navigationbar.css" rel="stylesheet">

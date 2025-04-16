@@ -122,6 +122,11 @@ $sql = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../Assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
+    <link rel="manifest" href="../Assets/site.webmanifest">
+
     <link href="../Style/Notification.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
     <link href="../Style/Navigationbar.css" rel="stylesheet">
@@ -146,7 +151,7 @@ $sql = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
                 case "Maintenance Staff":
                     ?>
                     <a href="MaintenanceHome.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             
@@ -154,13 +159,13 @@ $sql = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
                 case "Teacher":
                     ?>
                     <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             
                 default:
                     ?>
-                    <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
                     <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;

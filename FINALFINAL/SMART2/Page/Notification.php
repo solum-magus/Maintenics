@@ -1,0 +1,248 @@
+<?php 
+session_start();
+date_default_timezone_set('Asia/Manila');
+require_once __DIR__ . "/../Authentication/checknotif.php";
+
+if (!isset($_SESSION["position"])) {
+    echo "<script>
+    alert('You are not logged in!');
+    window.location.href = '../index.php';
+    </script>";
+    exit();
+}
+
+$Testsql = require __DIR__ . "/../database.php";
+$position = $_SESSION["position"];
+
+$fname = $_SESSION["fname"];
+$school_id = $_SESSION["id"] ?? null;
+
+$sql = "SELECT full_name, position FROM userinfo WHERE school_id = ?";
+$stmt = $Testsql->prepare($sql);
+$stmt->bind_param("i", $school_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$sql = "SELECT * FROM reportdetails WHERE status IN ('Pending', 'Ongoing', 'Resolved') ORDER BY date_reported DESC";
+$reports = $Testsql->query($sql);
+
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+
+}
+
+function timeAgo($timestamp) {
+    $timestampUnix = strtotime($timestamp);
+    $currentTime = time();
+    $timeDiff = $currentTime - $timestampUnix; 
+
+
+    if ($timeDiff < 0) {
+        return "Just now";
+    }
+    if ($timeDiff < 60) {
+        return $timeDiff . " seconds ago";
+    } elseif ($timeDiff < 3600) {
+        return floor($timeDiff / 60) . " minutes ago";
+    } elseif ($timeDiff < 86400) {
+        return floor($timeDiff / 3600) . " hours ago";
+    } else {
+        return floor($timeDiff / 86400) . " days ago";
+    }
+}
+
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+
+}
+
+$pendingReports = [];
+$ongoingReports = [];
+$resolvedReports = [];
+
+if ($reports->num_rows > 0) {
+    while ($row = $reports->fetch_assoc()) { 
+        switch ($row['status']) {
+            case 'Pending':
+                $pendingReports[] = $row;
+                break;
+            case 'Ongoing':
+                $ongoingReports[] = $row;
+                break;
+            case 'Resolved':
+                $resolvedReports[] = $row;
+                break;
+        }
+    }
+}
+
+$hasUnread = checkUnreadNotifications($mysqli);
+
+$sql = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
+    $result = $mysqli->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART</title>
+    <link href="../Style/Notification.css" rel="stylesheet">
+    <link href="../Style/Sidebar.css" rel="stylesheet">
+    <link href="../Style/Navigationbar.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="sticky-header">
+    <div class="header-container">
+        <div class="logos">
+            <!-- Dots Icon, when clicked will show/hide sidebar -->
+
+            <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
+            <?php
+            switch ($position) {
+                case "Admin":
+                    ?>
+                    <a href="AdminHome.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="AdminHistory.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+
+                case "Maintenance Staff":
+                    ?>
+                    <a href="MaintenanceHome.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            
+                case "Student":
+                case "Teacher":
+                    ?>
+                    <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            
+                default:
+                    ?>
+                    <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <?php
+                    break;
+            }
+            ?>
+
+            <a href="Notification.php"  class="logo-link"><img src="../Assets/notification<?= $hasUnread ? '1' : '' ?>.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
+            <a href="Settings.php"  class="logo-link"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
+        </div>
+
+        <div class="user-info">
+            <div class="user-top">
+            <div class="position-dropdown">
+                <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+            </div>
+                <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
+                    <option value="" disabled selected></option>
+                    <option value="settings">Settings</option>
+                    <option value="logout">Logout</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="sidebar" id="sidebar">
+    <div class="logo-section">
+        <img src="../Assets/companyl.svg" alt="Company Logo" class="logo">
+        <div class="company-name">
+            <h2>Maintenics</h2>
+            <h3>Smart</h3>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="company-info">
+        <div class="vision">
+            <h4>Vision</h4>
+            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions, using cutting-edge real-time tracking technology to transform how schools manage their facilities. We are building SMART because we believe every school deserves a safe, well-maintained, and efficient environment for learning, ensuring a brighter future for students and educators everywhere. </p>
+        </div>
+        <div class="mission">
+            <h4>Mission</h4>
+            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management through real-time tracking and data-driven insights. We are committed to delivering reliable, efficient, and sustainable solutions that empower schools to optimize their operations, reduce costs, and create safer, more productive learning environments. What sets us apart is our dedication to use technology to solve real-world challenges, ensuring every school can focus on what matters most—educating future generations.</p>
+        </div>
+        <div class="contact">
+            <h4>Contact Us</h4>
+            <p>maintenics@gmail.com</p>
+        </div>
+    </div>
+</div>
+
+
+
+	<div class="notifications">
+    <form method="POST" action="../Authentication/mark_all_read.php">
+        <button type="submit" id="mark-all-read" class="mark-all-btn">Mark All as Read</button>
+    </form>
+</div>
+
+<div class="notif-h">
+<h1> Notifications </h1>
+</div>
+
+<div class="notification-container">
+
+<?php foreach ($pendingReports as $report): ?>
+    <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>" data-id="<?= $report['report_id'] ?>">
+    <span class="overlayt">A report was submitted!<br>
+    <?php if ($_SESSION['position'] === 'Maintenance Staff' || $_SESSION['position'] === 'Admin'): ?>
+        Report ID: <?= htmlspecialchars($report["report_id"]) ?></span>
+    <?php else: ?>
+    </span>
+    <?php endif; ?>
+        <span class="timestamp"><?= timeAgo($report['date_reported']) ?></span>
+    </div>
+<?php endforeach; ?>
+
+</div>
+
+  <script src="../JS/script2.js"></script>
+  <script src="../JS/script4.js"></script>
+  <script src="../JS/script6.js"></script>
+  <script src="../JS/script7.js"></script>
+  </body>
+</html>

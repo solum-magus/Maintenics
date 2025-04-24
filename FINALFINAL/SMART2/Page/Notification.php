@@ -151,7 +151,7 @@ $sql = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
                 case "Maintenance Staff":
                     ?>
                     <a href="MaintenanceHome.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="History.php"   class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             

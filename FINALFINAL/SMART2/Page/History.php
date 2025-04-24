@@ -77,15 +77,13 @@ $reports = $Report->fetch_all(MYSQLI_ASSOC);
 $hasUnread = checkUnreadNotifications($Testsql);
 
 $ptype = [];
-
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $locations[] = $row['probtype'];
-        }
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $locations[] = $row['probtype'];
     }
+}
 
 if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
-
     $mysqli = require __DIR__ . "/../database.php";
 
     $fname = $mysqli->real_escape_string($_SESSION["fname"]);
@@ -103,10 +101,13 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
 
     $full_name = $user["full_name"] ?? "";
     $first_name = explode(" ", trim($full_name))[0];
-
 }
-?>
 
+// Set the active page based on the current page
+$current_page = $_SESSION['active_page'] ?? basename($_SERVER['PHP_SELF']);
+$_SESSION['active_page'] = $current_page;  // Ensure the active page is updated in session.
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,23 +126,33 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
 
 <header class="sticky-header">
     <div class="header-container">
-    <div class="logos">
-    <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
-        
-    <?php
-    $homePage = ($position == "Admin") ? "AdminHome.php" : (($position == "Maintenance Staff") ? "MaintenanceHome.php" : "Home.php");
-    ?>
-    <a href="<?= $homePage ?>" class="logo-link" id="HomeLink"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-    <a href="History.php" class="logo-link" id="HistoryLink"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
-    <a href="Notification.php" class="logo-link" id="NotificationLink"><img src="../Assets/notification.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications"></a>
-    <a href="Settings.php" class="logo-link" id="SettingsLink"><img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings"></a>
-</div>
+        <div class="logos">
+            <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
+
+            <?php
+            // Set the home page link based on position
+            $homePage = ($position == "Admin") ? "AdminHome.php" : (($position == "Maintenance Staff") ? "MaintenanceHome.php" : "Home.php");
+            ?>
+
+            <a href="<?= $homePage ?>" class="logo-link <?= ($current_page === 'Home.php') ? 'active' : '' ?>" id="HomeLink">
+                <img src="../Assets/home.svg" class="logo" alt="Home" id="Home">
+            </a>
+            <a href="History.php" class="logo-link <?= ($current_page === 'History.php') ? 'active' : '' ?>" id="HistoryLink">
+                <img src="../Assets/history.svg" class="logo" alt="History" id="History">
+            </a>
+            <a href="Notification.php" class="logo-link <?= ($current_page === 'Notification.php') ? 'active' : '' ?>" id="NotificationLink">
+                <img src="../Assets/notification.svg" class="logo <?= $hasUnread ? 'unread' : '' ?>" alt="Notifications" id="Notifications">
+            </a>
+            <a href="Settings.php" class="logo-link <?= ($current_page === 'Settings.php') ? 'active' : '' ?>" id="SettingsLink">
+                <img src="../Assets/settings.svg" class="logo" alt="Settings" id="Settings">
+            </a>
+        </div>
         <div class="user-info">
             <div class="user-top">
-            <div class="position-dropdown">
-                <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
-                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
-            </div>
+                <div class="position-dropdown">
+                    <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
+                    <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+                </div>
                 <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
                     <option value="" disabled selected></option>
                     <option value="settings">Settings</option>
@@ -164,11 +175,11 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
     <div class="company-info">
         <div class="vision">
             <h4>Vision</h4>
-            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions, using cutting-edge real-time tracking technology to transform how schools manage their facilities. We are building SMART because we believe every school deserves a safe, well-maintained, and efficient environment for learning, ensuring a brighter future for students and educators everywhere. </p>
+            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions...</p>
         </div>
         <div class="mission">
             <h4>Mission</h4>
-            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management through real-time tracking and data-driven insights. We are committed to delivering reliable, efficient, and sustainable solutions that empower schools to optimize their operations, reduce costs, and create safer, more productive learning environments. What sets us apart is our dedication to use technology to solve real-world challenges, ensuring every school can focus on what matters most—educating future generations.</p>
+            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management...</p>
         </div>
         <div class="contact">
             <h4>Contact Us</h4>
@@ -178,21 +189,21 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
 </div>
 
 <div class="filters">
-<form method="GET" action="History.php">
+    <form method="GET" action="History.php">
         <label for="problem">Filter by Problem:</label>
         <select id="problem" name="problem">
-        <option value="" selected>All</option>
+            <option value="" selected>All</option>
             <?php
-                $probQuery = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
-                $probResult = $Testsql->query($probQuery);
+            $probQuery = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
+            $probResult = $Testsql->query($probQuery);
 
-                if ($probResult && $probResult->num_rows > 0) {
-                    while ($row = $probResult->fetch_assoc()) {
-                        $prob = htmlspecialchars($row['probtype']);
-                        $selected = ($selectedProblem === $prob) ? "selected" : "";
-                        echo "<option value=\"$prob\">$prob</option>";
-                    }
+            if ($probResult && $probResult->num_rows > 0) {
+                while ($row = $probResult->fetch_assoc()) {
+                    $prob = htmlspecialchars($row['probtype']);
+                    $selected = ($selectedProblem === $prob) ? "selected" : "";
+                    echo "<option value=\"$prob\">$prob</option>";
                 }
+            }
             ?>
         </select>
 
@@ -204,7 +215,7 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
 </div>
 
 <div class="report-h">
-<h1>Report History</h1>
+    <h1>Report History</h1>
 </div>
 
 <?php if (!empty($reports)): ?>
@@ -223,7 +234,7 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
                     <div class="feedback-form">
                         <form method="POST" action="../Authentication/sendfeedback.php">
                             <input type="hidden" name="report_id" value="<?= $report['report_id'] ?>">
-                            <textarea name="feedback" id="feedback"placeholder="Leave your feedback here..." rows="4"></textarea>
+                            <textarea name="feedback" id="feedback" placeholder="Leave your feedback here..." rows="4"></textarea>
 
                             <div class="rating">
                                 <?php for ($i = 5; $i >= 1; $i--) : ?>
@@ -236,7 +247,6 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
                                 <?php endfor; ?>
                             </div>
                             <button type="submit" name="submit_feedback" id="feedbackbutton">Submit</button>
-
                         </form>
                     </div>
                 <?php else: ?>
@@ -246,12 +256,25 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <p class="feedback-submitted" style=" display: flex; justify-content: center; align-self: center;"><b>No recent reports.</p>
+    <p class="feedback-submitted" style="display: flex; justify-content: center; align-self: center;"><b>No recent reports.</b></p>
+<?php endif; ?>
+
+<?php 
+// Debugging: Output current page and active page from session
+echo 'Current Page: ' . $current_page;
+echo '<br>Active Page from Session: ' . $_SESSION['active_page']; 
+
+if (isset($_SESSION['just_logged_in'])): ?>
+    <script>
+        localStorage.setItem('activeTab', 'Home');
+    </script>
+    <?php unset($_SESSION['just_logged_in']); ?>
 <?php endif; ?>
 
 <script src="../JS/script1.js"></script>
 <script src="../JS/script4.js"></script>
 <script src="../JS/script6.js"></script>
 <script src="../JS/script7.js"></script>
+
 </body>
 </html>

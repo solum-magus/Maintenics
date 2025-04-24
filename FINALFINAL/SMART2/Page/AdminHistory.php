@@ -209,7 +209,7 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
 </div>
 
 		 <div class="container">
-        <div class="title">Report History</div>
+        <div class="title"><h2>Report History<h2></div>
         <div class="box">
             <div class="heading">Most Common Issues</div>
             <table class="table">

@@ -84,7 +84,7 @@ ul {
     background-color: #204468;
     padding: 20px;
     border-radius: 10px;
-    width: 50%;
+    width: 30%;
     max-height: 60%;
     text-align: center;
     position: relative;
@@ -169,7 +169,7 @@ ul {
 
 .password-wrapper img {
     position: absolute;
-    right: 22%;
+    right: 7%;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
@@ -187,13 +187,14 @@ ul {
 .modal-content label {
     display: block;
     font-size: 16px;
-    text-align: center;
+    text-align: left;
     width: 100%;
+    text-indent: 20px;
     font-weight: bold;
 }
 
 .modal-content input {
-    width: 60%;
+    width: 90%;
     padding: 5px;
     font-size: 14px;
     border-radius: 5px;
@@ -231,6 +232,16 @@ ul {
     h2 {
         font-size: 24px;
     }
+
+    .modal-content {
+        width: 40%;
+    }
+    .modal-content input {
+        width: 90%;
+    }
+    .modal-content label {
+        text-indent: 10px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -245,8 +256,14 @@ ul {
         margin-top: 10px;
     }
 
+    .modal-content {
+        width: 50%;
+    }
     .modal-content input {
-        width: 80%;
+        width: 90%;
+    }
+    .modal-content label {
+        text-indent: 10px;
     }
 
     .pfp{
@@ -277,7 +294,7 @@ ul {
     }
 
     .password-wrapper img {
-        right: 12%;
+        right: 7%;
     }
 
     .qr {

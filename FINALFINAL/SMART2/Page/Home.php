@@ -83,6 +83,10 @@
     <link href="../Style/Home.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
     <link href="../Style/Navigationbar.css" rel="stylesheet">
+    <script
+  src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+  type="module"
+></script>
 </head>
 <body>
 
@@ -260,7 +264,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="successModal" class="modal">
     <div class="modal-content">
         <span id="closeModal" class="close">&times;</span>
-        <img src="../Assets/modal.svg" class="modal-image">
+        <dotlottie-player
+        src="https://lottie.host/04108b42-2a62-4577-b2e9-80cc8d590abf/biajU331Fa.lottie"
+        background="transparent"
+        speed="1"
+        style="width: 150px; height: 150px"
+        loop
+        autoplay
+        ></dotlottie-player>
         <h2>Report Submitted</h2>
         <hr class="separator">
         <p>Your report has been logged and will be addressed shortly.</p>

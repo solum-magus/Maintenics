@@ -16,6 +16,10 @@ h1 {
 	white-space: nowrap;
 }
 
+p.feedback-submitted {
+    margin-top: 10px;
+}
+
 .report-h {
     text-align: left;
     padding-left: 50px;

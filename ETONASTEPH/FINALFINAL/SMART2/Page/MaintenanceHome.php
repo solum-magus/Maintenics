@@ -35,13 +35,25 @@ $position = $user["position"];
 $full_name = $user["full_name"] ?? "";
 $first_name = explode(" ", trim($full_name))[0];
 
+$filter = $_GET['problem'] ?? '';
+
+// Build the base query
 $sql = "SELECT report_id, rname, plocation, problem, pdescription, status, date_reported, sid 
-        FROM reportdetails 
-        ORDER BY 
+        FROM reportdetails";
+
+// Add WHERE clause if a filter is applied
+if (!empty($filter)) {
+    $sql .= " WHERE status = ?";
+}
+
+// Add the ordering
+$sql .= " ORDER BY 
             CASE 
                 WHEN status = 'Ongoing' THEN 1 
                 WHEN status = 'Pending' THEN 2 
-                ELSE 3 
+                WHEN status = 'Resolved' THEN 3
+                WHEN status = 'Rejected' THEN 4
+                ELSE 5
             END, 
             CASE 
                 WHEN status IN ('Ongoing', 'Pending') THEN date_reported 
@@ -52,7 +64,15 @@ $sql = "SELECT report_id, rname, plocation, problem, pdescription, status, date_
                 ELSE NULL 
             END DESC";
 
-$result = $Testsql->query($sql);
+// Prepare statement
+if (!empty($filter)) {
+    $stmt = $Testsql->prepare($sql);
+    $stmt->bind_param("s", $filter);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    $result = $Testsql->query($sql);
+}
 
 if ($result->num_rows > 0) {
     $reports = $result->fetch_all(MYSQLI_ASSOC);
@@ -280,17 +300,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reject_report'])) {
     </div>
 </div>
 
+<div class="cont">
+    <div class="filters">
+        <?php $selectedStatus = $_GET['problem'] ?? ''; ?>
+
+        <form method="GET" action="MaintenanceHome.php">
+            <label for="problem">Filter by Problem:</label>
+            <select id="problem" name="problem">
+                <option value="" <?= $selectedStatus === '' ? 'selected' : '' ?>>All</option>
+                <option value="Resolved" <?= $selectedStatus === 'Resolved' ? 'selected' : '' ?>>Resolved</option>
+                <option value="Ongoing" <?= $selectedStatus === 'Ongoing' ? 'selected' : '' ?>>Ongoing</option>
+                <option value="Pending" <?= $selectedStatus === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                <option value="Rejected" <?= $selectedStatus === 'Rejected' ? 'selected' : '' ?>>False Report</option>
+            </select>
+            <button type="submit" id="btn">Go</button>
+        </form>
+    </div>
+</div>
+
 <div class="row" id="main1">
-    <table style="width: 95% !important; height: 95%; margin-right: auto; margin-block: 2%;">
+    <table style="width: fit-content; height: 95%; margin-right: auto; margin-block: 2%;">
 
         <tr>
             <th class="cth">Action</th>
+            <th class="cth">Status</th>
             <th class="cth">Report ID</th>
             <th class="cth">Date Reported</th>
             <th class="cth">Location</th>
             <th class="cth">Problem</th>
             <th class="cth">Description</th>
-            <th class="cth">Status</th>
         </tr>
         <?php foreach ($reports as $report): ?>
         <tr>
@@ -304,17 +342,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reject_report'])) {
                     <form method="POST" action="">
                         <input type="hidden" name="report_id" value="<?= $report['report_id']; ?>">
                         <button type="submit" name="mark_resolved" class="resolved-btn">Mark as Resolved</button>
+                        <br>
                         <button type="submit" name="reject_report" class="reject-btn" id="reject_<?= $report['report_id']; ?>">False Report</button>
                     </form>
                 <?php endif; ?>
             </td>
+            <td class="<?= strtolower($report['status']) ?>"><?= $report['status']; ?></td>
             <td><?= $report['report_id']; ?></td>
             <td><?= $report['date_reported']; ?></td>
             <td><?= $report['plocation']; ?></td>
             <td><?= $report['problem']; ?></td>
-            <td><?= !empty($report['pdescription']) ? htmlspecialchars($report['pdescription']) : 'No description given.'; ?></td></td>
-            <td><?= $report['status']; ?></td>
-            
+            <td><?= !empty($report['pdescription']) ? htmlspecialchars($report['pdescription']) : 'No description given.'; ?></td></td> 
         </tr>
         <?php endforeach; ?>
 

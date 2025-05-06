@@ -73,6 +73,10 @@ th, td {
     padding: 10px;
     border: 1px black;
     background-color: white;
+    word-wrap: break-word;
+    word-break: normal;
+    white-space: normal;
+    max-width: 300px;
 }
 
 th {
@@ -92,7 +96,7 @@ h2 {
     background-color: white;
     border: none;
     display: block;
-    margin: 0 auto;
+    margin: 5px auto;
     text-align: center;
 }
 

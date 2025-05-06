@@ -1,74 +1,95 @@
 <?php
+session_start();
+require_once __DIR__ . "/../Authentication/checknotif.php";
 
-    session_start();
-    require_once __DIR__ . "/../Authentication/checknotif.php";
+// Check if user is logged in
+if (!isset($_SESSION["position"])) {
+    echo "<script>
+    alert('You are not logged in!');
+    window.location.href = '../index.php';
+    </script>";
+    exit();
+}
 
-    if (!isset($_SESSION["position"])) {
-        echo "<script>
-        alert('You are not logged in!');
-        window.location.href = '../index.php';
-        </script>";
-        exit();
-    }
-    if ($_SESSION["position"] === "Admin" || $_SESSION["position"] === "Maintenance Staff") {
-        echo "<script>
-        alert('You do not have permission to access this page.');
-        window.location.href = '../index.php';
-        </script>";
-        exit();
-    }
-    
-    if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+// Get database connection
+$mysqli = require __DIR__ . "/../database.php";
 
-        $mysqli = require __DIR__ . "/../database.php";
+// Get user information
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
 
-        $fname = $mysqli->real_escape_string($_SESSION["fname"]);
-        $position = $mysqli->real_escape_string($_SESSION["position"]);
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
 
-        $sql = "SELECT * FROM userinfo
-                WHERE full_name = '$fname'
-                AND position = '$position'";
-
-        $result = $mysqli->query($sql);
-
-        $user = $result->fetch_assoc();
-
-        $school_id = $user["school_id"] ?? null;
-
-        $full_name = $user["full_name"] ?? "";
-        $first_name = explode(" ", trim($full_name))[0];
-
-    }
-
-    if (isset($_SESSION["report_submitted"])) {
-        unset($_SESSION["report_submitted"]); 
-    }
-
-    $_SESSION["id"] = $school_id; 
-
-    $hasUnread = checkUnreadNotifications($mysqli);
-
-    $sql = "SELECT DISTINCT problemloc FROM problemlocations ORDER BY problemloc ASC";
     $result = $mysqli->query($sql);
+    $user = $result->fetch_assoc();
 
-    $locations = [];
+    $school_id = $user["school_id"] ?? null;
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+}
 
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $locations[] = $row['problemloc'];
-        }
+// Check for unread notifications
+$hasUnread = checkUnreadNotifications($mysqli);
+
+// Get all room locations
+$roomQuery = "SELECT DISTINCT problemloc FROM problemlocations ORDER BY problemloc ASC";
+$roomResult = $mysqli->query($roomQuery);
+
+$allRooms = [];
+if ($roomResult && $roomResult->num_rows > 0) {
+    while ($row = $roomResult->fetch_assoc()) {
+        $allRooms[] = $row['problemloc'];
     }
+}
 
-    $sql = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
-    $result = $mysqli->query($sql);
+// Get rooms with active issues (Pending or Ongoing status)
+$issueQuery = "SELECT plocation, problem, status, date_reported, pdescription
+               FROM reportdetails 
+               WHERE (status = 'Pending' OR status = 'Ongoing') 
+               AND plocation != 'Other'
+               ORDER BY plocation ASC";
+$issueResult = $mysqli->query($issueQuery);
 
-    $ptype = [];
-
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $locations[] = $row['probtype'];
+$unavailableRooms = [];
+if ($issueResult && $issueResult->num_rows > 0) {
+    while ($row = $issueResult->fetch_assoc()) {
+        $room = $row['plocation'];
+        if (!isset($unavailableRooms[$room])) {
+            $unavailableRooms[$room] = [];
         }
+        $unavailableRooms[$room][] = [
+            'problem' => $row['problem'],
+            'status' => $row['status'],
+            'date_reported' => $row['date_reported'],
+            'description' => $row['pdescription']
+        ];
     }
+}
+
+// Calculate available rooms (all rooms minus unavailable ones)
+$availableRooms = array_diff($allRooms, array_keys($unavailableRooms));
+
+// Get room issues by problem type for statistics
+$problemTypeStats = [];
+$statsQuery = "SELECT problem, COUNT(*) as count 
+               FROM reportdetails 
+               WHERE (status = 'Pending' OR status = 'Ongoing') 
+               GROUP BY problem";
+$statsResult = $mysqli->query($statsQuery);
+
+if ($statsResult && $statsResult->num_rows > 0) {
+    while ($row = $statsResult->fetch_assoc()) {
+        $problemTypeStats[$row['problem']] = $row['count'];
+    }
+}
+
+// Calculate percentages
+$totalRooms = count($allRooms);
+$availablePercent = ($totalRooms > 0) ? round((count($availableRooms) / $totalRooms) * 100) : 0;
+$unavailablePercent = ($totalRooms > 0) ? round((count($unavailableRooms) / $totalRooms) * 100) : 0;
 ?>
 
 <!DOCTYPE html>
@@ -174,7 +195,70 @@
         </div>
     </div>
 </div>
-
+<div id="home">
+    <div class="announcement">
+        <h2> 📣 Announcement</h2>
+<div class="status-board available">
+            <h2>Available Rooms</h2>
+            <ul class="room-list">
+                <?php if (count($availableRooms) > 0): ?>
+                    <?php foreach ($availableRooms as $room): ?>
+                        <li class="room-item">
+                            <div class="room-name">
+                                <span class="status-icon">✅</span><?= htmlspecialchars($room) ?>
+                            </div>
+                            <div class="room-status">Ready for use</div>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li class="room-item">
+                        <div class="room-status">No available rooms at the moment</div>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+        
+        <!-- Unavailable Rooms -->
+        <div class="status-board unavailable">
+            <h2>Unavailable Rooms</h2>
+            <ul class="room-list">
+                <?php if (count($unavailableRooms) > 0): ?>
+                    <?php foreach ($unavailableRooms as $room => $issues): ?>
+                        <li class="room-item">
+                            <div class="room-name">
+                                <span class="status-icon">❌</span><?= htmlspecialchars($room) ?>
+                            </div>
+                            <div class="room-status">
+                                Issues:
+                                <ul>
+                                    <?php foreach ($issues as $issue): ?>
+                                        <li>
+                                            <span class="problem"><?= htmlspecialchars($issue['problem']) ?></span> 
+                                            (<?= htmlspecialchars($issue['status']) ?> since <?= date('M d, h:i a', strtotime($issue['date_reported'])) ?>)
+                                            <?php if (!empty($issue['description'])): ?>
+                                                <span class="description">"<?= htmlspecialchars($issue['description']) ?>"</span>
+                                            <?php endif; ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li class="room-item">
+                        <div class="room-status">All rooms are available!</div>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+    
+    
+            
+        </div>
+        </div>
+    </div>
+    
 <div class="form-container">
     <h2 class="form-title">Good day, <?= $first_name ?>! Reporting an issue?</h2>
     <form id="reportForm">
@@ -221,6 +305,13 @@
 
 </div>
 
+
+
+
+    
+</div>
+                
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     fetch("../Authentication/get_user.php")
@@ -265,12 +356,11 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="modal-content">
         <span id="closeModal" class="close">&times;</span>
         <dotlottie-player
-        src="https://lottie.host/04108b42-2a62-4577-b2e9-80cc8d590abf/biajU331Fa.lottie"
-        background="transparent"
-        speed="1"
-        style="width: 100px; height: 100px"
-        loop
-        autoplay
+            id="successAnimation"
+            src="https://lottie.host/04108b42-2a62-4577-b2e9-80cc8d590abf/biajU331Fa.lottie"
+            background="transparent"
+            speed="1"
+            mode="normal"
         ></dotlottie-player>
         <h2>Report Submitted</h2>
         <hr class="separator">
@@ -281,12 +371,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="popup" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background: rgb(0, 123, 255); padding:10px 20px; border:1px solid rgb(38, 52, 177); border-radius:8px; z-index:10000; color:white; font-family: Roboto, sans-serif; box-shadow:0 0 10px rgba(0,0,0,0.1);">
         <span id="popup-message"></span>
     </div>
+    
 
 <script src="../JS/script.js"></script>
 <script src="../JS/script4.js"></script>
 <script src="../JS/script6.js"></script>
 <script src="../JS/script7.js"></script>
 <script src="../JS/script8.js"></script>
+<script src="../JS/script9.js"></script>
 
 </body>
 </html>

@@ -24,6 +24,26 @@ $position = $_SESSION["position"];
 $fname = $_SESSION["fname"];
 $school_id = $_SESSION["id"] ?? null;
 
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+}
+
 $sql = "SELECT full_name, position FROM userinfo WHERE school_id = ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("i", $school_id);
@@ -184,7 +204,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
             </div>
 
             <button type="submit" class="btn" id="final">Update User</button>
-            <a href="AdminHome.php" class="btn">Cancel</a>
+            <a href="AdminHome.php" class="btn" style="color: white !important;">Cancel</a>
         </form>
 </div>
 

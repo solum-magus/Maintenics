@@ -3,6 +3,7 @@
 
 * {
     font-family: "Comfortaa", sans-serif;
+    box-sizing: border-box;
 }
 
 body {
@@ -33,11 +34,22 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#termsPage {
-    max-width: 550px;
+.terms-page {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgb(250, 250, 250);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    flex-grow: 1;
 }
 #contentt {
     text-align: justify !important;
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
 h1 {
@@ -122,6 +134,7 @@ display: block;
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    width: 100%;
 }
 
 .form-group label {
@@ -131,12 +144,17 @@ display: block;
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
     flex: 2;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
+
 
 button {
     width: 50%;

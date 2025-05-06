@@ -36,7 +36,7 @@ $selectedDate = $_GET['date'] ?? '';
 
 $sql = "SELECT report_id, problem, date_reported, date_resolved, status, rating, feedback 
         FROM reportdetails 
-        WHERE status = 'Resolved'";
+        WHERE status IN ('Resolved', 'Rejected')";
 
 $conditions = [];
 $paramTypes = "";

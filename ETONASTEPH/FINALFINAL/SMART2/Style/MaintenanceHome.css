@@ -11,6 +11,20 @@
     text-align: center;
     margin: 20px auto;
 }
+
+td.pending {
+    color: rgb(255, 24, 24) !important;
+}
+td.resolved {
+    color: rgb(0, 194, 0) !important;
+}
+td.ongoing {
+    color: #ffda00 !important;
+}
+td.rejected {
+    color: rgb(163, 163, 163) !important;
+}
+
 .separator {
     width: 100%;
     height: 1px;
@@ -47,10 +61,17 @@
 
 table, th, td, tr {
     text-align: center;  
-    margin: 0 auto;
+    margin-left: auto;
     background-color: white;
-    font-size: 15px;
+    font-size: 16px;
     padding: 10px;
+  }
+
+  td {
+    word-wrap: break-word;
+    word-break: normal;
+    white-space: normal;
+    max-width: 300px;
   }
   
   th {
@@ -61,8 +82,6 @@ table, th, td, tr {
   table {
     background-color: black;
     padding: 1px !important;
-    justify-content: center;
-    align-items: center;
   }
   
   .cth {
@@ -72,9 +91,20 @@ table, th, td, tr {
   #main1 {
     width: 80%;
     margin: 10px auto;
+    display: block;
   }
 table select {
     border: none;
+}
+
+.filters {
+    justify-self: center;
+    margin: 40px;
+    font-size: 16px;
+}
+select#problem {
+    padding: 3px;
+    border-radius: 5px;
 }
 
 
@@ -99,24 +129,6 @@ table select {
     .dashboard .separator {
         height: 100px;
         width: 2px;
-    }
-
-    #main1 {
-        display: block;
-        margin: 10px auto;
-        width: 100%;
-    }
-
-    table {
-        width: 100%;
-        margin-top: 20px;
-        overflow-x: auto;
-    }
-
-    th,
-    td {
-        font-size: 16px;
-        padding: 10px;
     }
 
     .dashboard {
@@ -152,6 +164,32 @@ table select {
     }
 }
 
+@media (max-width: 1024px) and (min-width: 768px) {
+    #main1 {
+        display: block;
+        margin: 10px auto;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        display: table;
+        table-layout: fixed;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    th,
+    td {
+        font-size: 16px;
+        padding: 10px;
+        word-break: break-word;
+        white-space: normal;
+    }
+}
+
 @media (max-width: 768px) {
     .dashboard .separator {
         height: 100px;
@@ -160,6 +198,7 @@ table select {
     }
 
     #main1 {
+        width: 95%;
         overflow-x: auto; 
         -webkit-overflow-scrolling: touch;
     }
@@ -224,7 +263,7 @@ table select {
     }
 
     #main1 {
-        width: 100%;
+        width: 95%;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -244,6 +283,31 @@ table select {
         white-space: nowrap; 
     }
 
+    .cont {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form {
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form input,
+    form select,
+    form textarea,
+    form button,
+    form label {
+        width: 100%;
+        max-width: 100%;
+        margin: 5px;
+        text-align: center;
+    }
 
     .dashboard {
         gap: 15px;
@@ -263,6 +327,7 @@ table select {
         padding: 5px;
         font-size: 5px;
     }
+
 }
 
 @media (max-width: 320px) {
@@ -277,7 +342,7 @@ table select {
 
     #main1 {
         display: block;
-        margin: 5px 0px 0;
+        margin: 0 auto;
     }
 
     table {
@@ -317,6 +382,11 @@ table select {
     button {
         font-size: 8px;
     }
+
+    svg {
+        width: 18px;
+        height: auto;
+    }
 }
 
 button {
@@ -325,4 +395,6 @@ button {
     border-radius: 5px;
     border: none;
     background-color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

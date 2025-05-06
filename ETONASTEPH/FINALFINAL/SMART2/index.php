@@ -57,37 +57,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     else {
-        $sql_check = "SELECT * FROM userinfo WHERE school_id = ? OR full_name = ?";
-        $stmt_check = $mysqli->prepare($sql_check);
-        $stmt_check->bind_param("ss", $school_id, $full_name);
-        $stmt_check->execute();
-        $result_check = $stmt_check->get_result();
-
-        if ($result_check->num_rows > 0) {
-            $existing_user = $result_check->fetch_assoc();
+        $sql_check_id = "SELECT * FROM userinfo WHERE school_id = ?";
+        $stmt_check_id = $mysqli->prepare($sql_check_id);
+        $stmt_check_id->bind_param("s", $school_id);
+        $stmt_check_id->execute();
+        $result_check_id = $stmt_check_id->get_result();
+        
+        if ($result_check_id->num_rows > 0) {
+            $error_message = "This School ID is already registered.";
+        } else {
+            $sql_check_name = "SELECT * FROM userinfo WHERE full_name = ?";
+            $stmt_check_name = $mysqli->prepare($sql_check_name);
+            $stmt_check_name->bind_param("s", $full_name);
+            $stmt_check_name->execute();
+            $result_check_name = $stmt_check_name->get_result();
             
-            if ($existing_user["school_id"] === $school_id) {
-                $error_message = "This School ID is already taken.";
-            } elseif ($existing_user["full_name"] === $full_name) {
-                $error_message = "This Name is already taken.";
+            if ($result_check_name->num_rows > 0) {
+                $error_message = "This full name is already taken.";
+            } else {
+                $hashword = password_hash($password, PASSWORD_DEFAULT);
+                $userstatus = ($position === 'Maintenance Staff' || $position === 'Admin') ? "Pending" : "Approved";
+    
+                $sql = "INSERT INTO userinfo (position, full_name, school_id, hashword, userstatus) VALUES (?, ?, ?, ?, ?)";
+                $insert = $mysqli->prepare($sql);
+                $insert->bind_param("ssiss", $position, $full_name, $school_id, $hashword, $userstatus);
+    
+                try {
+                    $insert->execute();
+                    header("Location: index.php#signInPage"); 
+                    exit;
+                } catch (Exception $e) {
+                    $error_message = "An error occurred while creating the account.";
+                }
             }
-        }
-    }
-
-    if (empty($error_message)) {
-        $hashword = password_hash($password, PASSWORD_DEFAULT);
-        $userstatus = ($position === 'Maintenance Staff' || $position === 'Admin') ? "Pending" : "Approved";
-
-        $sql = "INSERT INTO userinfo (position, full_name, school_id, hashword, userstatus) VALUES (?, ?, ?, ?, ?)";
-        $insert = $mysqli->prepare($sql);
-        $insert->bind_param("ssiss", $position, $full_name, $school_id, $hashword, $userstatus);
-
-        try {
-            $insert->execute();
-             header("Location: index.php#signInPage"); 
-            
-        } catch (Exception) {
-            $error_message = "An error occurred while creating the account.";
         }
     }
 }
@@ -187,7 +189,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <img src="Assets/eye-alt.svg" onclick="showpass2()" class="pass-icon2" id="pass-icon2">
             </div>
 
-            <!-- Display Error Message -->
             <?php if (!empty($error_message)): ?>
                 <p style="color: red;"><?php echo $error_message; ?></p>
                 <script>
@@ -212,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
                     <h2>Welcome!</h2>
         
-                    <form action="Authentication/signin.php" method="post" id="signInForm"> <!--onsubmit="return validateSignInForm()"-->
+                    <form action="Authentication/signin.php" method="post" id="signInForm">
                          <div class="form-group">
                             <label for="school_id">Full Name</label>
                             <input type="text" id="signin_full_name" name="signin_full_name" maxlength="70" required

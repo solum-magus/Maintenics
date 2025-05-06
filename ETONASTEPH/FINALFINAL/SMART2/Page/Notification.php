@@ -54,7 +54,7 @@ switch ($position) {
         $sql = "SELECT r.*, u.full_name as reporter_name 
                 FROM reportdetails r
                 LEFT JOIN userinfo u ON r.rid = u.school_id
-                WHERE r.status IN ('Pending', 'Ongoing', 'Resolved') 
+                WHERE r.status IN ('Pending', 'Ongoing', 'Resolved', 'Rejected') 
                 ORDER BY r.date_reported DESC 
                 LIMIT ?";
         $stmt = $Testsql->prepare($sql);
@@ -64,7 +64,7 @@ switch ($position) {
     default:
         // Regular users only see their own notifications
         $sql = "SELECT * FROM reportdetails 
-                WHERE rid = ? AND status IN ('Pending', 'Ongoing', 'Resolved') 
+                WHERE rid = ? AND status IN ('Pending', 'Ongoing', 'Resolved', 'Rejected') 
                 ORDER BY date_reported DESC 
                 LIMIT ?";
         $stmt = $Testsql->prepare($sql);
@@ -97,6 +97,7 @@ function timeAgo($timestamp) {
 $pendingReports = [];
 $ongoingReports = [];
 $resolvedReports = [];
+$rejectedReports = [];
 
 if ($reports->num_rows > 0) {
     while ($row = $reports->fetch_assoc()) { 
@@ -108,6 +109,9 @@ if ($reports->num_rows > 0) {
                 $ongoingReports[] = $row;
                 break;
             case 'Resolved':
+                $resolvedReports[] = $row;
+                break;
+            case 'Rejected':
                 $resolvedReports[] = $row;
                 break;
         }
@@ -251,12 +255,20 @@ usort($allReports, function($a, $b) {
 
 foreach ($allReports as $report): ?>
     <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>" data-id="<?= $report['report_id'] ?>">
-    <span class="overlayt">A report was submitted!<br>
-    <?php if ($_SESSION['position'] === 'Maintenance Staff' || $_SESSION['position'] === 'Admin'): ?>
-        Report ID: <?= htmlspecialchars($report["report_id"]) ?></span>
-    <?php else: ?>
-    </span>
+    <?php
+        if ($position === 'Maintenance Staff' || $position === 'Admin'): ?>
+            <span class='overlayt'>A report was submitted by <?=htmlspecialchars($report["rname"])?>!<br>
+        <?php else: ?>
+            <span class='overlayt'>You submitted a report!<br>
     <?php endif; ?>
+    <span>Status: <b class="<?= strtolower($report['status']) ?>"><?= htmlspecialchars($report["status"]) ?></b><br>
+        Report ID: <?= htmlspecialchars($report["report_id"]) ?><br>
+        Problem: <?= $report['problem'] ?><br>
+        Date Reported: <?= $report['date_reported'] ?>
+        <?php if ($report["status"] === "Resolved"): ?>
+            <br>Date Resolved: <?= $report['date_resolved'] ?>
+        <?php endif; ?>
+    </span>
         <span class="timestamp"><?= timeAgo($report['date_reported']) ?></span>
     </div>
 <?php endforeach; ?>

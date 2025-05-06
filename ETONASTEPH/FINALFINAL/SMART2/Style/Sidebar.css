@@ -125,7 +125,7 @@ body {
 .dark-mode span,
 .dark-mode label,
 .dark-mode a {
-    color: white !important;
+    color: white ;
 }
 s
 .dark-mode .setting-choice {

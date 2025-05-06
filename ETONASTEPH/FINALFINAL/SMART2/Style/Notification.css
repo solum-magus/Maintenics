@@ -18,6 +18,19 @@ body {
   background-color: #45a049;
 }
 
+b.pending {
+    color: rgb(255, 24, 24) !important;
+}
+b.resolved {
+    color: rgb(0, 194, 0) !important;
+}
+b.ongoing {
+    color: #ffda00 !important;
+}
+b.rejected {
+    color: rgb(163, 163, 163) !important;
+}
+
 h1 {
     font-size: 44.6px;
     color: black;

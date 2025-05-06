@@ -248,25 +248,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <table>
                     <thead>
                         <tr>
+                            <th>Actions</th>
                             <th>Full Name</th>
                             <th>School ID</th>
                             <th>Position</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php while ($row = $userResult->fetch_assoc()): ?>
                         <tr>
-                            <td><?= htmlspecialchars($row['full_name']) ?></td>
-                            <td><?= htmlspecialchars($row['school_id']) ?></td>
-                            <td><?= htmlspecialchars($row['position']) ?></td>
-                            <td><?= htmlspecialchars($row['userstatus']) ?></td>
                             <td>
                                 <a href="ManageEdit.php?id=<?= $row['school_id'] ?>" class="button">Edit</a>
                                 <a href="../Authentication/Admin/delete.php?id=<?= $row['school_id'] ?>" class="button"
                                     onclick="return confirm('This action is irreversible, are you sure you want to delete this user?');">Delete</a>
                             </td>
+                            <td><?= htmlspecialchars($row['full_name']) ?></td>
+                            <td><?= htmlspecialchars($row['school_id']) ?></td>
+                            <td><?= htmlspecialchars($row['position']) ?></td>
+                            <td><?= htmlspecialchars($row['userstatus']) ?></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

@@ -55,17 +55,19 @@ h2 {
 
 .set a {
     padding: 5px;
-    background-color: green;
+    background-color: white;
     text-decoration: none;
-    border: none;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-    color: white;
+    color: #000000;
     display: block;
     margin-top: 20px;
-    width: auto;
+    width: fit-content;
+    margin: auto;
     text-align: center;
 }
+
+
 
 /* dark mode */
 .dark-mode .set {
@@ -74,6 +76,7 @@ h2 {
 
 .dark-mode .set a {
     background-color: #444;
+    color: white;
 }
 
 .dark-mode .form-control,

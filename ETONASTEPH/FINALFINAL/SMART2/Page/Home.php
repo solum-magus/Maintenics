@@ -196,8 +196,9 @@ $unavailablePercent = ($totalRooms > 0) ? round((count($unavailableRooms) / $tot
     </div>
 </div>
 <div id="home">
+<h2 class="h2">Announcement</h2>
     <div class="announcement">
-        <h2> 📣 Announcement</h2>
+        
 <div class="status-board available">
             <h2>Available Rooms</h2>
             <ul class="room-list">

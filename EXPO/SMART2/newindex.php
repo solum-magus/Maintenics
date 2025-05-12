@@ -239,7 +239,7 @@ By using our website, you agree to this Privacy Policy. If we make any updates, 
         </div>
         </div>
         <div class="col-md-4 mb-4">
-        <img src="Assets/protect.svg" />
+        <img src="Assets/protect.svg" class="img-fluid mx-auto d-block" />
         </div>
     </div>
     </section>
@@ -253,7 +253,7 @@ By using our website, you agree to this Privacy Policy. If we make any updates, 
         </div>
         </div>
         <div class="col-md-4 mb-4">
-        <img src="Assets/what.svg" />
+        <img src="Assets/what.svg" class="img-fluid mx-auto d-block" />
         </div>
     </div>
     </section>
@@ -267,8 +267,8 @@ By using our website, you agree to this Privacy Policy. If we make any updates, 
       </div>
     </div>
     <div class="col-md-4 mb-4">
-      <div class="p-4 border rounded shadow-sm h-100 bg-white">
-      <img src="Assets/cogs.svg" />
+      <div class="p-4 h-100">
+      <img src="Assets/cogs.svg" class="img-fluid mx-auto d-block" />
       </div>
     </div>
     <div class="col-md-4 mb-4">
@@ -282,35 +282,35 @@ By using our website, you agree to this Privacy Policy. If we make any updates, 
 
 <section class="container py-5">
   <h2 class="mb-4 text-center">Explore More Features</h2>
-  <div class="row">
+  <div class="row d-flex justify-content-around flex-wrap">
   <div class="col-md-2 mb-4">
       <div class="p-4 border rounded shadow-sm h-100 bg-light">
-      <img src="Assets/indexhistory.svg" />
+      <img src="Assets/indexhistory.svg" class="img-fluid mx-auto d-block"class="img-fluid mx-auto d-block"class="img-fluid mx-auto d-block" />
         <h4>Report History</h4>
       </div>
 </div>
     <div class="col-md-2 mb-4">
       <div class="p-4 border rounded shadow-sm h-100 bg-light">
-      <img src="Assets/indexnotif.svg" />
+      <img src="Assets/indexnotif.svg" class="img-fluid mx-auto d-block" />
         <h4>Instant Notifications</h4>
       </div>
     </div>
     <div class="col-md-2 mb-4">
       <div class="p-4 border rounded shadow-sm h-100 bg-light">
-      <img src="Assets/indexstatus.svg" />
+      <img src="Assets/indexstatus.svg" class="img-fluid mx-auto d-block" />
         <h4>Visual Status</h4>
       </div>
     </div>
 
-    <div class="col-md-2 mb-4">
+    <div class="col-md-2 mb-4"> 
       <div class="p-4 border rounded shadow-sm h-100 bg-light">
-      <img src="Assets/indexqr.svg" />
+      <img src="Assets/indexqr.svg" class="img-fluid mx-auto d-block" />
         <h4>QR Code Reporting</h4>
       </div>
     </div>
     <div class="col-md-2 mb-4">
       <div class="p-4 border rounded shadow-sm h-100 bg-light">
-      <img src="Assets/indexfeedback.svg" />
+      <img src="Assets/indexfeedback.svg" class="img-fluid mx-auto d-block" />
         <h4>Report Feedback</h4>
       </div>
     </div>
@@ -323,12 +323,12 @@ By using our website, you agree to this Privacy Policy. If we make any updates, 
     <div class="col-md-6 mb-4">
       <div class="p-4 border rounded shadow-sm h-100 bg-light">
         <h4>Contact Us</h4>
-        <img src="Assets/contact.svg" />
+        <img src="Assets/contact.svg" class="img-fluid mx-auto d-block"class="img-fluid mx-auto d-block" />
       </div>
     </div>
     <div class="col-md-6 mb-4">
       <div class="p-4 border rounded shadow-sm h-100 bg-white">
-        <h2>maintenics@gmail.com</h2>
+        <span><img src="Assets/notification.svg" style="width: 50px;" /></span><h2>maintenics@gmail.com</h2>
         <h2>0912-345-6789</h2>
         <h2>Maintenics</h2>
       </div>

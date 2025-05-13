@@ -103,9 +103,8 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
     $first_name = explode(" ", trim($full_name))[0];
 }
 
-// Set the active page based on the current page
 $current_page = $_SESSION['active_page'] ?? basename($_SERVER['PHP_SELF']);
-$_SESSION['active_page'] = $current_page;  // Ensure the active page is updated in session.
+$_SESSION['active_page'] = $current_page;  
 
 ?>
 
@@ -130,7 +129,6 @@ $_SESSION['active_page'] = $current_page;  // Ensure the active page is updated 
             <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
 
             <?php
-            // Set the home page link based on position
             $homePage = ($position == "Admin") ? "AdminHome.php" : (($position == "Maintenance Staff") ? "MaintenanceHome.php" : "Home.php");
             ?>
 

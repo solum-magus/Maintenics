@@ -50,7 +50,6 @@ if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
 switch ($position) {
     case "Admin":
     case "Maintenance Staff":
-        // Admin and Maintenance Staff can see all notifications
         $sql = "SELECT r.*, u.full_name as reporter_name 
                 FROM reportdetails r
                 LEFT JOIN userinfo u ON r.rid = u.school_id
@@ -62,7 +61,6 @@ switch ($position) {
         break;
     
     default:
-        // Regular users only see their own notifications
         $sql = "SELECT * FROM reportdetails 
                 WHERE rid = ? AND status IN ('Pending', 'Ongoing', 'Resolved', 'Rejected') 
                 ORDER BY date_reported DESC 
@@ -121,11 +119,11 @@ if ($reports->num_rows > 0) {
 switch ($position) {
     case "Admin":
     case "Maintenance Staff":
-        $hasUnread = checkUnreadNotifications($mysqli); // No rid - check all
+        $hasUnread = checkUnreadNotifications($mysqli); 
         break;
     
     default:
-        $hasUnread = checkUnreadNotifications($mysqli, $rid); // Check only user's notifications
+        $hasUnread = checkUnreadNotifications($mysqli, $rid); 
         break;
 }
 

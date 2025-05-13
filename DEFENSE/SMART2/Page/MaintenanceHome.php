@@ -37,16 +37,13 @@ $first_name = explode(" ", trim($full_name))[0];
 
 $filter = $_GET['problem'] ?? '';
 
-// Build the base query
 $sql = "SELECT report_id, rname, plocation, problem, pdescription, status, date_reported, sid 
         FROM reportdetails";
 
-// Add WHERE clause if a filter is applied
 if (!empty($filter)) {
     $sql .= " WHERE status = ?";
 }
 
-// Add the ordering
 $sql .= " ORDER BY 
             CASE 
                 WHEN status = 'Ongoing' THEN 1 
@@ -64,7 +61,6 @@ $sql .= " ORDER BY
                 ELSE NULL 
             END DESC";
 
-// Prepare statement
 if (!empty($filter)) {
     $stmt = $Testsql->prepare($sql);
     $stmt->bind_param("s", $filter);

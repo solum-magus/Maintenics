@@ -1,13 +1,16 @@
-#home {
+.container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Default: side-by-side */
     justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
     gap: 40px;
     padding: 40px 20px;
-    position: relative;
+    position: absolute;
     width: 100%;
 }
+
+
 
 .form-container {
     background: white;
@@ -17,14 +20,35 @@
     width: 650px;
     height: auto;
     text-align: center;
-    margin: 30px auto 0;
-    justify-content: center;
+    margin-left: auto; /* This pushes it to the right */
+    margin-top: 40px;
     position: relative;
     padding-bottom: 30px;
-    margin-bottom: 50px;
 }
 
 
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        align-items: center; /* Optional: center items when stacked */
+    }
+
+    .form-container {
+        width: 90%;
+        margin-left: 0; /* Remove right alignment when stacked */
+        margin-top: 30px;
+    }
+
+    .announcement {
+        width: 90%;
+    }
+}
+
+
+
+.dark-mode h2.avail {
+    color: black;
+}
 
 .form-title {
     color: red;
@@ -178,10 +202,10 @@ p {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    max-height: 350px;
+    max-height: 520px;
     overflow-y: auto;
     width: 50%;
-    margin: 0 auto;
+    margin: 90 auto;
     padding: 20px;
 }
  
@@ -195,9 +219,9 @@ p {
 }
 
 .h2{
-    margin-left: 150px;
+    margin-left: 230px;
     font-size: 30px;
-    margin: 0 auto;
+   
 }
 
 .available {
@@ -210,7 +234,7 @@ p {
 
 .unavailable {
     background-color: #f2dede;
-    border: 1px solid #ebcccc;
+    border: 1px solid #ebcccc !;
     max-height: 250px;
     font-size: 1.5rem;
 }
@@ -287,6 +311,17 @@ span.description {
 
 
 @media (max-width: 1024px) {
+    .container {
+        display: flex;
+        flex-direction: column; /* change from column to row */
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 40px;
+        padding: 40px 20px;
+        position: relative;
+        width: 100%;
+        flex-wrap: wrap; /* Optional: for responsiveness */
+    }
     .form-container {
         background: white;
     padding: 20px;

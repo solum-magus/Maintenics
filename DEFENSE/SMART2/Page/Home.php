@@ -69,10 +69,8 @@ if ($issueResult && $issueResult->num_rows > 0) {
     }
 }
 
-// Calculate available rooms (all rooms minus unavailable ones)
 $availableRooms = array_diff($allRooms, array_keys($unavailableRooms));
 
-// Get room issues by problem type for statistics
 $problemTypeStats = [];
 $statsQuery = "SELECT problem, COUNT(*) as count 
                FROM reportdetails 
@@ -86,7 +84,6 @@ if ($statsResult && $statsResult->num_rows > 0) {
     }
 }
 
-// Calculate percentages
 $totalRooms = count($allRooms);
 $availablePercent = ($totalRooms > 0) ? round((count($availableRooms) / $totalRooms) * 100) : 0;
 $unavailablePercent = ($totalRooms > 0) ? round((count($unavailableRooms) / $totalRooms) * 100) : 0;
@@ -195,12 +192,13 @@ $unavailablePercent = ($totalRooms > 0) ? round((count($unavailableRooms) / $tot
         </div>
     </div>
 </div>
-<div id="home">
-<h2 class="h2">Announcement</h2>
+
+<div class="container">
+
     <div class="announcement">
-        
+    <h2 class="h2">Announcement</h2>
 <div class="status-board available">
-            <h2>Available Rooms</h2>
+            <h2 class="avail">Available Rooms</h2>
             <ul class="room-list">
                 <?php if (count($availableRooms) > 0): ?>
                     <?php foreach ($availableRooms as $room): ?>
@@ -221,7 +219,7 @@ $unavailablePercent = ($totalRooms > 0) ? round((count($unavailableRooms) / $tot
         
         <!-- Unavailable Rooms -->
         <div class="status-board unavailable">
-            <h2>Unavailable Rooms</h2>
+            <h2 class="avail">Unavailable Rooms</h2>
             <ul class="room-list">
                 <?php if (count($unavailableRooms) > 0): ?>
                     <?php foreach ($unavailableRooms as $room => $issues): ?>

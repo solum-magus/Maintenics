@@ -2,7 +2,6 @@
 session_start();
 header("Content-Type: application/json");
 
-// Debugging session ID
 if (!isset($_SESSION["id"])) {
     echo json_encode(["error" => "User not logged in", "session" => $_SESSION]);
     exit;

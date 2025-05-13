@@ -1,6 +1,6 @@
 <?php 
 session_start();
-date_default_timezone_set('Asia/Manila'); // Change if needed
+date_default_timezone_set('Asia/Manila');
 require_once __DIR__ . "/../Authentication/checknotif.php";
 
 if (!isset($_SESSION["position"])) {
@@ -10,6 +10,8 @@ if (!isset($_SESSION["position"])) {
     </script>";
     exit();
 }
+
+$NOTIFICATION_LIMIT = 20;
 
 $Testsql = require __DIR__ . "/../database.php";
 $position = $_SESSION["position"];
@@ -24,14 +26,57 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-$sql = "SELECT * FROM reportdetails WHERE status IN ('Pending', 'Ongoing', 'Resolved') ORDER BY date_reported DESC";
-$reports = $Testsql->query($sql);
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+    $rid = $school_id;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+}
+
+switch ($position) {
+    case "Admin":
+    case "Maintenance Staff":
+        $sql = "SELECT r.*, u.full_name as reporter_name 
+                FROM reportdetails r
+                LEFT JOIN userinfo u ON r.rid = u.school_id
+                WHERE r.status IN ('Pending', 'Ongoing', 'Resolved', 'Rejected') 
+                ORDER BY r.date_reported DESC 
+                LIMIT ?";
+        $stmt = $Testsql->prepare($sql);
+        $stmt->bind_param("i", $NOTIFICATION_LIMIT);
+        break;
+    
+    default:
+        $sql = "SELECT * FROM reportdetails 
+                WHERE rid = ? AND status IN ('Pending', 'Ongoing', 'Resolved', 'Rejected') 
+                ORDER BY date_reported DESC 
+                LIMIT ?";
+        $stmt = $Testsql->prepare($sql);
+        $stmt->bind_param("ii", $rid, $NOTIFICATION_LIMIT);
+        break;
+}
+
+$stmt->execute();
+$reports = $stmt->get_result();
 
 function timeAgo($timestamp) {
-    $timestampUnix = strtotime($timestamp); // Convert timestamp to Unix time
-    $currentTime = time(); // Get current Unix time
-    $timeDiff = $currentTime - $timestampUnix; // Difference in seconds
-
+    $timestampUnix = strtotime($timestamp);
+    $currentTime = time();
+    $timeDiff = $currentTime - $timestampUnix; 
 
     if ($timeDiff < 0) {
         return "Just now";
@@ -47,10 +92,10 @@ function timeAgo($timestamp) {
     }
 }
 
-
 $pendingReports = [];
 $ongoingReports = [];
 $resolvedReports = [];
+$rejectedReports = [];
 
 if ($reports->num_rows > 0) {
     while ($row = $reports->fetch_assoc()) { 
@@ -64,12 +109,26 @@ if ($reports->num_rows > 0) {
             case 'Resolved':
                 $resolvedReports[] = $row;
                 break;
+            case 'Rejected':
+                $resolvedReports[] = $row;
+                break;
         }
     }
 }
 
-$hasUnread = checkUnreadNotifications($mysqli);
+switch ($position) {
+    case "Admin":
+    case "Maintenance Staff":
+        $hasUnread = checkUnreadNotifications($mysqli); 
+        break;
+    
+    default:
+        $hasUnread = checkUnreadNotifications($mysqli, $rid); 
+        break;
+}
 
+$sql = "SELECT DISTINCT probtype FROM problemtypes ORDER BY probtype ASC";
+$result = $mysqli->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -77,9 +136,14 @@ $hasUnread = checkUnreadNotifications($mysqli);
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../Assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
+    <link rel="manifest" href="../Assets/site.webmanifest">
+
     <link href="../Style/Notification.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
-
+    <link href="../Style/Navigationbar.css" rel="stylesheet">
 </head>
 <body>
 
@@ -87,7 +151,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
     <div class="header-container">
         <div class="logos">
 
-            <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
+            <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
             <?php
             switch ($position) {
                 case "Admin":
@@ -100,7 +164,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 case "Maintenance Staff":
                     ?>
                     <a href="MaintenanceHome.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="History.php"   class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             
@@ -108,13 +172,13 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 case "Teacher":
                     ?>
                     <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             
                 default:
                     ?>
-                    <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
                     <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
@@ -127,21 +191,13 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
         <div class="user-info">
             <div class="user-top">
-                
-            <?php if (isset($fname) && isset($position)):  ?>
-
-            <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
-            <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
-
-            <?php else: ?>
-
-            <span class="username">NULL</span>
-            <span class="position">NULL</span>
-
-            <?php endif; ?>
-
-            <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
-                    <option value="" disabled selected>Profile</option>
+            <div class="position-dropdown">
+                <img src="../Assets/profile.png" id="proff">
+                <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+            </div>
+                <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
+                    <option value="" disabled selected></option>
                     <option value="settings">Settings</option>
                     <option value="logout">Logout</option>
                 </select>
@@ -150,7 +206,6 @@ $hasUnread = checkUnreadNotifications($mysqli);
     </div>
 </header>
 
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
     <div class="logo-section">
         <img src="../Assets/companyl.svg" alt="Company Logo" class="logo">
@@ -163,11 +218,11 @@ $hasUnread = checkUnreadNotifications($mysqli);
     <div class="company-info">
         <div class="vision">
             <h4>Vision</h4>
-            <p>To be the leading provider of innovative maintenance solutions.</p>
+            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions, using cutting-edge real-time tracking technology to transform how schools manage their facilities. We are building SMART because we believe every school deserves a safe, well-maintained, and efficient environment for learning, ensuring a brighter future for students and educators everywhere. </p>
         </div>
         <div class="mission">
             <h4>Mission</h4>
-            <p>Deliver reliable, sustainable, and effective solutions for our clients.</p>
+            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management through real-time tracking and data-driven insights. We are committed to delivering reliable, efficient, and sustainable solutions that empower schools to optimize their operations, reduce costs, and create safer, more productive learning environments. What sets us apart is our dedication to use technology to solve real-world challenges, ensuring every school can focus on what matters most—educating future generations.</p>
         </div>
         <div class="contact">
             <h4>Contact Us</h4>
@@ -176,9 +231,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
     </div>
 </div>
 
-
-
-	<div class="notifications">
+<div class="notifications">
     <form method="POST" action="../Authentication/mark_all_read.php">
         <button type="submit" id="mark-all-read" class="mark-all-btn">Mark All as Read</button>
     </form>
@@ -190,23 +243,39 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
 <div class="notification-container">
 
-<?php foreach ($pendingReports as $report): ?>
+<?php
+
+$allReports = array_merge($pendingReports, $ongoingReports, $resolvedReports);
+
+usort($allReports, function($a, $b) {
+    return strtotime($b['date_reported']) - strtotime($a['date_reported']);
+});
+
+foreach ($allReports as $report): ?>
     <div class="<?= $report['is_read'] ? 'box' : 'box1' ?>" data-id="<?= $report['report_id'] ?>">
-    <span class="overlayt">A report was submitted!<br>
-    <?php if ($_SESSION['position'] === 'Maintenance Staff' || $_SESSION['position'] === 'Admin'): ?>
-        Report ID: <?= htmlspecialchars($report["report_id"]) ?></span>
-    <?php else: ?>
-    </span>
+    <?php
+        if ($position === 'Maintenance Staff' || $position === 'Admin'): ?>
+            <span class='overlayt'>A report was submitted by <?=htmlspecialchars($report["rname"])?>!<br>
+        <?php else: ?>
+            <span class='overlayt'>You submitted a report!<br>
     <?php endif; ?>
+    <span>Status: <b class="<?= strtolower($report['status']) ?>"><?= htmlspecialchars($report["status"]) ?></b><br>
+        Report ID: <?= htmlspecialchars($report["report_id"]) ?><br>
+        Problem: <?= $report['problem'] ?><br>
+        Date Reported: <?= $report['date_reported'] ?>
+        <?php if ($report["status"] === "Resolved"): ?>
+            <br>Date Resolved: <?= $report['date_resolved'] ?>
+        <?php endif; ?>
+    </span>
         <span class="timestamp"><?= timeAgo($report['date_reported']) ?></span>
     </div>
 <?php endforeach; ?>
 
 </div>
 
-  <script src="../JS/script2.js"></script>
-  <script src="../JS/script4.js"></script>
-  <script src="../JS/script6.js"></script>
-  <script src="../JS/script7.js"></script>
-  </body>
+<script src="../JS/script2.js"></script>
+<script src="../JS/script4.js"></script>
+<script src="../JS/script6.js"></script>
+<script src="../JS/script7.js"></script>
+</body>
 </html>

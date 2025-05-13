@@ -1,16 +1,22 @@
 <?php
-session_start(); // Start session for error messages
+session_start();
+
+if (!isset($_SESSION["position"])) {
+    echo "<script>
+    alert('You are not logged in!');
+    window.location.href = '../index.php';
+    </script>";
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $mysqli = require __DIR__ . "/../database.php";
 
-    // Get user input
     $school_id = $_POST["school_id"];
     $current_password = $_POST["current_password"];
     $new_password = $_POST["new_password"];
     $confirm_password = $_POST["confirm_password"];
 
-    // Use prepared statements for security
     $sql = "SELECT * FROM userinfo WHERE school_id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param("s", $school_id);
@@ -47,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             exit();
                     }
                 }
-                exit(); // Ensure no further execution
+                exit();
             } else {
                 $_SESSION["error"] = "Error updating password.";
             }
@@ -58,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["error"] = "Incorrect current password.";
     }
 
-    // Redirect back if there is an error
     header("Location: ../Page/Settings.php");
     exit();
 }

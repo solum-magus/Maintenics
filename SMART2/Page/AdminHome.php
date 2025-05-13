@@ -40,7 +40,7 @@ $totalReportsQuery = "SELECT COUNT(*) AS total FROM reportdetails";
 $totalReportsResult = $Testsql->query($totalReportsQuery);
 $totalReports = $totalReportsResult->fetch_assoc()['total'] ?? 0;
 
-$inProgressQuery = "SELECT COUNT(*) AS in_progress FROM reportdetails WHERE status = 'Pending'";
+$inProgressQuery = "SELECT COUNT(*) AS in_progress FROM reportdetails WHERE status = 'Ongoing' OR 'Pending'";
 $inProgressResult = $Testsql->query($inProgressQuery);
 $inProgressReports = $inProgressResult->fetch_assoc()['in_progress'] ?? 0;
 
@@ -57,6 +57,28 @@ if ($result->num_rows > 0) {
     $reports = [];
 }
 
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+
+}
+
 $hasUnread = checkUnreadNotifications($mysqli);
 
 $problemdetailQuery = "SELECT * FROM problemlocations";
@@ -67,10 +89,9 @@ $problemdetail2Result = $Testsql->query($problemdetailQuery);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['delete']) && isset($_POST['id'])) {
-        $type = $_POST['delete']; // location or problem
-        $id = $_POST['id']; // location or problem ID
+        $type = $_POST['delete']; 
+        $id = $_POST['id']; 
 
-        // Process deletion
         if ($type === "location") {
             $deleteQuery = "DELETE FROM problemlocations WHERE problemloc = ?";
         } elseif ($type === "problem") {
@@ -78,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (isset($deleteQuery)) {
-            // Prepare and execute the deletion query
             $stmt = $Testsql->prepare($deleteQuery);
             $stmt->bind_param("s", $id);
             $stmt->execute();
@@ -103,15 +123,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../Assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
+    <link rel="manifest" href="../Assets/site.webmanifest">
+
     <link href="../Style/AdminHome.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
+    <link href="../Style/Navigationbar.css" rel="stylesheet">
 </head>
 <body>
 
 <header class="sticky-header">
     <div class="header-container">
         <div class="logos">
-            <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
+        <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
             <?php
             switch ($position) {
                 case "Admin":
@@ -150,20 +176,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="user-info">
             <div class="user-top">
-            <?php if (isset($fname) && isset($position)):  ?>
-
-            <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
-            <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
-
-            <?php else: ?>
-
-            <span class="username">NULL</span>
-            <span class="position">NULL</span>
-
-            <?php endif; ?>
-
-            <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
-                    <option value="" disabled selected>Profile</option>
+            <div class="position-dropdown">
+                <img src="../Assets/profile.png" id="proff">
+                <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+            </div>
+                <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
+                    <option value="" disabled selected></option>
                     <option value="settings">Settings</option>
                     <option value="logout">Logout</option>
                 </select>
@@ -184,11 +203,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="company-info">
         <div class="vision">
             <h4>Vision</h4>
-            <p>To be the leading provider of innovative maintenance solutions.</p>
+            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions, using cutting-edge real-time tracking technology to transform how schools manage their facilities. We are building SMART because we believe every school deserves a safe, well-maintained, and efficient environment for learning, ensuring a brighter future for students and educators everywhere. </p>
         </div>
         <div class="mission">
             <h4>Mission</h4>
-            <p>Deliver reliable, sustainable, and effective solutions for our clients.</p>
+            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management through real-time tracking and data-driven insights. We are committed to delivering reliable, efficient, and sustainable solutions that empower schools to optimize their operations, reduce costs, and create safer, more productive learning environments. What sets us apart is our dedication to use technology to solve real-world challenges, ensuring every school can focus on what matters most—educating future generations.</p>
         </div>
         <div class="contact">
             <h4>Contact Us</h4>
@@ -229,25 +248,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <table>
                     <thead>
                         <tr>
+                            <th>Actions</th>
                             <th>Full Name</th>
                             <th>School ID</th>
                             <th>Position</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php while ($row = $userResult->fetch_assoc()): ?>
                         <tr>
-                            <td><?= htmlspecialchars($row['full_name']) ?></td>
-                            <td><?= htmlspecialchars($row['school_id']) ?></td>
-                            <td><?= htmlspecialchars($row['position']) ?></td>
-                            <td><?= htmlspecialchars($row['userstatus']) ?></td>
                             <td>
                                 <a href="ManageEdit.php?id=<?= $row['school_id'] ?>" class="button">Edit</a>
                                 <a href="../Authentication/Admin/delete.php?id=<?= $row['school_id'] ?>" class="button"
                                     onclick="return confirm('This action is irreversible, are you sure you want to delete this user?');">Delete</a>
                             </td>
+                            <td><?= htmlspecialchars($row['full_name']) ?></td>
+                            <td><?= htmlspecialchars($row['school_id']) ?></td>
+                            <td><?= htmlspecialchars($row['position']) ?></td>
+                            <td><?= htmlspecialchars($row['userstatus']) ?></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

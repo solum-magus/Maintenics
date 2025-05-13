@@ -87,6 +87,28 @@ $stmt = $Testsql->prepare($sql);
 $stmt->execute();
 $topStaff = $stmt->get_result();
 
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -94,15 +116,20 @@ $topStaff = $stmt->get_result();
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../Assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
+    <link rel="manifest" href="../Assets/site.webmanifest">
     <link href="../Style/AdminHistory.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
+    <link href="../Style/Navigationbar.css" rel="stylesheet">
 </head>
 <body>
 
 <header class="sticky-header">
     <div class="header-container">
         <div class="logos">
-            <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
+        <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
             <?php
             switch ($position) {
                 case "Admin":
@@ -114,22 +141,22 @@ $topStaff = $stmt->get_result();
 
                 case "Maintenance Staff":
                     ?>
-                    <a href="MaintenanceHome.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="MaintenanceHome.php" class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             
                 case "Student":
                 case "Teacher":
                     ?>
-                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="Home.php" class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
                     <a href="History.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             
                 default:
                     ?>
-                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="Home.php" class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
                     <a href="History.php" class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
@@ -142,22 +169,15 @@ $topStaff = $stmt->get_result();
 
         <div class="user-info">
             <div class="user-top">
-                <?php if (isset($fname) && isset($position)):  ?>
-
-                <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
-                <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
-
-                <?php else: ?>
-
-                <span class="username">NULL</span>
-                <span class="position">NULL</span>
-
-                <?php endif; ?>
-
+            <div class="position-dropdown">
+                <img src="../Assets/profile.png" id="proff">
+                <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+            </div>
                 <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
-                        <option value="" disabled selected>Profile</option>
-                        <option value="settings">Settings</option>
-                        <option value="logout">Logout</option>
+                    <option value="" disabled selected></option>
+                    <option value="settings">Settings</option>
+                    <option value="logout">Logout</option>
                 </select>
             </div>
         </div>
@@ -176,11 +196,11 @@ $topStaff = $stmt->get_result();
     <div class="company-info">
         <div class="vision">
             <h4>Vision</h4>
-            <p>To be the leading provider of innovative maintenance solutions.</p>
+            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions, using cutting-edge real-time tracking technology to transform how schools manage their facilities. We are building SMART because we believe every school deserves a safe, well-maintained, and efficient environment for learning, ensuring a brighter future for students and educators everywhere. </p>
         </div>
         <div class="mission">
             <h4>Mission</h4>
-            <p>Deliver reliable, sustainable, and effective solutions for our clients.</p>
+            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management through real-time tracking and data-driven insights. We are committed to delivering reliable, efficient, and sustainable solutions that empower schools to optimize their operations, reduce costs, and create safer, more productive learning environments. What sets us apart is our dedication to use technology to solve real-world challenges, ensuring every school can focus on what matters most—educating future generations.</p>
         </div>
         <div class="contact">
             <h4>Contact Us</h4>
@@ -190,7 +210,7 @@ $topStaff = $stmt->get_result();
 </div>
 
 		 <div class="container">
-        <div class="title">Report History</div>
+        <div class="title"><h2>Report History<h2></div>
         <div class="box">
             <div class="heading">Most Common Issues</div>
             <table class="table">
@@ -261,6 +281,7 @@ $topStaff = $stmt->get_result();
                                 echo "<td>" . htmlspecialchars($row['completed_tasks']) . "</td>";
                                 echo "<td>" . number_format($row['average_rating'], 2) . "</td>";
                                 echo "</tr>";
+                                $firstRow = false;
                             }
                         } else {
                             echo "<tr><td colspan='3'>No ratings available</td></tr>";

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$mysqli = require __DIR__ . "/../database.php"; // Make sure this returns $mysqli
+$mysqli = require __DIR__ . "/../database.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rname = $_POST["rname"];
@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $problem = $_POST["problem"];
     $pdescription = $_POST["pdescription"];
 
-    // Insert into reportdetails
     $stmt = $mysqli->prepare("INSERT INTO reportdetails (rname, plocation, problem, pdescription) VALUES (?, ?, ?, ?)");
     
     if (!$stmt) {
@@ -18,8 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssss", $rname, $plocation, $problem, $pdescription);
     if ($stmt->execute()) {
         $_SESSION["report_submitted"] = true; 
-        header("Location: ../Page/Home.php"); // Redirect to Home.php   
-        exit(); // Ensure script stops after redirection
+        header("Location: ../Page/Home.php"); 
+        exit(); 
     } else {
         echo "Error submitting report: " . $stmt->error;
     }

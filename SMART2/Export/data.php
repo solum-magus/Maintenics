@@ -3,7 +3,7 @@
   <tr>
     <td>#</td>
     <td>Report ID</td>
-    <td>Name</td>
+    <td>Resolver</td>
     <td>Location</td>
     <td>Problem</td>
     <td>Status</td>
@@ -18,7 +18,7 @@
   <tr>
     <td> <?php echo $i++; ?> </td>
     <td> <?php echo $row["report_id"]; ?> </td>
-    <td> <?php echo $row["rname"]; ?> </td>
+    <td> <?php echo $row["sname"]; ?> </td>
     <td> <?php echo $row["plocation"]; ?> </td>
     <td> <?php echo $row["problem"]; ?> </td>
     <td> <?php echo $row["status"]; ?> </td>

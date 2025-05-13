@@ -1,11 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 
 ::-webkit-scrollbar {
     display: none;
 }
 
+h1,h2,h3 {
+    font-family: "Fredoka", sans-serif;
+}
+
 body {
-    font-family: "Roboto", sans-serif;
     background-color: #f2f2f2;
     background-image: url('../Assets/bg.png');
     background-size: cover;
@@ -28,10 +32,11 @@ body {
     padding: 20px;
     padding-left: 10px; 
     transition: left 0.3s ease;
-    z-index: 9999;
+    z-index: 9999; 
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
+    align-items: flex-start;
+    overflow-y: scroll;
 }
 
 .sidebar .logo-section {
@@ -39,8 +44,8 @@ body {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    padding: 0; 
-    margin: 0;   
+    padding: 0;  
+    margin: 0;  
 }
 
 
@@ -52,12 +57,15 @@ body {
 }
 
 
-/* Company name and product name */
+
 .sidebar .company-name h2,
 .sidebar .company-name h3 {
     margin: 10%;
-    font-size: 25px; 
+    font-size: 25px !important; 
     color: white;
+    text-align: end;
+    font-family: "Marcellus", serif;
+    margin-left: 10px;
 }
 
 .sidebar .separator {
@@ -68,7 +76,7 @@ body {
 /* Company Info Section (Vision, Mission, etc.) */
 .sidebar .company-info {
     margin-top: 20px;
-    text-align: left; 
+    text-align: justify;
     width: 100%;
 }
 
@@ -94,21 +102,21 @@ body {
 }
 
 .content.active {
-    margin-left: 300px; 
+    margin-left: 300px;
 }
 .sidebar #CloseDots {
     position: absolute;
     right: 10px;
     top: 10px;
-    width: 23%;
+    width: 15%;
     cursor: pointer;
 }
 
 /* Dark Mode */
 .dark-mode {
     background-image: url('../Assets/bg1.png');
-    background-color: #1F1F1F;  /* Dark background */
-    color: #ffffff;  /* Light text */
+    background-color: #1F1F1F;  
+    color: #ffffff;  
 }
 .dark-mode h1,
 .dark-mode h2,
@@ -117,11 +125,11 @@ body {
 .dark-mode span,
 .dark-mode label,
 .dark-mode a {
-    color: white !important;
+    color: white ;
 }
 s
 .dark-mode .setting-choice {
-    background-color: #333; 
+    background-color: #333;
     color: white;
 }
 
@@ -137,7 +145,7 @@ s
 }
 
 .dark-mode a {
-    color: #4a90e2; /* Light blue */
+    color: #4a90e2; 
 }
 
 .dark-mode button {

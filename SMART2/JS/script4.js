@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const sidebar = document.getElementById("sidebar");
     // Create a close button inside the sidebar
     const closeDots = document.createElement("img");
-    closeDots.src = "../Assets/dots.svg";
+    closeDots.src = "../Assets/back.svg";
     closeDots.classList.add("logo");
     closeDots.id = "CloseDots";
     sidebar.insertBefore(closeDots, sidebar.firstChild);

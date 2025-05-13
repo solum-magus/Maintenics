@@ -1,19 +1,21 @@
 <?php
 
-function checkUnreadNotifications($Testsql) {
-    $sql = "SELECT * FROM reportdetails WHERE status IN ('Pending', 'Ongoing', 'Resolved') ORDER BY date_reported DESC";
-    $reports = $Testsql->query($sql);
-
-    $hasUnread = false;
-    if ($reports->num_rows > 0) {
-        while ($row = $reports->fetch_assoc()) {
-            if ($row['is_read'] == 0) {
-                $hasUnread = true;
-                break;
-            }
-        }
+function checkUnreadNotifications($Testsql, $rid = null) {
+    if ($rid === null) {
+        // For Admin and Maintenance Staff - check all unread notifications
+        $sql = "SELECT COUNT(*) as count FROM reportdetails WHERE is_read = 0";
+        $result = $Testsql->query($sql);
+    } else {
+        // For regular users - check only their unread notifications
+        $sql = "SELECT COUNT(*) as count FROM reportdetails WHERE rid = ? AND is_read = 0";
+        $stmt = $Testsql->prepare($sql);
+        $stmt->bind_param("i", $rid);
+        $stmt->execute();
+        $result = $stmt->get_result();
     }
-    return $hasUnread;
+    
+    $row = $result->fetch_assoc();
+    return ($row['count'] > 0);
 }
 
 ?>

@@ -25,6 +25,28 @@ if ($result->num_rows > 0) {
     $user = null; 
 }
 
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+
+}
+
 $hasUnread = checkUnreadNotifications($mysqli);
 
 ?>
@@ -34,16 +56,22 @@ $hasUnread = checkUnreadNotifications($mysqli);
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../Assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
+    <link rel="manifest" href="../Assets/site.webmanifest">
     <link href="../Style/Settings.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
-
+    <link href="../Style/Navigationbar.css" rel="stylesheet">
 </head>
 <body>
 
 <header class="sticky-header">
     <div class="header-container">
         <div class="logos">
-            <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
+            <!-- Dots Icon, when clicked will show/hide sidebar -->
+
+            <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
             <?php
             switch ($position) {
                 case "Admin":
@@ -63,8 +91,8 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 case "Student":
                 case "Teacher":
                     ?>
-                    <a href="Home.php"  class="logo-link"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
-                    <a href="History.php"  class="logo-link"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
+                    <a href="Home.php"><img src="../Assets/home.svg" class="logo" alt="Home" id="Home"></a>
+                    <a href="History.php"><img src="../Assets/history.svg" class="logo" alt="History" id="History"></a>
                     <?php
                     break;
             
@@ -83,20 +111,13 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
         <div class="user-info">
             <div class="user-top">
-
-                <?php if (isset($fname) && isset($position)):  ?>
-
-                <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
-				<span class="position"><?= htmlspecialchars($user["position"]) ?></span>
-
-                <?php else: ?>
-
-                <span class="username">NULL</span>
-                <span class="position">NULL</span>
-
-                <?php endif; ?>
+            <div class="position-dropdown">
+                <img src="../Assets/profile.png" id="proff">
+                <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+            </div>
                 <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
-                    <option value="" disabled selected>Profile</option>
+                    <option value="" disabled selected></option>
                     <option value="settings">Settings</option>
                     <option value="logout">Logout</option>
                 </select>
@@ -105,7 +126,6 @@ $hasUnread = checkUnreadNotifications($mysqli);
     </div>
 </header>
 
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
     <div class="logo-section">
         <img src="../Assets/companyl.svg" alt="Company Logo" class="logo">
@@ -118,11 +138,11 @@ $hasUnread = checkUnreadNotifications($mysqli);
     <div class="company-info">
         <div class="vision">
             <h4>Vision</h4>
-            <p>To be the leading provider of innovative maintenance solutions.</p>
+            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions, using cutting-edge real-time tracking technology to transform how schools manage their facilities. We are building SMART because we believe every school deserves a safe, well-maintained, and efficient environment for learning, ensuring a brighter future for students and educators everywhere. </p>
         </div>
         <div class="mission">
             <h4>Mission</h4>
-            <p>Deliver reliable, sustainable, and effective solutions for our clients.</p>
+            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management through real-time tracking and data-driven insights. We are committed to delivering reliable, efficient, and sustainable solutions that empower schools to optimize their operations, reduce costs, and create safer, more productive learning environments. What sets us apart is our dedication to use technology to solve real-world challenges, ensuring every school can focus on what matters most—educating future generations.</p>
         </div>
         <div class="contact">
             <h4>Contact Us</h4>
@@ -161,6 +181,46 @@ $hasUnread = checkUnreadNotifications($mysqli);
 
                 <div class="setting-choice" id="contactUsBtn">Contact Us</div>
 
+                <?php
+                switch ($position) {
+                    case "Admin":
+                        ?>
+                        <div class="setting-choice">
+                            <label><a href="../Export/export1.php" class="setting-choice" style="text-decoration: none;">Export Feedback</a></label>
+                        </div>
+
+                        <div class="setting-choice">
+                            <label><a href="../Export/export.php" class="setting-choice" style="text-decoration: none;">Export History</a></label>
+                        </div>
+                        <?php
+                        break;
+
+                    case "Maintenance Staff":
+                        ?>
+                        <div class="setting-choice">
+                            <label><a href="../Export/export1.php" class="setting-choice" style="text-decoration: none;">Export Feedback</a></label>
+                        </div>
+
+                        <div class="setting-choice">
+                            <label><a href="../Export/export.php" class="setting-choice" style="text-decoration: none;">Export History</a></label>
+                        </div>
+                        <?php
+                        break;
+
+                    default:
+                        ?>
+                        <div class="setting-choice">
+                            <label onclick="showCustomAlert();" style="color: grey !important; text-decoration: none;">Export Feedback</label>
+                        </div>
+
+                        <div class="setting-choice">
+                            <label onclick="showCustomAlert();" style="color: grey !important; text-decoration: none;">Export History</label>
+                        </div>
+                        <?php
+                        break;
+                }
+                ?>
+
                 <img src="../Assets/QR.svg" class="qr">
             </div>
 		</div>
@@ -175,7 +235,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
         <div id="passwordModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>Change Password</h2>
+                <h2 style="margin-bottom: 10px;">Change Password</h2>
 
 
 
@@ -231,60 +291,63 @@ $hasUnread = checkUnreadNotifications($mysqli);
         <div id="privacyModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>Privacy & Policy</h2>
+                <h2 style="text-align: center;">Privacy & Policy</h2>
                 <br>
                 <h3>Information We Collect</h3>
+                <br>
                 <ul>
-                    <strong>Personal Information</strong> – Name, email address, school ID, and position (Student, Teacher, Maintenance Staff, Admin).
+                    <li><strong>Personal Information</strong> – Name, email address, school ID, and position (Student, Teacher, Maintenance Staff, Admin).</li>
                     <br>
-                    <strong>Usage Data</strong> – Information about how you interact with our platform.
+                    <li><strong>Usage Data</strong> – Information about how you interact with our platform.</li>
                     <br>
-                    <strong>Device Information</strong> – Your device type, browser, and IP address.
+                    <li><strong>Device Information</strong> – Your device type, browser, and IP address.</li>
                 </ul>
 
                 <br><br>
-                <h3>How We Use Your Information</h3>
+                <h3>How We Use Your Information</h3> <br>
                 <ul>
-                    Provide and improve our platform’s services.
-                    Notify maintenance staff about reported issues.
-                    Secure user authentication and access control.
+                    <li>Provide and improve our platform’s services.</li>
+                    <br>
+                    <li>Notify maintenance staff about reported issues.</li>
+                    <br>
+                    <li>Secure user authentication and access control.</li>
                 </ul>
-                <br>
-                <h3>Data Protection & Security</h3>
+                <br><br>
+                <h3>Data Protection & Security</h3> <br>
                 <ul>
-                <p>We implement strict security measures to safeguard your personal data against unauthorized access, alteration, or disclosure.</p>
-                </ul>
-
-                <br>
-                <h3>Sharing of Information</h3>
-                <ul>
-                    <strong>School Administration & Maintenance Staff</strong> – To process issue reports. <br>
-                    <strong>Legal Authorities</strong> – If required by law.
+                    <li>We implement strict security measures to safeguard your personal data against unauthorized access, alteration, or disclosure.</li>
                 </ul>
 
-                <br>
-                <h3>Cookies & Tracking</h3>
+                <br><br>
+                <h3>Sharing of Information</h3> <br>
                 <ul>
-                <p>We use cookies to enhance user experience and track platform performance.</p>
+                    <li><strong>School Administration & Maintenance Staff</strong> – To process issue reports.</li>
+                    <br>
+                    <li><strong>Legal Authorities</strong> – If required by law.</li>
                 </ul>
 
-                <br>
-                <h3>Your Rights</h3>
+                <br><br>
+                <h3>Cookies & Tracking</h3> <br>
                 <ul>
-                <p>You have the right to access, modify, or delete your personal data by contacting us.</p>
+                    <li>We use cookies to enhance user experience and track platform performance.</li>
+                </ul>
+
+                <br><br>
+                <h3>Your Rights</h3> <br>
+                <ul>
+                    <li>You have the right to access, modify, or delete your personal data by contacting us.</li>
                 </ul>
             </div>
         </div>
 
-
-        <!-- Contact Us Modal -->
+        
         <div id="contactModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Contact Us</h2>
                 <p>If you have any questions, feel free to reach out:</p>
                 <ul>
-                    <strong>Email:</strong> MaintenicsSmart@gmail.com
+                    <strong>Email:</strong> maintenics@gmail.com
                     <br>
                     <strong>Phone:</strong> +63 912 345 6789
                     <br>
@@ -296,6 +359,9 @@ $hasUnread = checkUnreadNotifications($mysqli);
             </div>
         </div>
 
+        <div id="popup">
+            <span id="popup-message"></span>
+        </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -303,15 +369,21 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 const modal = document.getElementById("passwordModal");
                 if (modal) {
                     modal.classList.add("show");
-                } 
+                }
             <?php endif; ?>
     });
     
-</script>
+    </script>
+    <script>
+    function showCustomAlert() {
+        customAlert("This action is not authorized.");
+    }
+    </script>
   <script src="../JS/script3.js"></script>
   <script src="../JS/script4.js"></script>
   <script src="../JS/script6.js"></script>
   <script src="../JS/script7.js"></script>
+  <script src="../JS/script8.js"></script>
 
   <script>
     sessionStorage.setItem("darkMode", "<?php echo $_SESSION['dark_mode'] ?? 0; ?>");

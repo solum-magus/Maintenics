@@ -1,11 +1,10 @@
-
 document.addEventListener("DOMContentLoaded", function () {
-    navigateTo("welcomePage");
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    if (window.location.hash === "#signInPage") {
+    if (window.location.hash === "#signUpPage") {
+        navigateTo("signUpPage");
+    } else if (window.location.hash === "#signInPage") {
         navigateTo("signInPage");
+    } else {
+        navigateTo("welcomePage");
     }
 });
 
@@ -15,6 +14,12 @@ function navigateTo(pageId) {
     });
 
     document.getElementById(pageId).style.display = 'block';
+    
+    if (history.pushState) {
+        history.pushState(null, null, '#' + pageId);
+    } else {
+        location.hash = '#' + pageId;
+    }
 }
 
 

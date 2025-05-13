@@ -71,6 +71,28 @@ if (isset($_POST['add_location'])) {
     }
 }
 
+if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
+
+    $mysqli = require __DIR__ . "/../database.php";
+
+    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
+    $position = $mysqli->real_escape_string($_SESSION["position"]);
+
+    $sql = "SELECT * FROM userinfo
+            WHERE full_name = '$fname'
+            AND position = '$position'";
+
+    $result = $mysqli->query($sql);
+
+    $user = $result->fetch_assoc();
+
+    $school_id = $user["school_id"] ?? null;
+
+    $full_name = $user["full_name"] ?? "";
+    $first_name = explode(" ", trim($full_name))[0];
+
+}
+
 $hasUnread = checkUnreadNotifications($Testsql);
 
 ?>
@@ -83,13 +105,14 @@ $hasUnread = checkUnreadNotifications($Testsql);
     <link href="../Style/AdminHome.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
     <link href="../Style/ReportEdit.css" rel="stylesheet">
+    <link href="../Style/Navigationbar.css" rel="stylesheet">
 </head>
 <body>
 
 <header class="sticky-header">
     <div class="header-container">
         <div class="logos">
-            <img src="../Assets/dots.svg" class="logo" alt="Dots" id="Dots">
+        <img src="../Assets/companyl.svg" class="logo" alt="Dots" id="Dots">
             <?php
             switch ($position) {
                 case "Admin":
@@ -128,20 +151,13 @@ $hasUnread = checkUnreadNotifications($Testsql);
 
         <div class="user-info">
             <div class="user-top">
-            <?php if (isset($fname) && isset($position)):  ?>
-
-            <span class="username"><?= htmlspecialchars($user["full_name"]) ?></span>
-            <span class="position"><?= htmlspecialchars($user["position"]) ?></span>
-
-            <?php else: ?>
-
-            <span class="username">NULL</span>
-            <span class="position">NULL</span>
-
-            <?php endif; ?>
-
-            <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
-                    <option value="" disabled selected>Profile</option>
+            <div class="position-dropdown">
+                <img src="../Assets/profile.png" id="proff">
+                <span class="username"><?= htmlspecialchars($first_name ?? "NULL") ?></span>
+                <span class="position"><?= htmlspecialchars($user["position"] ?? "NULL") ?></span>
+            </div>
+                <select class="dropdown" id="profileDropdown" onchange="handleProfileChange(this.value)">
+                    <option value="" disabled selected></option>
                     <option value="settings">Settings</option>
                     <option value="logout">Logout</option>
                 </select>
@@ -162,11 +178,11 @@ $hasUnread = checkUnreadNotifications($Testsql);
     <div class="company-info">
         <div class="vision">
             <h4>Vision</h4>
-            <p>To be the leading provider of innovative maintenance solutions.</p>
+            <p>In the coming years, we see ourselves as the global leader in school maintenance solutions, using cutting-edge real-time tracking technology to transform how schools manage their facilities. We are building SMART because we believe every school deserves a safe, well-maintained, and efficient environment for learning, ensuring a brighter future for students and educators everywhere. </p>
         </div>
         <div class="mission">
             <h4>Mission</h4>
-            <p>Deliver reliable, sustainable, and effective solutions for our clients.</p>
+            <p>Our mission is to provide schools with an innovative, user-friendly platform that simplifies maintenance management through real-time tracking and data-driven insights. We are committed to delivering reliable, efficient, and sustainable solutions that empower schools to optimize their operations, reduce costs, and create safer, more productive learning environments. What sets us apart is our dedication to use technology to solve real-world challenges, ensuring every school can focus on what matters most—educating future generations.</p>
         </div>
         <div class="contact">
             <h4>Contact Us</h4>

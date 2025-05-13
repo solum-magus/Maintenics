@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2025 at 05:42 PM
+-- Generation Time: May 06, 2025 at 07:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,8 @@ INSERT INTO `problemlocations` (`idd`, `problemloc`) VALUES
 (20, 'RM103'),
 (22, 'RM105'),
 (23, 'RM106'),
-(24, 'RM104');
+(24, 'RM104'),
+(25, 'RM107');
 
 -- --------------------------------------------------------
 
@@ -115,40 +116,6 @@ INSERT INTO `reportdetails` (`report_id`, `rating`, `feedback`, `rname`, `rid`, 
 (1159, 1, 'No feedback given.', 'Kenneth Del Mundo', 44444444444, 'RM103', 'Lights', '', 'Stephen Chase Nepomuceno', 77777777777, 'Resolved', '2025-04-27 12:40:30', '2025-04-27 12:40:43', 1),
 (1160, 4, 'No feedback given.', 'Kenneth Del Mundo', 44444444444, 'RM103', 'Air Conditioner', '', 'Stephen Chase Nepomuceno', 77777777777, 'Resolved', '2025-04-27 12:49:21', '2025-04-27 12:49:28', 1),
 (1161, 4, 'No feedback given.', 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', 'Stephen Chase Nepomuceno', 77777777777, 'Resolved', '2025-04-27 12:51:10', '2025-04-27 12:51:19', 1),
-(1162, 2, 'No feedback given.', 'Kenneth Del Mundo', 44444444444, 'RM101', 'Wifi', '', 'Stephen Chase Nepomuceno', 77777777777, 'Resolved', '2025-04-27 12:52:27', '2025-04-27 12:52:35', 1),
-(1163, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM102', 'Lights', '', '', 0, 'Pending', '2025-05-01 12:33:37', NULL, 1),
-(1164, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM101', 'TV', '', '', 0, 'Pending', '2025-05-01 13:04:31', NULL, 1),
-(1165, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM102', 'Wifi', '', '', 0, 'Pending', '2025-05-01 13:05:53', NULL, 1),
-(1166, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM102', 'TV', '', '', 0, 'Pending', '2025-05-01 13:07:29', NULL, 1),
-(1167, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 13:27:24', NULL, 1),
-(1168, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM102', 'Lights', '', '', 0, 'Pending', '2025-05-01 13:34:05', NULL, 1),
-(1169, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM103', 'TV', '', '', 0, 'Pending', '2025-05-01 13:37:51', NULL, 1),
-(1170, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 13:40:29', NULL, 1),
-(1171, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'TV', '', '', 0, 'Pending', '2025-05-01 13:48:31', NULL, 1),
-(1172, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Lights', '', '', 0, 'Pending', '2025-05-01 13:48:42', NULL, 1),
-(1173, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Lights', '', '', 0, 'Pending', '2025-05-01 13:50:00', NULL, 1),
-(1174, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'TV', '', '', 0, 'Pending', '2025-05-01 13:50:19', NULL, 1),
-(1175, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 13:50:36', NULL, 1),
-(1176, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM102', 'Lights', '', '', 0, 'Pending', '2025-05-01 13:50:53', NULL, 1),
-(1177, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM102', 'Lights', '', '', 0, 'Pending', '2025-05-01 13:51:06', NULL, 1),
-(1178, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Lights', '', '', 0, 'Pending', '2025-05-01 14:32:21', NULL, 1),
-(1179, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM103', 'Lights', '', '', 0, 'Pending', '2025-05-01 14:32:37', NULL, 1),
-(1180, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 14:34:59', NULL, 1),
-(1181, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'TV', '', '', 0, 'Pending', '2025-05-01 14:35:12', NULL, 1),
-(1182, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 14:41:59', NULL, 1),
-(1183, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM102', 'Lights', '', '', 0, 'Pending', '2025-05-01 14:43:39', NULL, 1),
-(1184, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Lights', '', '', 0, 'Pending', '2025-05-01 14:44:00', NULL, 1),
-(1185, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 14:48:21', NULL, 1),
-(1186, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 14:49:59', NULL, 1),
-(1187, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM103', 'Wifi', '', '', 0, 'Pending', '2025-05-01 14:55:05', NULL, 1),
-(1188, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM102', 'Lights', '', '', 0, 'Pending', '2025-05-01 15:09:59', NULL, 1),
-(1189, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM102', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 15:21:23', NULL, 1),
-(1190, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 15:26:20', NULL, 1),
-(1191, NULL, NULL, 'Peter James Mistranza', 55555555555, 'RM102', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-01 15:26:36', NULL, 1),
-(1192, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-03 07:47:49', NULL, 1),
-(1193, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM102', 'TV', '', '', 0, 'Pending', '2025-05-03 07:58:11', NULL, 1),
-(1194, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM103', 'Lights', '', '', 0, 'Pending', '2025-05-03 08:10:05', NULL, 1),
-(1195, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM102', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-03 08:10:26', NULL, 1),
 (1196, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM103', 'TV', '', '', 0, 'Pending', '2025-05-03 08:16:25', NULL, 1),
 (1197, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-03 08:21:31', NULL, 1),
 (1198, NULL, NULL, 'Kenneth Del Mundo', 44444444444, 'RM101', 'Air Conditioner', '', '', 0, 'Pending', '2025-05-03 08:23:08', NULL, 1),
@@ -189,12 +156,11 @@ CREATE TABLE `userinfo` (
 INSERT INTO `userinfo` (`position`, `full_name`, `school_id`, `hashword`, `bio`, `dark_mode`, `userstatus`) VALUES
 ('Maintenance Staff', 'Chris Jumong Soler', 22222222222, '$2y$10$tzo0eE7EgTgXCRmuPTSffeowQJR5.OyTOnJsbRCNLfof6YwOGtmfa', '', 0, 'Approved'),
 ('Maintenance Staff', 'Leiby Rose Masanegra', 33333333333, '$2y$10$ajg4.tN.lwG/QsaMqdZMzeJJ0iG7RJ5jE1DHsg/mENunBaMvB2BkK', '', 0, 'Approved'),
-('Teacher', 'Kenneth Del Mundo', 44444444444, '$2y$10$F0v2vBYbRbWeIzy8GGHJJO4/qJwj5k/sQz0ZsrXIx9JHm24daVuNe', '', 1, 'Approved'),
+('Teacher', 'Kenneth Del Mundo', 44444444444, '$2y$10$F0v2vBYbRbWeIzy8GGHJJO4/qJwj5k/sQz0ZsrXIx9JHm24daVuNe', '', 0, 'Approved'),
 ('Student', 'Peter James Mistranza', 55555555555, '$2y$10$GstnnmCq5.P5UZmP53LvieADCWz3sx25W0UktD.v3cU4i0rKey0Le', '', 0, 'Approved'),
 ('Student', 'Jhello Velasco', 66666666666, '$2y$10$Bkm7Bk0jom3/4uJhCO529e14ctUrp2fkh3XK5Wa4lMfD4YkIZjTli', '', 0, 'Pending'),
-('Maintenance Staff', 'Stephen Chase Nepomuceno', 77777777777, '$2y$10$6RI8kpmwl5TbBX3EVTtYAurDRi0hHkXLW1hzHnrQP37UfqCXL2Qh6', '', 1, 'Approved'),
-('Admin', 'Zanjoe Ladesma Soliveres', 111111111111, '$2y$10$PgkTyai.VmldO/cSdUqhEuuDyYWMoS7Ut/D4yLTWMHD6obYr13pxa', '', 0, 'Approved'),
-('Student', 'hello e', 122332444444, '$2y$10$86fWInav6ivxI6Kji22kf.ak2FBs6lU7aLY5krYBYXaj0r8v.5vgO', '', 0, 'Approved');
+('Maintenance Staff', 'Stephen Chase Nepomuceno', 77777777777, '$2y$10$6RI8kpmwl5TbBX3EVTtYAurDRi0hHkXLW1hzHnrQP37UfqCXL2Qh6', '', 0, 'Approved'),
+('Admin', 'Zanjoe Ladesma Soliveres', 111111111111, '$2y$10$PgkTyai.VmldO/cSdUqhEuuDyYWMoS7Ut/D4yLTWMHD6obYr13pxa', '', 1, 'Approved');
 
 --
 -- Indexes for dumped tables
@@ -234,13 +200,13 @@ ALTER TABLE `userinfo`
 -- AUTO_INCREMENT for table `problemlocations`
 --
 ALTER TABLE `problemlocations`
-  MODIFY `idd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `idd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `problemtypes`
 --
 ALTER TABLE `problemtypes`
-  MODIFY `iddd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `iddd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `reportdetails`

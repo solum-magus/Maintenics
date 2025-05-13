@@ -1,6 +1,6 @@
 <?php
 session_start();
-require __DIR__ . "/config.php"; // Ensure database connection
+require __DIR__ . "/config.php"; 
 
 if (!isset($_SESSION['id'])) {
     exit("Unauthorized access");
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("ii", $darkMode, $userId);
 
     if ($stmt->execute()) {
-        $_SESSION['dark_mode'] = $darkMode; // Store in session
+        $_SESSION['dark_mode'] = $darkMode; 
         echo "success";
     } else {
         error_log("DB Update Failed: " . $stmt->error);
@@ -32,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->close();
     $conn->close();
 } elseif ($_SERVER["REQUEST_METHOD"] === "GET") {
-    // Retrieve the current dark mode setting
     $sql = "SELECT dark_mode FROM userinfo WHERE school_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $userId);
@@ -40,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_result($darkMode);
     $stmt->fetch();
 
-    echo json_encode(["darkMode" => $darkMode]); // Send response as JSON
+    echo json_encode(["darkMode" => $darkMode]); 
 
     $stmt->close();
     $conn->close();

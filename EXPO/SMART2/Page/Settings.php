@@ -176,10 +176,10 @@ $hasUnread = checkUnreadNotifications($mysqli);
                     <label for="darkModeToggle">Dark Mode</label>
                     <input type="checkbox" id="darkModeToggle">
                 </div>
-        
-                <div class="setting-choice" id="privacyPolicyBtn">Privacy & Policy</div>
 
-                <div class="setting-choice" id="contactUsBtn">Contact Us</div>
+                <!--<div class="setting-choice" id="privacyPolicyBtn">Privacy & Policy</div>
+
+                <div class="setting-choice" id="contactUsBtn">Contact Us</div>-->
 
                 <?php
                 switch ($position) {
@@ -221,7 +221,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 }
                 ?>
 
-                <img src="../Assets/QR.svg" class="qr">
+                <img src="../Assets/QR.png" class="qr">
             </div>
 		</div>
 
@@ -287,7 +287,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
         </div>
 
 
-        <!-- Privacy Policy Modal -->
+        <!-- Privacy Policy Modal
         <div id="privacyModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -357,7 +357,7 @@ $hasUnread = checkUnreadNotifications($mysqli);
                 </ul>
 
             </div>
-        </div>
+        </div> -->
 
         <div id="popup">
             <span id="popup-message"></span>

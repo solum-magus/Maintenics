@@ -219,8 +219,8 @@ ul {
     align-self: center;
     justify-content: center;
     position: relative;
-    left: 50px;
-    bottom: 300px;
+    left: 100px;
+    bottom: 225px;
 }
 
 #popup {
@@ -262,9 +262,8 @@ ul {
 
 @media (max-width: 1200px) {
     .qr {
-        max-width: 100px;
-        left: 100px;
-        bottom: 300px;
+        left: 0px;
+        bottom: -100px;
     }
 }
 
@@ -324,7 +323,7 @@ ul {
     .qr {
         max-width: 150px;
         left: 30%;
-        bottom: 300px;
+        bottom: 225px;
     }
 }
 @media (max-width: 570px) {

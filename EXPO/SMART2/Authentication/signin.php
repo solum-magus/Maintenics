@@ -25,6 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         }
 
+        if ($user["userstatus"] === "Rejected") {
+            $_SESSION["error_message2"] = "Your account is rejected. Cannot Log-in.";
+            $_SESSION["entered_name"] = $entered_name;
+            header("Location: ../index.php");
+            exit();
+        }
+
         if (password_verify($password, $user["hashword"])) {
             session_regenerate_id();
 

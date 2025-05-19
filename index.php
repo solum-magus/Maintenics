@@ -27,7 +27,6 @@ if (isset($_SESSION["position"])) {
 }
 
 unset($_SESSION["error_message2"]);
-unset($_SESSION["entered_name"]);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $full_name = trim($_POST["full_name"]);
@@ -38,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $_SESSION["entered_name"] = $full_name;
     $_SESSION["entered_school_id"] = $school_id;
+    $_SESSION["entered_pos"] = $position;
 
     if (strlen($full_name) < 3 || strlen($full_name) > 70) {
         echo "<script>
@@ -154,7 +154,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 if (isset($_GET['signup_success'])) {
     unset($_SESSION['entered_name']);
     unset($_SESSION['entered_school_id']);
+    unset($_SESSION['entered_pos']);
 }
+$entered_pos = $_SESSION['entered_pos'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -195,11 +197,11 @@ if (isset($_GET['signup_success'])) {
             <form action="" method="post" id="signUpForm">
             <div class="form-group">
                 <select id="position" name="position" required>
-                    <option value="">Position</option>
-                    <option value="Student" <?php echo (isset($_POST['position']) && $_POST['position'] == "Student") ? "selected" : ""; ?>>Student</option>
-                    <option value="Teacher" <?php echo (isset($_POST['position']) && $_POST['position'] == "Teacher") ? "selected" : ""; ?>>Teacher</option>
-                    <option value="Admin" <?php echo (isset($_POST['position']) && $_POST['position'] == "Admin") ? "selected" : ""; ?>>Admin</option>
-                    <option value="Maintenance Staff" <?php echo (isset($_POST['position']) && $_POST['position'] == "Maintenance Staff") ? "selected" : ""; ?>>Maintenance Staff</option>
+                  <option value="">Position</option>
+                  <option value="Student" <?php echo ($entered_pos == "Student") ? "selected" : ""; ?>>Student</option>
+                  <option value="Teacher" <?php echo ($entered_pos == "Teacher") ? "selected" : ""; ?>>Teacher</option>
+                  <option value="Admin" <?php echo ($entered_pos == "Admin") ? "selected" : ""; ?>>Admin</option>
+                  <option value="Maintenance Staff" <?php echo ($entered_pos == "Maintenance Staff") ? "selected" : ""; ?>>Maintenance Staff</option>
                 </select>
             </div>
 
@@ -208,7 +210,7 @@ if (isset($_GET['signup_success'])) {
                   oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '').replace(/\s{2,}/g, ' ');"
                   onblur="this.value = this.value.trim(), this.placeholder = 'Enter your full name'"
                   placeholder="Full Name"
-                  onfocus="this.placeholder='<?= $entered_name ?>'"
+                  onfocus="this.placeholder=''"
                   value="<?php echo isset($_SESSION['entered_name']) ? htmlspecialchars($_SESSION['entered_name']) : ''; ?>">
             </div>
     
@@ -251,7 +253,7 @@ if (isset($_GET['signup_success'])) {
                     class="form-control"
                     oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '').replace(/\s{2,}/g, ' ')"
                     onblur="this.value = this.value.trim()" placeholder="Enter your full name"
-                    value="">
+                    value="<?= $entered_name ?>">
                 </div>
 
                 <div class="mb-3 position-relative">

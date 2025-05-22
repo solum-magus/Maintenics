@@ -1,9 +1,8 @@
 <?php
 session_start();
-require_once __DIR__ . "/../Authentication/checknotif.php";
 
 // Check if user is logged in
-if (!isset($_SESSION["position"])) {
+if (!isset($_SESSION["position"]) || !isset($_SESSION["fname"])) {
     echo "<script>
     alert('You are not logged in!');
     window.location.href = '../index.php';
@@ -11,28 +10,45 @@ if (!isset($_SESSION["position"])) {
     exit();
 }
 
-// Get database connection
+// Connect to DB
 $mysqli = require __DIR__ . "/../database.php";
 
-// Get user information
-if (isset($_SESSION["fname"]) && isset($_SESSION["position"])) {
-    $fname = $mysqli->real_escape_string($_SESSION["fname"]);
-    $position = $mysqli->real_escape_string($_SESSION["position"]);
+// Escape session values
+$fname = $mysqli->real_escape_string($_SESSION["fname"]);
+$position = $mysqli->real_escape_string($_SESSION["position"]);
 
-    $sql = "SELECT * FROM userinfo
-            WHERE full_name = '$fname'
-            AND position = '$position'";
+// Fetch user info to get userstatus
+$sql = "SELECT * FROM userinfo WHERE full_name = '$fname' AND position = '$position'";
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
 
-    $result = $mysqli->query($sql);
-    $user = $result->fetch_assoc();
-
+if ($user) {
     $school_id = $user["school_id"] ?? null;
     $full_name = $user["full_name"] ?? "";
     $first_name = explode(" ", trim($full_name))[0];
+    $status = $user["userstatus"] ?? "Unknown";
+
+    
+    if ($status === "Pending") {
+        echo "<script>
+            alert('Your account is still pending approval. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    } elseif ($status === "Rejected") {
+        echo "<script>
+            alert('Your account has been rejected. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    }
 }
 
 // Check for unread notifications
+require_once __DIR__ . "/../Authentication/checknotif.php";
 $hasUnread = checkUnreadNotifications($mysqli);
+
+// Now everything else below (unchanged)
 
 // Get all room locations
 $roomQuery = "SELECT DISTINCT problemloc FROM problemlocations ORDER BY problemloc ASC";
@@ -271,7 +287,7 @@ $unavailablePercent = ($totalRooms > 0) ? round((count($unavailableRooms) / $tot
                     }
                 }
             ?>
-            <option value="Other">Other</option>
+           
         </select>
 
         <select id="problem" name="problem" required>

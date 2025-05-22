@@ -10,7 +10,34 @@ if (!isset($_SESSION["position"])) {
     </script>";
     exit();
 }
+$mysqli = require __DIR__ . "/../database.php";
 
+// Escape values
+$fname = $mysqli->real_escape_string($_SESSION["fname"]);
+$position = $mysqli->real_escape_string($_SESSION["position"]);
+
+// Get user info
+$sql = "SELECT * FROM userinfo WHERE full_name = '$fname' AND position = '$position'";
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
+
+if ($user) {
+    $status = $user["userstatus"] ?? "Unknown";
+
+    if ($status === "Pending") {
+        echo "<script>
+            alert('Your account is still pending approval. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    } elseif ($status === "Rejected") {
+        echo "<script>
+            alert('Your account has been rejected. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    }
+} 
 $NOTIFICATION_LIMIT = 20;
 
 $Testsql = require __DIR__ . "/../database.php";

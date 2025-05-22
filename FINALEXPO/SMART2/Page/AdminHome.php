@@ -2,21 +2,53 @@
 session_start();
 require_once __DIR__ . "/../Authentication/checknotif.php";
 
-if (!isset($_SESSION["position"])) {
+// Check if user is logged in
+if (!isset($_SESSION["position"]) || !isset($_SESSION["fname"])) {
     echo "<script>
-    alert('You are not logged in!');
-    window.location.href = '../index.php';
+        alert('You are not logged in!');
+        window.location.href = '../index.php';
     </script>";
     exit();
 }
 
+// Check if user is Admin
 if ($_SESSION["position"] !== "Admin") {
     echo "<script>
-    alert('You do not have permission to access this page.');
-    window.location.href = '../index.php';
+        alert('You do not have permission to access this page.');
+        window.location.href = '../index.php';
     </script>";
     exit();
 }
+
+// DB connection
+$mysqli = require __DIR__ . "/../database.php";
+
+// Escape values
+$fname = $mysqli->real_escape_string($_SESSION["fname"]);
+$position = $mysqli->real_escape_string($_SESSION["position"]);
+
+// Get user info
+$sql = "SELECT * FROM userinfo WHERE full_name = '$fname' AND position = '$position'";
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
+
+if ($user) {
+    $status = $user["userstatus"] ?? "Unknown";
+
+    if ($status === "Pending") {
+        echo "<script>
+            alert('Your account is still pending approval. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    } elseif ($status === "Rejected") {
+        echo "<script>
+            alert('Your account has been rejected. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    }
+} 
 
 $Testsql = require __DIR__ . "/../database.php";
 
@@ -194,7 +226,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
     <link rel="manifest" href="../Assets/site.webmanifest">
-
     <link href="../Style/AdminHome.css" rel="stylesheet">
     <link href="../Style/Sidebar.css" rel="stylesheet">
     <link href="../Style/Navigationbar.css" rel="stylesheet">

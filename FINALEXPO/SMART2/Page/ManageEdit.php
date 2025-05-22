@@ -17,7 +17,23 @@ if ($_SESSION["position"] !== "Admin") {
     </script>";
     exit();
 }
+if ($user) {
+    $status = $user["userstatus"] ?? "Unknown";
 
+    if ($status === "Pending") {
+        echo "<script>
+            alert('Your account is still pending approval. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    } elseif ($status === "Rejected") {
+        echo "<script>
+            alert('Your account has been rejected. Please contact the admin.');
+            window.location.href = '../index.php';
+        </script>";
+        exit();
+    }
+} 
 $mysqli = require __DIR__ . "/../database.php";
 $position = $_SESSION["position"];
 

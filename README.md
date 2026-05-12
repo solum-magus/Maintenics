@@ -4,6 +4,7 @@ School Maintenance And Real-Time Tracking
 Newest version is EXPOFINAL folder
 
 Contributors:
+
 solum-magus (Stephen Chase Nepomuceno)
 
 zjheq (Zanjoe Soliveres)

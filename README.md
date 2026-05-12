@@ -5,7 +5,7 @@ School Maintenance And Real-Time Tracking
 Newest version is EXPOFINAL folder
 
 
-Contributors:
+Code Contributors:
 
 solum-magus (Stephen Chase Nepomuceno)
 
